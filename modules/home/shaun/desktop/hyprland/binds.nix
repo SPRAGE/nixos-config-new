@@ -70,7 +70,7 @@ in
         "ALT SHIFT, S, movetoworkspace, special"
 
         # terminal
-        "$mod, T, ${uexec (getExe pkgs.kitty)}"
+        "$mod, RETURN, ${uexec (getExe pkgs.kitty)}"
         "$mod, E, ${uexec (getExe pkgs.kitty)} -e yazi"
         "CTRL SHIFT, Escape, ${uexec (getExe pkgs.kitty)} -e btop"
 
