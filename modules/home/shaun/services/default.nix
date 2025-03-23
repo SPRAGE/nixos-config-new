@@ -1,7 +1,7 @@
 {
   imports = [
     ./nextcloud-client.nix
-    ./sops.nix
+    # ./sops.nix
     ./xdg.nix
   ];
 }

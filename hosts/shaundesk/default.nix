@@ -64,7 +64,7 @@
           resolution = "1920x1080";
           scale = "1";
           refreshRate = 60;
-          rotation = "transform,3";
+          rotation = "transform,1";
           position = "-1080x-600";
           workspaces = [ 1 ];
         }
