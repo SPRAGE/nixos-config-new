@@ -26,15 +26,8 @@ in
             "workspaces"
             "windowtitle"
           ];
-          "middle" = [
-            "clock"
-          ];
           "right" = [
-            "volume"
-            "bluetooth"
-            "network"
-            "systray"
-            "notifications"
+            "clock"
           ];
         };
 
@@ -56,6 +49,24 @@ in
             "notifications"
           ];
         };
+        # "2" = {
+        #   "left" = [
+        #     "dashboard"
+        #     "workspaces"
+        #     "windowtitle"
+        #   ];
+        #   "middle" = [
+        #     "clock"
+        #     "media"
+        #   ];
+        #   "right" = [
+        #     "volume"
+        #     "bluetooth"
+        #     "network"
+        #     "systray"
+        #     "notifications"
+        #   ];
+        # };
       };
     };
 

@@ -21,6 +21,7 @@
   };
 
   networking.hostName = "shaundesk";
+  networking.interfaces.enp8s0.wakeOnLan.policy = true;
 
   virtualisation.docker.rootless = {
     enable = true;
@@ -62,7 +63,7 @@
         {
           name = "DP-3";
           resolution = "2560x1080";
-          position = "1080x480";
+          position = "1080x680";
           refreshRate = 75;
           scale = "1";
           primary = true;
