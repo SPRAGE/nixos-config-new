@@ -20,7 +20,7 @@ in
       "hyprctl dispatch workspace 1"
       # "sleep 9 && ${uexec (getExe pkgs.vesktop)}"
       # (uexec (getExe config.programs.spicetify.spicedSpotify))
-      (uexec (getExe pkgs.steam))
+      # (uexec (getExe pkgs.steam))
     ];
   };
 }
