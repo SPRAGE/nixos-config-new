@@ -51,29 +51,29 @@
 
       monitors = [
         {
+          name = "DP-2";
+          resolution = "1920x1080";
+          scale = "1";
+          refreshRate = 75;
+          rotation = "transform,1";
+          position = "0x0";
+          workspaces = [ 1 ];
+        }
+        {
           name = "DP-3";
           resolution = "2560x1080";
-          position = "0x0";
+          position = "1080x480";
           refreshRate = 75;
           scale = "1";
           primary = true;
           workspaces = [ 2 ];
         }
         {
-          name = "DP-2";
-          resolution = "1920x1080";
-          scale = "1";
-          refreshRate = 75;
-          rotation = "transform,1";
-          position = "-1080x-600";
-          workspaces = [ 1 ];
-        }
-        {
           name = "HDMI-A-1";
           resolution = "1920x1080";
           scale = "1";
           refreshRate = 60;
-          position = "2560x-100";
+          position = "3000x280";
           workspaces = [ 3 ];
         }
       ];
