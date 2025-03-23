@@ -48,7 +48,7 @@ in
       [
         # Compositor
         "$mod SHIFT, R, ${uexec pkgs.hyprland}/bin/hyprctl reload && hyprpanel quit; hyprpanel"
-        "$mod, Q, killactive,"
+        "$mod,SHIFT, Q, killactive,"
         "$mod, F, fullscreen,"
         "$mod, G, togglefloating"
 
@@ -66,7 +66,7 @@ in
         "$mod SHIFT, down, movewindow, d"
 
         # special workspaces
-        "$mod, S, togglespecialworkspace, spotify"
+        # "$mod, S, togglespecialworkspace, spotify"
         "ALT SHIFT, S, movetoworkspace, special"
 
         # terminal
@@ -80,6 +80,7 @@ in
 
         # Launcher
         # "$mod, Space, exec, pkill lumastart || ${lumastart}"
+        "$mod, Space, exec, rofi -show drun"
         "$mod, V, exec, pkill rofi || ${getExe pkgs.cliphist} list | ${getExe pkgs.rofi} -dmenu -display-columns 2 | ${getExe pkgs.cliphist} decode | wl-copy"
 
         # lock screen
