@@ -53,7 +53,7 @@
         {
           name = "DP-3";
           resolution = "2560x1080";
-          position = "1080x600";
+          position = "0x0";
           refreshRate = 75;
           scale = "1";
           primary = true;
@@ -65,7 +65,7 @@
           scale = "1";
           refreshRate = 75;
           rotation = "transform,1";
-          position = "0x0";
+          position = "-1080x-600";
           workspaces = [ 1 ];
         }
         {
@@ -73,7 +73,7 @@
           resolution = "1920x1080";
           scale = "1";
           refreshRate = 60;
-          position = "3460x500";
+          position = "2560x-100";
           workspaces = [ 3 ];
         }
       ];
