@@ -73,7 +73,7 @@
           resolution = "1920x1080";
           scale = "1";
           refreshRate = 60;
-          position = "3000x280";
+          position = "3640x280";
           workspaces = [ 3 ];
         }
       ];
