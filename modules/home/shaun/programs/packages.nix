@@ -12,18 +12,9 @@ in
     fastfetch
 
     # Video/Audio
-    mpv
-    loupe
-    celluloid
     pwvucontrol
-    gimp
+    libreoffice
+    galculator
 
-    signal-desktop
-    obsidian
-    anki-bin
-    vial
-    # orca-slicer-beta
-
-    inputs.lumastart.packages.${pkgs.system}.default
   ];
 }
