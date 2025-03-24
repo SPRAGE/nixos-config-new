@@ -21,7 +21,6 @@
   };
 
   networking.hostName = "shaundesk";
-  networking.interfaces.enp8s0.wakeOnLan.policy = true;
 
   virtualisation.docker.rootless = {
     enable = true;
@@ -51,13 +50,6 @@
       desktop.hyprland.enable = true;
 
       monitors = [
-        # {
-        #   name = "DP-2";
-        #   scale = "1";
-        #   rotation = "transform,1";
-        #   position = "0x0";
-        #   workspaces = [ 1 ];
-        # }
         {
           name = "DP-3";
           resolution = "2560x1080";
@@ -65,6 +57,15 @@
           refreshRate = 75;
           scale = "1";
           primary = true;
+          workspaces = [ 2 ];
+        }
+        {
+          name = "DP-2";
+          resolution = "1920x1080";
+          scale = "1";
+          refreshRate = 60;
+          rotation = "transform,1";
+          position = "-1080x-600";
           workspaces = [ 1 ];
         }
         {
@@ -73,7 +74,7 @@
           scale = "1";
           refreshRate = 60;
           position = "2560x-100";
-          workspaces = [ 2 ];
+          workspaces = [ 3 ];
         }
       ];
     };
