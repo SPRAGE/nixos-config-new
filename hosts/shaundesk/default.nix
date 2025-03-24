@@ -50,33 +50,33 @@
       gpuAcceleration.enable = true;
       desktop.hyprland.enable = true;
 
-    #   monitors = [
-    #     # {
-    #     #   name = "DP-2";
-    #     #   scale = "1";
-    #     #   rotation = "transform,1";
-    #     #   position = "0x0";
-    #     #   workspaces = [ 1 ];
-    #     # }
-    #     {
-    #       name = "DP-3";
-    #       resolution = "2560x1080";
-    #       position = "1080x680";
-    #       refreshRate = 75;
-    #       scale = "1";
-    #       primary = true;
-    #       workspaces = [ 2 ];
-    #     }
-    #     {
-    #       name = "HDMI-A-1";
-    #       resolution = "1920x1080";
-    #       scale = "1";
-    #       refreshRate = 60;
-    #       position = "3640x280";
-    #       workspaces = [ 3 ];
-    #     }
-    #   ];
-    # };
+      #   monitors = [
+      #     # {
+      #     #   name = "DP-2";
+      #     #   scale = "1";
+      #     #   rotation = "transform,1";
+      #     #   position = "0x0";
+      #     #   workspaces = [ 1 ];
+      #     # }
+      #     {
+      #       name = "DP-3";
+      #       resolution = "2560x1080";
+      #       position = "1080x680";
+      #       refreshRate = 75;
+      #       scale = "1";
+      #       primary = true;
+      #       workspaces = [ 2 ];
+      #     }
+      #     {
+      #       name = "HDMI-A-1";
+      #       resolution = "1920x1080";
+      #       scale = "1";
+      #       refreshRate = 60;
+      #       position = "3640x280";
+      #       workspaces = [ 3 ];
+      #     }
+      #   ];
+    };
 
     programs = {
       thunar.enable = true;
