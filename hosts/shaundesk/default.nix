@@ -54,7 +54,7 @@
         {
           name = "DP-2";
           scale = "1";
-          rotation = "1";
+          rotation = "transform,1";
           position = "0x0";
           workspaces = [ 1 ];
         }
