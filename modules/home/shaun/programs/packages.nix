@@ -13,8 +13,13 @@ in
 
     # Video/Audio
     pwvucontrol
+
+    #office
     libreoffice
     galculator
+
+    #github
+    gh
 
   ];
 }
