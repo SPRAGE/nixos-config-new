@@ -19,6 +19,12 @@ in
         identityFile = "~/.ssh/gitkey";
         identitiesOnly = true;
       };
+      "github-work" = {
+        hostname = "github.com";
+        user = "git";
+        identityFile = "~/.ssh/gitkey-work";
+        identitiesOnly = true;
+      };
     };
   };
 }
