@@ -20,7 +20,10 @@
     #kernelParams = [ "acpi_enforce_resources=lax" ];
   };
 
-  networking.hostName = "shaundesk";
+  networking = {
+    hostName = "shaundesk";
+    interfaces.enp8s0.wakeOnLan.enable = true;
+  };
 
   virtualisation.docker.rootless = {
     enable = true;
