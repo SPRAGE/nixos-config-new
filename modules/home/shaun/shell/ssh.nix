@@ -12,9 +12,12 @@ in
         host = builtins.concatStringsSep " " hostnames;
         forwardAgent = true;
       };
-      "github.com" = {
+      # 🐙 GitHub alias using your custom key
+      "github-shaun" = {
         hostname = "github.com";
+        user = "git";
         identityFile = "~/.ssh/gitkey";
+        identitiesOnly = true;
       };
     };
   };
