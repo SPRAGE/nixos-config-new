@@ -9,8 +9,8 @@
 
       search = {
         force = true;
-        default = "Brave";
-        privateDefault = "Brave";
+        default = "google";
+        privateDefault = "google";
         engines = {
           "Home Manager NixOs" = {
             urls = [
