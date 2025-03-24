@@ -12,7 +12,7 @@ in
   config = {
     users = {
       # allow password to be set by sops-nix
-      mutableUsers = false;
+      mutableUsers = true;
 
       users.${user} = {
         # System User

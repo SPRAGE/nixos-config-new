@@ -10,7 +10,7 @@ in
 
     sudo = {
       # User does not need to give password when using sudo.
-      wheelNeedsPassword = mkDefault false;
+      wheelNeedsPassword = mkDefault true;
 
       # only allow members of the wheel group to execute sudo
       # by setting the executable’s permissions accordingly
