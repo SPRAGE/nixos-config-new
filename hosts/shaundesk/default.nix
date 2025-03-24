@@ -61,19 +61,19 @@
         {
           name = "DP-3";
           resolution = "2560x1080";
-          # position = "1080x680";
+          position = "0x0";
           refreshRate = 75;
           scale = "1";
           primary = true;
-          workspaces = [ 2 ];
+          workspaces = [ 1 ];
         }
         {
           name = "HDMI-A-1";
           resolution = "1920x1080";
           scale = "1";
           refreshRate = 60;
-          # position = "3640x280";
-          workspaces = [ 3 ];
+          position = "2560x-100";
+          workspaces = [ 2 ];
         }
       ];
     };
