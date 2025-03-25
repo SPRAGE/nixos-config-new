@@ -66,6 +66,17 @@
         zstyle ':completion:*' select-prompt %SScrolling active: current selection at %p%s
         zstyle ':completion:*' verbose true
         _comp_options+=(globdots)
+        
+        osc52_copy() {
+    local input=$(cat | base64 | tr -d '\n')
+    printf "\e]52;c;%s\a" "$input"
+  }
+
+  # alias for easier use
+  alias copy='osc52_copy'
+
+
+
       '';
 
       shellAliases = {
