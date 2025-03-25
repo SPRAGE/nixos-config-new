@@ -26,6 +26,7 @@ in
             "workspaces"
             "windowtitle"
           ];
+          "middle" = [ ]; # Add this line
           "right" = [
             "clock"
           ];
