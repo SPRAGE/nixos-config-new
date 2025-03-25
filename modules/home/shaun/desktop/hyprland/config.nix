@@ -37,7 +37,7 @@ in
 
       # Force Screen tearing
       "immediate, class:^(steam_app_[0-9]*)$"
-      "immediate, class:ffxiv"
+      # "immediate, class:ffxiv"
 
       # fix fullscreen flashing
       "suppressevent fullscreen, class:^(steam_app_[0-9]*)$"
@@ -115,7 +115,7 @@ in
 
     input = {
       follow_mouse = 1; # focus change on cursor move
-      sensitivity = -0.49;
+      sensitivity = 1;
       accel_profile = "flat";
       off_window_axis_events = true;
     };
@@ -148,7 +148,7 @@ in
       # Turn on screen when sleeping
       key_press_enables_dpms = true;
       mouse_move_enables_dpms = true;
-      vrr = 1;
+      vrr = 0;
     };
 
     # render = {
