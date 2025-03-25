@@ -7,6 +7,7 @@ in
     enable = true;
     hashKnownHosts = true;
     compression = true;
+    addKeysToAgent = "yes";
     matchBlocks = {
       net = {
         host = builtins.concatStringsSep " " hostnames;
