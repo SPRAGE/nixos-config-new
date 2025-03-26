@@ -10,6 +10,7 @@ in
     ./bluetooth.nix
     ./printing.nix
     ./sound.nix
+    ./mounts.nix
   ];
 
   options.modules.hardware = {
