@@ -47,34 +47,34 @@
       cpu.type = "amd";
       gpu.type = "amd";
       sound.enable = true;
-    };
 
-    mounts = {
-      enable = true;
-      disks = [
-        {
-          mountPoint = "/mnt/sda1";
-          uuid = "55604B1039F8427C";
-          fsType = "ntfs-3g";
-          options = [
-            "rw"
-            "nofail"
-            "uid=1000"
-            "gid=100"
-          ];
-        }
-        {
-          mountPoint = "/mnt/sdb1";
-          uuid = "0032F71432F70D82";
-          fsType = "ntfs-3g";
-          options = [
-            "rw"
-            "nofail"
-            "uid=1000"
-            "gid=100"
-          ];
-        }
-      ];
+      mounts = {
+        enable = true;
+        disks = [
+          {
+            mountPoint = "/mnt/sda1";
+            uuid = "55604B1039F8427C";
+            fsType = "ntfs-3g";
+            options = [
+              "rw"
+              "nofail"
+              "uid=1000"
+              "gid=100"
+            ];
+          }
+          {
+            mountPoint = "/mnt/sdb1";
+            uuid = "0032F71432F70D82";
+            fsType = "ntfs-3g";
+            options = [
+              "rw"
+              "nofail"
+              "uid=1000"
+              "gid=100"
+            ];
+          }
+        ];
+      };
     };
 
     display = {
