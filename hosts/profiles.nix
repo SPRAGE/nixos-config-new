@@ -36,11 +36,11 @@ in
   };
 
   # VM
-  vm = nixosSystem {
+  dataserver = nixosSystem {
     inherit specialArgs;
     # Modules that are used
     modules = [
-      ./vm
+      ./dataserver
       ../modules/nixos
     ] ++ concatLists [ homeManager ];
   };
