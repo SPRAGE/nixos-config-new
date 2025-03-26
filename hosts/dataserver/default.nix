@@ -88,6 +88,7 @@
 
     os = {
       mainUser = "pai";
+      users = [ "pai" ];
       autoLogin = false;
     };
 
