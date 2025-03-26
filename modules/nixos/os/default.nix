@@ -66,6 +66,7 @@
       wget
       unzip
       unrar
+      ntfs3g
     ];
 
     variables = {
