@@ -51,8 +51,8 @@ in
       map (disk: {
         "${disk.mountPoint}" = {
           device = "/dev/disk/by-uuid/${disk.uuid}";
-          fsType = disk.fsType;
-          options = disk.options;
+          inherit (disk) fsType;
+          inherit (disk) options;
         };
       }) cfg.disks
     );
