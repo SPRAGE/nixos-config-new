@@ -6,7 +6,7 @@
 }:
 
 let
-  mod = "Mod4"; # SUPER
+  modifier = "Mod4"; # SUPER
   terminal = "${pkgs.kitty}/bin/kitty";
   fileManager = "${pkgs.xfce.thunar}/bin/thunar";
   launcher = "${pkgs.rofi}/bin/rofi -show drun";
@@ -17,8 +17,8 @@ in
     enable = true;
 
     config = {
-      modifier = mod;
-      terminal = terminal;
+      inherit modifier;
+      inherit terminal;
 
       startup = [
         {
