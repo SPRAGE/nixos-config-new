@@ -117,7 +117,7 @@
 
     os = {
       mainUser = "shaun";
-      autoLogin = false;
+      autoLogin = true;
     };
 
     networking.optomizeTcp = true;
