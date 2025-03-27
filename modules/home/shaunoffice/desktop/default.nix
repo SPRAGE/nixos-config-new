@@ -3,7 +3,8 @@
 }:
 {
   imports = [
-    ./hyprland
+    # ./hyprland
+    ./sway
     ./hypridle.nix
     ./hyprlock.nix
     ./hyprpanel.nix
