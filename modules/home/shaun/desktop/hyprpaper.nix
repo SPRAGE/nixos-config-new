@@ -13,7 +13,7 @@ let
     filter
     ;
   cfg = config.modules.desktop.hyprpaper;
-  # primaryWall = config.modules.theme.stylix.image;
+  primaryWall = config.modules.theme.stylix.image;
 
   inherit (osConfig.modules.display) monitors;
 
