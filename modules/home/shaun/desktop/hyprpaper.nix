@@ -13,7 +13,7 @@ let
     filter
     ;
   cfg = config.modules.desktop.hyprpaper;
-  primaryWall = config.modules.theme.stylix.image;
+  # primaryWall = config.modules.theme.stylix.image;
 
   inherit (osConfig.modules.display) monitors;
 
@@ -28,10 +28,10 @@ in
   config = mkIf cfg.enable {
     services.hyprpaper = {
       enable = true;
-      settings = {
-        preload = [ "${primaryWall}" ];
-        # wallpaper = [ "${primaryMonitor},${primaryWall}" ];
-      };
+      # settings = {
+      #   preload = [ "${primaryWall}" ];
+      #   wallpaper = [ "${primaryMonitor},${primaryWall}" ];
+      # };
     };
   };
 }

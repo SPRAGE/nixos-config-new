@@ -13,6 +13,7 @@ in
 {
   wayland.windowManager.hyprland.settings = {
     exec-once = [
+      "${pkgs.hyprpaper}/bin/hyprpaper"
       "hyprctl setcursor ${pointer.name} ${toString pointer.size}"
       "wl-paste --watch cliphist store"
       "${getExe pkgs.wlsunset} -l 32.7 -L -96.9"
