@@ -36,11 +36,11 @@ in
   };
 
   # VM
-  dataserver = nixosSystem {
+  shaunoffice = nixosSystem {
     inherit specialArgs;
     # Modules that are used
     modules = [
-      ./dataserver
+      ./shaunoffice
       ../modules/nixos
     ] ++ concatLists [ homeManager ];
   };
