@@ -16,8 +16,6 @@
 
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
-    #For openrgb with gigabyte motherboard
-    #kernelParams = [ "acpi_enforce_resources=lax" ];
   };
 
   networking = {
@@ -40,12 +38,11 @@
     roles = {
       desktop.enable = true;
       development.enable = true;
-      # gaming.enable = true;
+      work.enable = true;
     };
 
     hardware = {
       cpu.type = "intel";
-      # gpu.type = "amd";
       sound.enable = true;
 
     };
