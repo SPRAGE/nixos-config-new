@@ -28,10 +28,10 @@ in
   config = mkIf cfg.enable {
     services.hyprpaper = {
       enable = true;
-      # settings = {
-      #   preload = [ "${primaryWall}" ];
-      #   wallpaper = [ "${primaryMonitor},${primaryWall}" ];
-      # };
+      settings = {
+        preload = [ "${primaryWall}" ];
+        # wallpaper = [ "${primaryMonitor},${primaryWall}" ];
+      };
     };
   };
 }
