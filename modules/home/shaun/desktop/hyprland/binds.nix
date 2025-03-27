@@ -109,12 +109,6 @@ in
       ", XF86AudioRaiseVolume, exec, hyprpanel -r 'audio.speaker.volume += 0.05; indicator.speaker()'"
       ", XF86AudioLowerVolume, exec, hyprpanel -r 'audio.speaker.volume -= 0.05; indicator.speaker()'"
     ];
-    binde = [
-      "CTRL SHIFT, left, resizeactive, -20 0"
-      "CTRL SHIFT, right, resizeactive, 20 0"
-      "CTRL SHIFT, up, resizeactive, 0 -20"
-      "CTRL SHIFT, down, resizeactive, 0 20"
-    ];
 
   };
 }
