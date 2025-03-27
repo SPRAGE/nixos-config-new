@@ -35,7 +35,7 @@ in
               # "zenpower" # zenpower is for reading cpu info, i.e voltage
               "msr" # x86 CPU MSR access device
             ];
-            extraModulePackages = [ config.boot.kernelPackages.zenpower ];
+            # extraModulePackages = [ config.boot.kernelPackages.zenpower ];
           }
 
           (mkIf (pstate.enable && (versionAtLeast kver "5.17") && (versionOlder kver "6.1")) {
