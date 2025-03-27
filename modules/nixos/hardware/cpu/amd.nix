@@ -4,6 +4,7 @@
   lib,
   ...
 }:
+
 let
   inherit (lib)
     mkIf
@@ -14,7 +15,7 @@ let
   dev = config.modules.hardware;
 
   kver = config.boot.kernelPackages.kernel.version;
-  inherit (dev.cpu.amd) pstate zenpower;
+  inherit (dev.cpu.amd) pstate;
 in
 {
   config =
@@ -30,12 +31,11 @@ in
         boot = mkMerge [
           {
             kernelModules = [
-              "kvm-amd" # amd virtualization
-              "amd-pstate" # load pstate module in case the device has a newer gpu
-              "zenpower" # zenpower is for reading cpu info, i.e voltage
+              "kvm-amd" # AMD virtualization
+              "amd-pstate" # load pstate module
               "msr" # x86 CPU MSR access device
             ];
-            extraModulePackages = [ config.boot.kernelPackages.zenpower ];
+            # Removed: extraModulePackages = [ config.boot.kernelPackages.zenpower ];
           }
 
           (mkIf (pstate.enable && (versionAtLeast kver "5.17") && (versionOlder kver "6.1")) {
@@ -47,30 +47,11 @@ in
             kernelParams = [ "amd_pstate=passive" ];
           })
 
-          # for older kernels
-          # see <https://github.com/NixOS/nixos-hardware/blob/c256df331235ce369fdd49c00989fdaa95942934/common/cpu/amd/pstate.nix>
-          (mkIf (pstate.enable && (versionAtLeast kver "6.3")) { kernelParams = [ "amd_pstate=active" ]; })
+          (mkIf (pstate.enable && (versionAtLeast kver "6.3")) {
+            kernelParams = [ "amd_pstate=active" ];
+          })
         ];
 
-        # Ryzen cpu control
-        systemd.services.zenstates = mkIf zenpower.enable {
-          enable = true;
-          description = "Undervolt via Zenstates";
-          after = [
-            "syslog.target"
-            "systemd-modules-load.service"
-          ];
-
-          unitConfig = {
-            ConditionPathExists = "${pkgs.zenstates}/bin/zenstates";
-          };
-
-          serviceConfig = {
-            User = "root";
-            ExecStart = "${pkgs.zenstates}/bin/zenstates ${zenpower.args}";
-          };
-
-          wantedBy = [ "multi-user.target" ];
-        };
+        # Removed: zenstates service
       };
 }
