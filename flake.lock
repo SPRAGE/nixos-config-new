@@ -686,24 +686,6 @@
         "type": "github"
       }
     },
-    "nix-secrets": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1743036779,
-        "narHash": "sha256-ll5PjOF/3H3FWErV9XOwmYqfOHJD9P9s/S/vWKP7HFY=",
-        "ref": "main",
-        "rev": "a2df6b5aa456457a05b72b7340d362de0fff3782",
-        "shallow": true,
-        "type": "git",
-        "url": "ssh://git@github.com/SPRAGE/nix-secrets.git"
-      },
-      "original": {
-        "ref": "main",
-        "shallow": true,
-        "type": "git",
-        "url": "ssh://git@github.com/SPRAGE/nix-secrets.git"
-      }
-    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1714030708,
@@ -981,7 +963,6 @@
         "lumastart": "lumastart",
         "matugen": "matugen",
         "nix-index-database": "nix-index-database",
-        "nix-secrets": "nix-secrets",
         "nixpkgs": "nixpkgs_4",
         "nixpkgs-stable": "nixpkgs-stable",
         "nvix": "nvix",
