@@ -42,14 +42,13 @@ in
 
     command = mkOption {
       type = types.str;
-      default = mkDefault (
+      default =
         if cfg.sway.enable then
           "sway"
         else if cfg.hyprland.enable then
           "uwsm start hyprland-uwsm.desktop"
         else
-          "sh -c 'echo No WM enabled >&2; sleep 5'"
-      );
+          "sh -c 'echo No WM enabled >&2; sleep 5'";
       description = "Startup command for the selected window manager.";
     };
   };

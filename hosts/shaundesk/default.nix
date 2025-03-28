@@ -79,7 +79,10 @@
 
     display = {
       gpuAcceleration.enable = true;
-      desktop.hyprland.enable = true;
+      desktop = {
+        enable = true;
+        hyprland = true;
+      };
 
       monitors = [
         {
