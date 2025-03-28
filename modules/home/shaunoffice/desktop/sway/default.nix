@@ -11,7 +11,7 @@ let
 in
 {
   imports = [
-    ./sway.nix
+    ./config.nix
   ];
 
   config = mkIf cfg.enable {
