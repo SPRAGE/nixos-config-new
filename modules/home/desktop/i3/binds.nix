@@ -29,7 +29,7 @@ in
 
     "${mod}+Shift+q" = "kill";
     "${mod}+f" = "fullscreen toggle";
-    "${mod}+space" = "floating toggle";
+    "${mod}+Shift+space" = "floating toggle";
     "${mod}+l" = "exec i3lock";
 
     "Print" = "exec ${getExe pkgs.grimblast} --notify copysave area";
