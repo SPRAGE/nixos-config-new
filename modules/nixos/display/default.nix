@@ -1,10 +1,14 @@
 { lib, config, ... }:
+
 let
   inherit (lib)
     mkEnableOption
     mkOption
+    mkDefault
+    mkIf
     types
     ;
+
   cfg = config.modules.display.desktop;
 in
 {
@@ -16,21 +20,33 @@ in
   ];
 
   options.modules.display.desktop = {
-    hyprland.enable = mkEnableOption "Enable the hyprland desktop";
+    enable = mkEnableOption "Enable graphical desktop environment";
+
+    command = mkOption {
+      type = types.str;
+      default = mkDefault "uwsm start hyprland-uwsm.desktop";
+      description = "Startup command for the selected window manager";
+    };
 
     isWayland = mkOption {
       type = types.bool;
-      default = cfg.hyprland.enable;
-      description = ''
-        Whether to enable Wayland exclusive modules, this contains a wariety
-        of packages, modules, overlays, XDG portals and so on.
-      '';
+      default = true;
+      description = "Whether to enable Wayland-specific features";
     };
 
-    # Add the command of each desktop for stuff like greetd
-    command = mkOption {
-      type = types.str;
-      default = "uwsm start hyprland-uwsm.desktop";
-    };
+    hyprland.enable = mkEnableOption "Enable Hyprland window manager";
+    sway.enable = mkEnableOption "Enable Sway window manager";
+  };
+
+  config = mkIf cfg.enable {
+    # Automatically set the command based on which WM is enabled
+    modules.display.desktop.command = mkDefault (
+      if cfg.sway.enable then
+        "sway"
+      else if cfg.hyprland.enable then
+        "uwsm start hyprland-uwsm.desktop"
+      else
+        "sh -c 'echo No WM enabled >&2; sleep 5'"
+    );
   };
 }
