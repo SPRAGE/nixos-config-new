@@ -11,29 +11,28 @@ let
 in
 {
   imports = [
+    ./binds.nix
     ./config.nix
+    ./startup.nix
   ];
 
-  config = mkIf cfg.enable {
+  config = mkIf cfg.sway.enable {
     home.packages = with pkgs; [
       grimblast
       wl-clipboard
       wlsunset
-      swaylock
     ];
-
-    services.cliphist.enable = true;
 
     wayland.windowManager.sway = {
       enable = true;
+      systemd.enable = false;
     };
 
-    programs.swaylock = {
-      enable = true;
-      settings = {
-        show-failed-attempts = true;
-        # other settings
-      };
+    services.cliphist.enable = true;
+
+    modules.desktop = {
+      swayidle.enable = mkDefault false;
+      swaylock.enable = mkDefault true;
     };
   };
 }
