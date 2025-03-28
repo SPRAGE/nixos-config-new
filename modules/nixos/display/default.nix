@@ -22,31 +22,44 @@ in
   options.modules.display.desktop = {
     enable = mkEnableOption "Enable graphical desktop environment";
 
-    command = mkOption {
-      type = types.str;
-      default = mkDefault "uwsm start hyprland-uwsm.desktop";
-      description = "Startup command for the selected window manager";
+    windowManager = mkOption {
+      type = types.enum [
+        "hyprland"
+        "sway"
+      ];
+      default = "hyprland";
+      description = "Which Wayland window manager to use.";
     };
 
     isWayland = mkOption {
       type = types.bool;
       default = true;
-      description = "Whether to enable Wayland-specific features";
+      description = "Whether to enable Wayland-specific modules.";
     };
 
     hyprland.enable = mkEnableOption "Enable Hyprland window manager";
     sway.enable = mkEnableOption "Enable Sway window manager";
+
+    command = mkOption {
+      type = types.str;
+      default = mkDefault (
+        if cfg.sway.enable then
+          "sway"
+        else if cfg.hyprland.enable then
+          "uwsm start hyprland-uwsm.desktop"
+        else
+          "sh -c 'echo No WM enabled >&2; sleep 5'"
+      );
+      description = "Startup command for the selected window manager.";
+    };
   };
 
   config = mkIf cfg.enable {
-    # Automatically set the command based on which WM is enabled
-    modules.display.desktop.command = mkDefault (
-      if cfg.sway.enable then
-        "sway"
-      else if cfg.hyprland.enable then
-        "uwsm start hyprland-uwsm.desktop"
-      else
-        "sh -c 'echo No WM enabled >&2; sleep 5'"
-    );
+    assertions = [
+      {
+        assertion = !(cfg.hyprland.enable && cfg.sway.enable);
+        message = "Only one window manager can be enabled at a time: either Hyprland or Sway, not both.";
+      }
+    ];
   };
 }
