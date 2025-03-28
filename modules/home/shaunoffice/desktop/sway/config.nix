@@ -7,10 +7,9 @@
 
 let
   mod = "Mod4"; # SUPER
-  terminal = "${pkgs.kitty}/bin/kitty";
+  terminal = lib.getExe pkgs.kitty;
   fileManager = "${pkgs.xfce.thunar}/bin/thunar";
-  launcher = "${pkgs.rofi}/bin/rofi -show drun";
-  cliphist = "${pkgs.cliphist}/bin/cliphist";
+  launcher = "${lib.getExe pkgs.rofi} -show drun";
 in
 {
   wayland.windowManager.sway = {
@@ -21,10 +20,6 @@ in
       inherit terminal;
 
       startup = [
-        {
-          command = "wl-paste --watch ${cliphist} store";
-          always = true;
-        }
         { command = "${pkgs.wlsunset}/bin/wlsunset -l 32.7 -L -96.9"; }
         { command = "swaymsg workspace 1"; }
       ];
@@ -38,7 +33,7 @@ in
 
       output = {
         "*" = {
-          bg = "${config.home.homeDirectory}/.background-image fill";
+          bg = lib.mkForce "${config.home.homeDirectory}/.background-image fill";
         };
       };
 
@@ -49,7 +44,6 @@ in
           "${mod}+e" = "exec ${terminal} -e yazi";
           "${mod}+d" = "exec ${launcher}";
           "${mod}+Shift+e" = "exec ${fileManager}";
-          "${mod}+v" = "exec ${cliphist} list | ${launcher} | ${cliphist} decode | wl-copy";
           "Ctrl+Shift+Escape" = "exec ${terminal} -e btop";
 
           # Window management
@@ -68,9 +62,6 @@ in
           "${mod}+Shift+Down" = "move down";
           "${mod}+Shift+Up" = "move up";
           "${mod}+Shift+Right" = "move right";
-
-          # Workspaces
-          # $mod+[1..9] for switch, Shift+$mod+[1..9] for move
         }
         // lib.listToAttrs (
           builtins.concatMap (
@@ -95,7 +86,6 @@ in
         titlebar = true;
       };
 
-      # Optional: assign apps to workspaces (Sway equivalent of windowrules)
       assigns = {
         "8" = [
           { app_id = "steam"; }
@@ -110,6 +100,5 @@ in
     grimblast
     wl-clipboard
     wlsunset
-    cliphist
   ];
 }

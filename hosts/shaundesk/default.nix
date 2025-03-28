@@ -81,7 +81,7 @@
       gpuAcceleration.enable = true;
       desktop = {
         enable = true;
-        hyprland = true;
+        hyprland.enable = true;
       };
 
       monitors = [
