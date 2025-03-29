@@ -29,9 +29,9 @@ in
 
     output = builtins.listToAttrs (
       map (m: {
-        name = m.name;
+        inherit (m) name;
         value = {
-          scale = m.scale;
+          inherit (m) scale;
           pos = m.position;
           mode = m.resolution;
         };
