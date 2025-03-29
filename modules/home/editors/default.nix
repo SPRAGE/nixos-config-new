@@ -15,6 +15,7 @@ in
 
     vscode.enable = mkEnableOption "Enable VS Code";
     neovim.enable = mkEnableOption "Enable Neovim";
+     windsurf.enable = lib.mkEnableOption "Enable Windsurf log viewer";
   };
 
   config = mkIf cfg.enable {

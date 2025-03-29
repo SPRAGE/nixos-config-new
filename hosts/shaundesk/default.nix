@@ -82,6 +82,8 @@
       desktop = {
         enable = true;
         hyprland.enable = true;
+        sway.enable = false;
+        i3.enable = false;
       };
 
       monitors = [

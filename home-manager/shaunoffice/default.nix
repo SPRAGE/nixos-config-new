@@ -10,13 +10,13 @@ in
 {
   imports = [
     # inputs.spicetify.homeManagerModules.default
-    ./desktop
-    ./programs
-    ./roles
-    ./services
-    ./shell
-    ./theming
-    ./editors
+    # ./desktop
+    # ./programs
+    # ./roles
+    # ./services
+    # ./shell
+    # ./theming
+    # ./editors
   ];
 
   home = {
