@@ -3,5 +3,8 @@
     ./desktop.nix
     ./development.nix
     ./gaming.nix
+    ./server.nix
+    ./work.nix
+
   ];
 }
