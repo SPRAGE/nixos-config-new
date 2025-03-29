@@ -6,7 +6,6 @@
     ./zellij
     ./git.nix
     ./gpg.nix
-    ./kitty.nix
     ./ssh.nix
     ./starship.nix
     ./zsh.nix

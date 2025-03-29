@@ -1,84 +1,98 @@
 {
+  config,
   lib,
   pkgs,
-  config,
   osConfig,
   ...
 }:
-let
-  inherit (lib.modules) mkIf mkForce;
-in
-# inherit (osConfig.garden.system) video;
-{
-  services.gpg-agent = mkIf pkgs.stdenv.hostPlatform.isLinux {
-    enable = true;
-    enableBashIntegration = config.programs.bash.enable;
-    enableFishIntegration = config.programs.fish.enable;
-    enableZshIntegration = config.programs.zsh.enable;
-    enableNushellIntegration = config.programs.nushell.enable;
 
-    pinentryPackage = pkgs.pinentry-gnome3; # requires services.dbus.packages = [ pkgs.gcr ]
-    enableScDaemon = true;
-    enableSshSupport = true;
-    defaultCacheTtl = 1209600;
-    defaultCacheTtlSsh = 1209600;
-    maxCacheTtl = 1209600;
-    maxCacheTtlSsh = 1209600;
-    extraConfig = "allow-preset-passphrase";
+let
+  inherit (lib)
+    mkOption
+    mkEnableOption
+    mkIf
+    mkForce
+    types
+    ;
+  cfg = config.modules.shell.gpg;
+
+  pinentryMap = {
+    gnome3 = pkgs.pinentry-gnome3;
+    qt = pkgs.pinentry-qt;
+    tty = pkgs.pinentry;
   };
 
-  # Allow manually restarting gpg-agent if it fails
-  systemd.user.services.gpg-agent.Unit.RefuseManualStart = mkForce false;
+  pinentryPkg = pinentryMap.${cfg.pinentry or "gnome3"};
+in
+{
+  options.modules.shell.gpg = {
+    enable = mkEnableOption "Enable GPG and gpg-agent setup";
 
-  programs.gpg = {
-    enable = true;
-    homedir = "${config.xdg.dataHome}/gnupg";
-    settings = {
-      keyserver = "keys.openpgp.org";
-      # https://github.com/drduh/config/blob/master/gpg.conf
-      # https://www.gnupg.org/documentation/manuals/gnupg/GPG-Configuration-Options.html
-      # https://www.gnupg.org/documentation/manuals/gnupg/GPG-Esoteric-Options.html
-      # Use AES256, 192, or 128 as cipher
-      personal-cipher-preferences = "AES256 AES192 AES";
-      # Use SHA512, 384, or 256 as digest
-      personal-digest-preferences = "SHA512 SHA384 SHA256";
-      # Use ZLIB, BZIP2, ZIP, or no compression
-      personal-compress-preferences = "ZLIB BZIP2 ZIP Uncompressed";
-      # Default preferences for new keys
-      default-preference-list = "SHA512 SHA384 SHA256 AES256 AES192 AES ZLIB BZIP2 ZIP Uncompressed";
-      # SHA512 as digest to sign keys
-      cert-digest-algo = "SHA512";
-      # SHA512 as digest for symmetric ops
-      s2k-digest-algo = "SHA512";
-      # AES256 as cipher for symmetric ops
-      s2k-cipher-algo = "AES256";
-      # UTF-8 support for compatibility
-      charset = "utf-8";
-      # Show Unix timestamps
-      fixed-list-mode = "";
-      # No comments in signature
-      no-comments = "";
-      # No version in signature
-      no-emit-version = "";
-      # Disable banner
-      no-greeting = "";
-      # Long hexadecimal key format
-      keyid-format = "0xlong";
-      # Display UID validity
-      list-options = "show-uid-validity";
-      verify-options = "show-uid-validity";
-      # Display all keys and their fingerprints
-      with-fingerprint = "";
-      # Cross-certify subkeys are present and valid
-      require-cross-certification = "";
-      # Disable caching of passphrase for symmetrical ops
-      no-symkey-cache = "";
-      # Enable smartcard
-      use-agent = "";
-      # Output ASCII instead of binary
-      armor = "";
-      # Disable recipient key ID in messages (breaks Mailvelope)
-      throw-keyids = "";
+    enableSshSupport = mkOption {
+      type = types.bool;
+      default = true;
+      description = "Enable SSH agent support in gpg-agent.";
+    };
+
+    pinentry = mkOption {
+      type = types.enum [
+        "gnome3"
+        "qt"
+        "tty"
+      ];
+      default = "gnome3";
+      description = "Which pinentry program to use.";
+    };
+  };
+
+  config = mkIf cfg.enable {
+    services.gpg-agent = mkIf pkgs.stdenv.hostPlatform.isLinux {
+      enable = true;
+      enableBashIntegration = config.programs.bash.enable;
+      enableFishIntegration = config.programs.fish.enable;
+      enableZshIntegration = config.programs.zsh.enable;
+      enableNushellIntegration = config.programs.nushell.enable;
+      pinentryPackage = pinentryPkg;
+      enableScDaemon = true;
+      inherit (cfg) enableSshSupport;
+
+      defaultCacheTtl = 1209600;
+      defaultCacheTtlSsh = 1209600;
+      maxCacheTtl = 1209600;
+      maxCacheTtlSsh = 1209600;
+
+      extraConfig = "allow-preset-passphrase";
+    };
+
+    systemd.user.services.gpg-agent.Unit.RefuseManualStart = mkForce false;
+
+    programs.gpg = {
+      enable = true;
+      homedir = "${config.xdg.dataHome}/gnupg";
+      settings = {
+        keyserver = "keys.openpgp.org";
+        personal-cipher-preferences = "AES256 AES192 AES";
+        personal-digest-preferences = "SHA512 SHA384 SHA256";
+        personal-compress-preferences = "ZLIB BZIP2 ZIP Uncompressed";
+        default-preference-list = "SHA512 SHA384 SHA256 AES256 AES192 AES ZLIB BZIP2 ZIP Uncompressed";
+        cert-digest-algo = "SHA512";
+        s2k-digest-algo = "SHA512";
+        s2k-cipher-algo = "AES256";
+        charset = "utf-8";
+        fixed-list-mode = "";
+        no-comments = "";
+        no-emit-version = "";
+        no-greeting = "";
+        keyid-format = "0xlong";
+        list-options = "show-uid-validity";
+        verify-options = "show-uid-validity";
+        with-fingerprint = "";
+        require-cross-certification = "";
+        no-symkey-cache = "";
+        use-agent = "";
+        armor = "";
+        throw-keyids = "";
+      };
     };
   };
 }
