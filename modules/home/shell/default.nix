@@ -4,9 +4,7 @@
     ./tools
     ./yazi
     ./zellij
-    ./git.nix
     ./gpg.nix
-    ./ssh.nix
     ./starship.nix
     ./zsh.nix
 
