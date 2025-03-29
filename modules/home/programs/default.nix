@@ -1,6 +1,6 @@
 {
   imports = [
-    ./browsers
+    # ./browsers
     ./rofi
     # ./orcaslicer.nix
     ./packages.nix

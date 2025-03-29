@@ -72,8 +72,8 @@
   # HTTPS-FIRST POLICY
   "dom.security.https_first" = true;
   # PASSWORDS
-  "signon.rememberSignons" = false;
-  "signon.formlessCapture.enabled" = false;
+  "signon.rememberSignons" = true;
+  "signon.formlessCapture.enabled" = true;
   "signon.privateBrowsingCapture.enabled" = false;
   "network.auth.subresource-http-auth-allow" = 1;
   "editor.truncate_user_pastes" = false;
