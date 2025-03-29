@@ -7,7 +7,7 @@ in
 {
   imports = [
     ./vscode.nix
-    ./neovim
+    ./neovim.nix
   ];
 
   options.modules.editors = {
