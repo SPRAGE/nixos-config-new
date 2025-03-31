@@ -4,7 +4,6 @@ let
   inherit (lib)
     mkEnableOption
     mkOption
-    mkDefault
     mkIf
     types
     ;
@@ -16,7 +15,7 @@ in
     ./graphical.nix
     ./monitors.nix
     ./wayland.nix
-    ./xsession.nix # Import our custom X session module
+    ./xsession-custom.nix # Import our custom X session module.
   ];
 
   options.modules.display.desktop = {
@@ -40,7 +39,7 @@ in
     hyprland.enable = mkEnableOption "Enable Hyprland window manager";
     sway.enable = mkEnableOption "Enable Sway window manager";
 
-    xsession.enable = mkEnableOption "Enable X session for legacy applications";
+    xsessionCustom.enable = mkEnableOption "Enable custom X session for legacy applications";
 
     command = mkOption {
       type = types.str;
@@ -49,8 +48,8 @@ in
           "sway"
         else if cfg.hyprland.enable then
           "uwsm start hyprland-uwsm.desktop"
-        else if cfg.xsession.enable then
-          if cfg.xsession.windowManager == "i3" then "i3" else "startx"
+        else if cfg.xsessionCustom.enable then
+          if cfg.xsessionCustom.windowManager == "i3" then "i3" else "startx"
         else
           "sh -c 'echo No WM enabled >&2; sleep 5'";
       description = "Startup command for the selected session: Wayland or X session.";
