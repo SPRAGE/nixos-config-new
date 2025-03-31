@@ -9,8 +9,8 @@ let
   cfg = config.modules.display.desktop;
 in
 {
-  options.modules.display.desktop.xserver = {
-    enable = lib.mkEnableOption "Enable X server for legacy applications";
+  options.modules.display.desktop.xsession = {
+    enable = lib.mkEnableOption "Enable X session for legacy applications";
     windowManager = lib.mkOption {
       type = lib.types.enum [
         "i3"
@@ -22,12 +22,12 @@ in
     videoDrivers = lib.mkOption {
       type = lib.types.listOf lib.types.str;
       default = [ "modesetting" ];
-      description = "List of video drivers to use with the X server.";
+      description = "List of video drivers to use with the X session.";
     };
     layout = lib.mkOption {
       type = lib.types.str;
       default = "us";
-      description = "Default keyboard layout for X server sessions.";
+      description = "Default keyboard layout for X sessions.";
     };
     xkbOptions = lib.mkOption {
       type = lib.types.str;
@@ -36,18 +36,20 @@ in
     };
   };
 
-  config = lib.mkIf cfg.xserver.enable {
+  config = lib.mkIf cfg.xsession.enable {
+    # Enable the X server service (this is the built-in module)
     services.xserver = {
       enable = true;
-      inherit (cfg.xerver) videoDrivers;
-      inherit (cfg.xerver) layout;
-      inherit (cfg.xerver) xkbOptions;
+      videoDrivers = cfg.xsession.videoDrivers;
+      layout = cfg.xsession.layout;
+      xkbOptions = cfg.xsession.xkbOptions;
+      # Add additional settings as needed.
     };
 
-    # If i3 is selected as the window manager, add it to the startup command.
-    environment.variables = lib.mkIf (cfg.xserver.windowManager == "i3") {
-      # Ensure the i3 package is available in your environment.
-      PATH = lib.mkForce (pkgs.i3.withPackages (ps: with ps; [ ])) + ":" + lib.getEnv "PATH";
-    };
+    # If i3 is selected, you might want to ensure i3 is in the environment.
+    # This example assumes that when using i3, you'll run it directly.
+    environment.systemPackages = lib.mkIf (cfg.xsession.windowManager == "i3") [
+      pkgs.i3
+    ];
   };
 }
