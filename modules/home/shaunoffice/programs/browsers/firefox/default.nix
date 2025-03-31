@@ -75,14 +75,9 @@
           };
           "NixOS Wiki" = {
             urls = [ { template = "https://nixos.wiki/index.php?search={searchTerms}"; } ];
-            iconUpdateURL = "https://nixos.wiki/favicon.png";
+            icon = "https://nixos.wiki/favicon.png";
             updateInterval = 24 * 60 * 60 * 1000; # every day
             definedAliases = [ "@nw" ];
-          };
-          "Brave" = {
-            urls = [ { template = "https://search.brave.com/search?q={searchTerms}"; } ];
-            iconUpdateURL = "https://upload.wikimedia.org/wikipedia/commons/5/51/Brave_icon_lionface.png";
-            updateInterval = 24 * 60 * 60 * 1000; # every day
           };
         };
       };

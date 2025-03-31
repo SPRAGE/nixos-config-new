@@ -8,7 +8,6 @@ let
     mkIf
     types
     ;
-
   cfg = config.modules.display.desktop;
 in
 {
@@ -17,6 +16,7 @@ in
     ./graphical.nix
     ./monitors.nix
     ./wayland.nix
+    ./xserver.nix # Import the new xserver module.
   ];
 
   options.modules.display.desktop = {
@@ -40,6 +40,8 @@ in
     hyprland.enable = mkEnableOption "Enable Hyprland window manager";
     sway.enable = mkEnableOption "Enable Sway window manager";
 
+    xserver.enable = mkEnableOption "Enable X server for legacy applications";
+
     command = mkOption {
       type = types.str;
       default =
@@ -47,9 +49,11 @@ in
           "sway"
         else if cfg.hyprland.enable then
           "uwsm start hyprland-uwsm.desktop"
+        else if cfg.xserver.enable then
+          if cfg.xserver.windowManager == "i3" then "i3" else "startx"
         else
           "sh -c 'echo No WM enabled >&2; sleep 5'";
-      description = "Startup command for the selected window manager.";
+      description = "Startup command for the selected session: Wayland or X session.";
     };
   };
 
