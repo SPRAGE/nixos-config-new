@@ -40,9 +40,9 @@ in
     # Enable the X server service (this is the built-in module)
     services.xserver = {
       enable = true;
-      videoDrivers = cfg.xsession.videoDrivers;
-      layout = cfg.xsession.layout;
-      xkbOptions = cfg.xsession.xkbOptions;
+      inherit (cfg.xsession) videoDrivers;
+      inherit (cfg.xsession) layout;
+      inherit (cfg.xsession) xkbOptions;
       # Add additional settings as needed.
     };
 
