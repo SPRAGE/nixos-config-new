@@ -49,8 +49,10 @@
 
     display = {
       gpuAcceleration.enable = true;
-      desktop.hyprland.enable = true;
-
+      desktop = {
+        windowManager = "i3";
+        i3.enable = true;
+      };
       monitors = [
         {
           name = "DP-1";
