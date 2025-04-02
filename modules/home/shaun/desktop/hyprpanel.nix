@@ -44,7 +44,23 @@ in
           ];
           "right" = [
             "volume"
-            "bluetooth"
+            "network"
+            "systray"
+            "notifications"
+          ];
+        };
+        "2" = {
+          "left" = [
+            "dashboard"
+            "workspaces"
+            "windowtitle"
+          ];
+          "middle" = [
+            "clock"
+            "media"
+          ];
+          "right" = [
+            "volume"
             "network"
             "systray"
             "notifications"
