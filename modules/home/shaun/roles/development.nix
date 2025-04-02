@@ -10,6 +10,7 @@ in
 {
   config = mkIf cfg.enable {
     editors.windsurf.enable = true;
+    editors.cursor.enable = true;
     # modules.shell.zellij.enable = mkDefault true;
   };
 }
