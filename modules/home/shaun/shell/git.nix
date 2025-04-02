@@ -11,7 +11,7 @@
         init = {
           defaultBranch = "main";
         };
-
+        pull.rebase = true;
         core.askPass = "";
 
         diff.colorMoved = "default";
@@ -29,7 +29,7 @@
           key = "${config.home.homeDirectory}/.ssh/gitkey";
         };
       };
-      pull.rebase = true;
+      
 
       ignores = [
         ".direnv"
