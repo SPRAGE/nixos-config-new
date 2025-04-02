@@ -97,7 +97,7 @@ in
       theme = {
         font.size = "0.85rem";
         bar.outer_spacing = "1rem";
-        bar.dropdownGap = "3.3em";
+        bar.dropdownGap = "2.3em";
         bar.menus.monochrome = true;
         bar.buttons.monochrome = true;
         bar.buttons.workspaces.hover = "${accent-alt}";

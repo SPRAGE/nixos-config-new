@@ -44,7 +44,23 @@ in
           ];
           "right" = [
             "volume"
-            "bluetooth"
+            "network"
+            "systray"
+            "notifications"
+          ];
+        };
+        "2" = {
+          "left" = [
+            "dashboard"
+            "workspaces"
+            "windowtitle"
+          ];
+          "middle" = [
+            "clock"
+            "media"
+          ];
+          "right" = [
+            "volume"
             "network"
             "systray"
             "notifications"
@@ -79,9 +95,9 @@ in
       menus.clock.weather.enable = false;
       wallpaper.enable = true;
       theme = {
-        font.size = "0.9rem";
+        font.size = "0.85rem";
         bar.outer_spacing = "1rem";
-        bar.dropdownGap = "3.3em";
+        bar.dropdownGap = "2.3em";
         bar.menus.monochrome = true;
         bar.buttons.monochrome = true;
         bar.buttons.workspaces.hover = "${accent-alt}";
