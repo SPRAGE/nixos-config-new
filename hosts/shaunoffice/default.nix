@@ -20,7 +20,7 @@
 
   networking = {
     hostName = "shaunoffice";
-    interfaces.enp8s0.wakeOnLan.enable = true;
+    # interfaces.enp8s0.wakeOnLan.enable = true;
   };
 
   virtualisation.docker.rootless = {
@@ -55,7 +55,7 @@
       };
       monitors = [
         {
-          name = "DP-1";
+          name = "HDMI-2";
           resolution = "1920x1080";
           position = "0x0";
           refreshRate = 60;
@@ -64,7 +64,7 @@
           workspaces = [ 1 ];
         }
         {
-          name = "HDMI-2";
+          name = "DP-1";
           resolution = "1920x1080";
           scale = "1";
           refreshRate = 60;
