@@ -95,7 +95,7 @@ in
       menus.clock.weather.enable = false;
       wallpaper.enable = true;
       theme = {
-        font.size = "0.9rem";
+        font.size = "0.85rem";
         bar.outer_spacing = "1rem";
         bar.dropdownGap = "3.3em";
         bar.menus.monochrome = true;
