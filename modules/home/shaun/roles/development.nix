@@ -9,6 +9,7 @@ let
 in
 {
   config = mkIf cfg.enable {
+    modules.editors.windsurf.enable = true;
     # modules.shell.zellij.enable = mkDefault true;
   };
 }
