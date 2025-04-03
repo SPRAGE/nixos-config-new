@@ -29,11 +29,29 @@ in
       default = ./connections;
       description = "Directory containing .remmina connection files";
     };
+
+    disableToolbar = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+      description = "Disable the visibility of the toolbar in Remmina.";
+    };
+
+    disableTabbing = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+      description = "Disable tabbing in Remmina.";
+    };
   };
 
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [ remmina ];
 
     xdg.dataFile = remminaFileAttrs;
+
+    home.file."${config.xdg.configHome}/remmina/remmina.pref".text = ''
+      [remmina_pref]
+      show_toolbar=${toString (!cfg.disableToolbar)}
+      tab_mode=${if cfg.disableTabbing then "false" else "true"}
+    '';
   };
 }
