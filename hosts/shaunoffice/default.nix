@@ -62,7 +62,13 @@
           refreshRate = 60;
           scale = "1";
           primary = true;
-          workspaces = [ 1 3 5 7 9 ];
+          workspaces = [
+            1
+            3
+            5
+            7
+            9
+          ];
         }
         {
           name = "DP-1";
@@ -70,7 +76,13 @@
           scale = "1";
           refreshRate = 60;
           position = "1920x0";
-          workspaces = [ 2 4 6 8 10 ];
+          workspaces = [
+            2
+            4
+            6
+            8
+            10
+          ];
         }
       ];
     };

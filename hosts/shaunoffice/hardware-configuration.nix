@@ -20,17 +20,17 @@
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault false;
   networking = {
-      interfaces.enp5s0 = {
-        useDHCP = false;
-        ipv4.addresses = [
-          {
-            address = "192.168.150.157"; # Replace with your desired static IP
-            prefixLength = 24;         # Subnet mask (e.g., 24 for 255.255.255.0)
-          }
-        ];
-      };
-      nameservers = [ "8.8.8.8"  ]; # Replace with your preferred DNS servers
-      defaultGateway.address = "192.168.150.100";
+    interfaces.enp5s0 = {
+      useDHCP = false;
+      ipv4.addresses = [
+        {
+          address = "192.168.150.157"; # Replace with your desired static IP
+          prefixLength = 24; # Subnet mask (e.g., 24 for 255.255.255.0)
+        }
+      ];
     };
+    nameservers = [ "8.8.8.8" ]; # Replace with your preferred DNS servers
+    defaultGateway.address = "192.168.150.100";
+  };
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 }
