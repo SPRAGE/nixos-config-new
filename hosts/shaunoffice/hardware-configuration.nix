@@ -28,9 +28,9 @@
             prefixLength = 24;         # Subnet mask (e.g., 24 for 255.255.255.0)
           }
         ];
-        nameservers = [ "8.8.8.8"  ]; # Replace with your preferred DNS servers
       };
-    defaultGateway.address = "192.168.150.100";
+      nameservers = [ "8.8.8.8"  ]; # Replace with your preferred DNS servers
+      defaultGateway.address = "192.168.150.100";
     };
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 }
