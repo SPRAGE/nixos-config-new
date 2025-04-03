@@ -1,4 +1,10 @@
-{ pkgs, config, inputs, lib, ... }:
+{
+  pkgs,
+  config,
+  inputs,
+  lib,
+  ...
+}:
 
 {
   wayland.windowManager.sway.config = {
