@@ -47,6 +47,10 @@ in
           };
         };
       };
+
+      gamescope = {
+        enable = true;
+      };
     };
 
     # required since gamemode 1.8 to change CPU governor
