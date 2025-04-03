@@ -20,7 +20,7 @@
   # with explicit per-interface declarations with `networking.interfaces.<interface>.useDHCP`.
   networking.useDHCP = lib.mkDefault false;
   networking = {
-      interfaces."*" = {
+      interfaces.enp5s0 = {
         useDHCP = false;
         ipv4.addresses = [
           {
