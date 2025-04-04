@@ -21,5 +21,10 @@ in
     #github
     gh
 
+    #home
+    home-manager
+
+    
+
   ];
 }

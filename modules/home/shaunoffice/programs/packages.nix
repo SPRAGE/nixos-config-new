@@ -21,5 +21,11 @@ in
     #github
     gh
 
+    #home
+    home-manager
+
+    #anydesk
+    anydesk
+
   ];
 }
