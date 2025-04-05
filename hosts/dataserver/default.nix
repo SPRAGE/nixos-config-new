@@ -33,7 +33,7 @@
         mountPoint = "/mnt/shaun";
         uuid = "bdfefd75-37a2-4d2b-b6d5-cb14d5396d2d"; # Replace with your disk's UUID
         fsType = "ext4";
-        options = [ "rw" "nofail" "umask=000" ];
+        options = [ "rw" "nofail" ];
       }
 
       {
