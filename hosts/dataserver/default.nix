@@ -115,8 +115,7 @@
     os = {
       mainUser = "pai";
       users = [ "pai" ];
-      extraGroups = [ "wheel" "audio" "docker" ]
-      ++ lib.optionals config.networking.networkmanager.enable [ "networkmanager" ];
+      extraGroups = [ "wheel" "audio" "docker" "networkmanager" ];
       autoLogin = false;
     };
 
