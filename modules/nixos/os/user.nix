@@ -1,64 +1,32 @@
-{
-  pkgs,
-  config,
-  lib,
-  ...
-}:
+{ pkgs, config, lib, ... }:
+
 let
-  inherit (lib) mkOption types optionals;
+  inherit (lib) mkOption types optionals mapAttrs;
   user = config.modules.os.mainUser;
 in
 {
-  config = {
-    users = {
-      # allow password to be set by sops-nix
-      mutableUsers = true;
-
-      users.${user} = {
-        # System User
-        isNormalUser = true;
-        extraGroups = [
-          "wheel"
-        ] ++ optionals config.networking.networkmanager.enable [ "networkmanager" ]
-          ++ config.modules.os.additionalGroups; # Add additional groups here
-        initialPassword = "changeme";
-        # hashedPasswordFile = config.sops.secrets."users.${user}.password".path;
-        shell = pkgs.zsh; # Default shell
-      };
-    };
-  };
-
-  config.warnings = optionals (config.modules.os.users == [ ]) [
-    ''
-      You have not added any users to be supported by your system. You may end up with an unbootable system!
-
-      Consider setting {option}`config.modules.system.users` in your configuration
-    ''
-  ];
-
   options.modules.os = {
-    mainUser = mkOption {
-      type = types.enum config.modules.os.users;
-      default = builtins.elemAt config.modules.os.users 0;
-      description = ''
-        The username of the main user for your system.
-
-        In case of a multiple systems, this will be the user with priority in ordered lists and enabled options.
-      '';
-    };
-
     users = mkOption {
       type = with types; listOf str;
       default = [ "shaun" ];
       description = "A list of home-manager users on the system.";
     };
 
+    mainUser = mkOption {
+      type = types.enum config.modules.os.users;
+      default = builtins.elemAt config.modules.os.users 0;
+      description = ''
+        The username of the main user for your system.
+
+        In case of multiple users, this one will have priority in ordered lists and enabled options.
+      '';
+    };
+
     autoLogin = mkOption {
       type = types.bool;
       default = false;
       description = ''
-        Whether to enable passwordless login. This is generally useful on systems with
-        FDE (Full Disk Encryption) enabled. It is a security risk for systems without FDE.
+        Whether to enable passwordless login (e.g. on systems with FDE).
       '';
     };
 
@@ -66,8 +34,49 @@ in
       type = with types; listOf str;
       default = [];
       description = ''
-        A list of additional groups to be added to the main user's extraGroups.
+        Extra groups the main user should be a part of.
       '';
     };
+
+    otherUsers = mkOption {
+      type = types.attrsOf (types.listOf types.str);
+      default = {};
+      description = ''
+        A set of system-only users. Keys are usernames, and values are lists of extra groups.
+        These users are created without Home Manager or home directories.
+      '';
+    };
+  };
+
+  config = {
+    users.mutableUsers = true;
+
+    users.users.${user} = {
+      isNormalUser = true;
+      shell = pkgs.zsh;
+      initialPassword = "changeme";
+      extraGroups = [
+        "wheel"
+      ] ++ optionals config.networking.networkmanager.enable [ "networkmanager" ]
+        ++ config.modules.os.additionalGroups;
+    };
+
+    # Create system-only users from `otherUsers` attrset
+    users.users = mapAttrs (name: groups: {
+      isSystemUser = true;
+      createHome = false;
+      home = "/var/empty";
+      description = "System user created via modules.os.otherUsers";
+      extraGroups = groups;
+    }) config.modules.os.otherUsers;
+
+    # Warning if no main user is defined
+    warnings = optionals (config.modules.os.users == [ ]) [
+      ''
+        You have not added any users to your system. This may result in an unusable system.
+
+        Consider setting `modules.os.users` and `modules.os.mainUser`.
+      ''
+    ];
   };
 }

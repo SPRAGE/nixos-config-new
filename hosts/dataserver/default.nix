@@ -117,10 +117,14 @@
       mainUser = "pai";
       users = [
         "pai"
-        "karan"
-        "shaun"
       ];
       additionalGroups = [ "docker" ];
+
+      otherUsers = {
+        shaun = [ "sambashare" ];
+        karan = [ "sambashare" ];
+
+      };
       autoLogin = false;
     };
 
