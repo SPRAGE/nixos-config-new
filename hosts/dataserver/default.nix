@@ -30,10 +30,10 @@
     shares = {
       shaun = {
         path = "/mnt/shaun";
-        browseable = true;
-        "read only" = false;
-        "guest ok" = false;
-        "valid users" = "shaun";
+        browseable = "true";
+        "read only" = "false";
+        "guest ok" = "false";
+        "valid users" = [ "shaun" ];
         "force user" = "shaun";
         "force group" = "users";
         "create mask" = "0644";
@@ -42,10 +42,10 @@
 
       karan = {
         path = "/mnt/karan";
-        browseable = true;
-        "read only" = false;
-        "guest ok" = false;
-        "valid users" = "karan";
+        browseable = "true";
+        "read only" = "false";
+        "guest ok" = "false";
+        "valid users" = [ "karan" ];
         "force user" = "karan";
         "force group" = "users";
         "create mask" = "0644";
