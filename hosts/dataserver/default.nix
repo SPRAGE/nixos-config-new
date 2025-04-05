@@ -18,42 +18,25 @@
     kernelPackages = pkgs.linuxPackages_latest;
   };
 
-  services.sambaAdvanced = {
-    enable = true;
-
-    globalConfig = {
+  services.samba.settings = {
+    global = {
       workgroup = "WORKGROUP";
-      "server string" = "smbnix";
-      "netbios name" = "smbnix";
       security = "user";
-      "hosts allow" = "192.168.0. 127.0.0.1 localhost";
-      "hosts deny" = "0.0.0.0/0";
-      "guest account" = "nobody";
       "map to guest" = "bad user";
     };
 
     shares = {
       shaun = {
         path = "/mnt/shaun";
-        browseable = "yes";
-        "read only" = "no";
-        "guest ok" = "yes";
-        "create mask" = "0644";
-        "directory mask" = "0755";
+        browseable = true;
+        "read only" = false;
+        "guest ok" = false;
+        "valid users" = [ "shaun" ];
         "force user" = "shaun";
         "force group" = "users";
+        "create mask" = "0644";
+        "directory mask" = "0755";
       };
-
-      # private = {
-      #   path = "/mnt/Shares/Private";
-      #   browseable = "yes";
-      #   "read only" = "no";
-      #   "guest ok" = "no";
-      #   "create mask" = "0644";
-      #   "directory mask" = "0755";
-      #   "force user" = "username";
-      #   "force group" = "groupname";
-      # };
     };
   };
 
