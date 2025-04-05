@@ -15,7 +15,6 @@ in
     ./roles
     ./services
     ./shell
-    # ./theming
     ./editors
    
   ];
