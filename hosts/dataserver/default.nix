@@ -18,6 +18,19 @@
     kernelPackages = pkgs.linuxPackages_latest;
   };
 
+  modules.hardware.mounts = {
+    enable = true;
+
+    disks = [
+      {
+        mountPoint = "/mnt/data";
+        uuid = "7D133D5F1C140076"; # Replace with your disk's UUID
+        fsType = "ntfs-3g";
+        options = [ "rw" "nofail" ];
+      }
+    ];
+  };
+
   networking = {
     hostName = "shaunoffice";
     # interfaces.enp8s0.wakeOnLan.enable = true;
