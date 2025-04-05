@@ -63,7 +63,7 @@ in
         shares = builtins.listToAttrs (
           map (share: {
             name = share.name;
-            value = {
+            value = lib.mkIniSection {
               path = share.path;
               writable = true;
               browseable = true;
@@ -72,6 +72,7 @@ in
             };
           }) cfg.shares
         );
+
       };
     };
 
