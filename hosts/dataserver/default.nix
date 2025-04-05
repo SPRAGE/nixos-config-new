@@ -26,7 +26,7 @@
         mountPoint = "/mnt/karan";
         uuid = "7D133D5F1C140076"; # Replace with your disk's UUID
         fsType = "ntfs-3g";
-        options = [ "rw" "nofail" "umask=000" ];
+        options = [ "rw" "nofail" ];
       }
 
       {
@@ -40,7 +40,7 @@
         mountPoint = "/mnt/hdd";
         uuid = "C252DCB252DCAC83"; # Replace with your disk's UUID
         fsType = "ntfs-3g";
-        options = [ "rw" "nofail" "umask=000" ];
+        options = [ "rw" "nofail" ];
       }
     ];
   };
