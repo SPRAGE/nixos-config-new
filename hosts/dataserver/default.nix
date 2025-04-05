@@ -37,6 +37,19 @@
         "create mask" = "0644";
         "directory mask" = "0755";
       };
+
+      karan = {
+        path = "/mnt/karan";
+        browseable = true;
+        "read only" = false;
+        "guest ok" = false;
+        "valid users" = [ "karan" ];
+        "force user" = "karan";
+        "force group" = "users";
+        "create mask" = "0644";
+        "directory mask" = "0755";
+      };
+
     };
   };
 
