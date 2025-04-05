@@ -17,6 +17,7 @@ in
     ./shell
     ./theming
     ./editors
+   
   ];
 
   home = {

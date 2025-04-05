@@ -13,7 +13,7 @@ in
   ];
 
   programs.hyprpanel = {
-    overlay.enable = true;
+    # overlay.enable = false;
     enable = true;
     # systemd.enable = true;
     hyprland.enable = true;
