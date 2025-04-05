@@ -50,9 +50,9 @@
     interfaces.enp2s0.wakeOnLan.enable = true;
   };
 
-  virtualisation.docker.rootless = {
+  virtualisation.docker = {
     enable = true;
-    setSocketVariable = true;
+    # setSocketVariable = true;
   };
 
 
