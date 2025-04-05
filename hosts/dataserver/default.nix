@@ -33,7 +33,7 @@
         browseable = true;
         "read only" = false;
         "guest ok" = false;
-        "valid users" = [ "shaun" ];
+        "valid users" = "shaun";
         "force user" = "shaun";
         "force group" = "users";
         "create mask" = "0644";
@@ -45,7 +45,7 @@
         browseable = true;
         "read only" = false;
         "guest ok" = false;
-        "valid users" = [ "karan" ];
+        "valid users" = "karan";
         "force user" = "karan";
         "force group" = "users";
         "create mask" = "0644";
