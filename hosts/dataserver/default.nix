@@ -28,11 +28,12 @@
     };
 
     shares = {
+
       shaun = {
         path = "/mnt/shaun";
-        browseable = "true";
-        "read only" = "false";
-        "guest ok" = "false";
+        browseable = true;
+        "read only" = false;
+        "guest ok" = false;
         "valid users" = [ "shaun" ];
         "force user" = "shaun";
         "force group" = "users";
@@ -42,9 +43,9 @@
 
       karan = {
         path = "/mnt/karan";
-        browseable = "true";
-        "read only" = "false";
-        "guest ok" = "false";
+        browseable = true;
+        "read only" = false;
+        "guest ok" = false;
         "valid users" = [ "karan" ];
         "force user" = "karan";
         "force group" = "users";
