@@ -47,9 +47,15 @@ sudo nixos-install --flake github:spector700/nixos-config#alfhiem --no-write-loc
 
 - Reboot
 
-# 💾 Inspiration
+---
+
+## 💾 Credits & Inspiration
+
+This configuration is inspired by and builds upon the amazing work of:
 
 - [fufexan/dotfiles](https://github.com/fufexan/dotfiles)
 - [linuxmobile/kaku](https://github.com/linuxmobile/kaku)
 - [Gerg-L/nixos](https://github.com/Gerg-L/nixos)
 - [Misterio77/nix-config](https://github.com/Misterio77/nix-config)
+
+Special thanks to these projects for their contributions to the NixOS and Linux ecosystem.
