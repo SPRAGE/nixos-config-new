@@ -16,14 +16,15 @@
 
   services.sambaShares = {
     enable = true;
+
     shares = [
       {
-        name = "karan";
+        name = "drive1";
         path = "/mnt/karan";
         allowedUsers = [ "karan" ];
       }
       {
-        name = "shaun";
+        name = "drive2";
         path = "/mnt/shaun";
         allowedUsers = [ "shaun" ];
       }
