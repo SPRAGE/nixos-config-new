@@ -18,7 +18,7 @@
     kernelPackages = pkgs.linuxPackages_latest;
   };
 
-  services.samba = {
+  services.sambaAdvanced = {
     enable = true;
 
     settings = {
