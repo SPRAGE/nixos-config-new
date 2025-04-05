@@ -1,7 +1,7 @@
 { pkgs, config, lib, ... }:
 
 let
-  inherit (lib) mkOption types optionals mapAttrs;
+  inherit (lib) mkOption types optionals mapAttrs mkMerge;
   user = config.modules.os.mainUser;
 in
 {
@@ -9,41 +9,36 @@ in
     users = mkOption {
       type = with types; listOf str;
       default = [ "shaun" ];
-      description = "A list of home-manager users on the system.";
+      description = "A list of Home Manager users on the system.";
     };
 
     mainUser = mkOption {
       type = types.enum config.modules.os.users;
       default = builtins.elemAt config.modules.os.users 0;
       description = ''
-        The username of the main user for your system.
-
-        In case of multiple users, this one will have priority in ordered lists and enabled options.
+        The main system user. This user is created with full access (wheel, etc.)
+        and usually managed by Home Manager.
       '';
     };
 
     autoLogin = mkOption {
       type = types.bool;
       default = false;
-      description = ''
-        Whether to enable passwordless login (e.g. on systems with FDE).
-      '';
+      description = "Enable automatic login (useful for FDE systems).";
     };
 
     additionalGroups = mkOption {
       type = with types; listOf str;
       default = [];
-      description = ''
-        Extra groups the main user should be a part of.
-      '';
+      description = "Extra groups for the main user (e.g. docker, video, etc.).";
     };
 
     otherUsers = mkOption {
       type = types.attrsOf (types.listOf types.str);
       default = {};
       description = ''
-        A set of system-only users. Keys are usernames, and values are lists of extra groups.
-        These users are created without Home Manager or home directories.
+        A set of additional system-only users (not managed by Home Manager).
+        Keys are usernames; values are lists of extra groups.
       '';
     };
   };
@@ -51,31 +46,34 @@ in
   config = {
     users.mutableUsers = true;
 
-    users.users.${user} = {
-      isNormalUser = true;
-      shell = pkgs.zsh;
-      initialPassword = "changeme";
-      extraGroups = [
-        "wheel"
-      ] ++ optionals config.networking.networkmanager.enable [ "networkmanager" ]
-        ++ config.modules.os.additionalGroups;
-    };
+    users.users = mkMerge [
+      # Main user
+      {
+        ${user} = {
+          isNormalUser = true;
+          shell = pkgs.zsh;
+          initialPassword = "changeme"; # Replace with hashedPasswordFile for production
+          extraGroups = [
+            "wheel"
+          ] ++ optionals config.networking.networkmanager.enable [ "networkmanager" ]
+            ++ config.modules.os.additionalGroups;
+        };
+      }
 
-    # Create system-only users from `otherUsers` attrset
-    users.users = mapAttrs (name: groups: {
-      isSystemUser = true;
-      createHome = false;
-      home = "/var/empty";
-      description = "System user created via modules.os.otherUsers";
-      extraGroups = groups;
-    }) config.modules.os.otherUsers;
+      # System-only users
+      (mapAttrs (name: groups: {
+        isSystemUser = true;
+        createHome = false;
+        home = "/var/empty";
+        description = "System user from modules.os.otherUsers";
+        extraGroups = groups;
+      }) config.modules.os.otherUsers)
+    ];
 
-    # Warning if no main user is defined
     warnings = optionals (config.modules.os.users == [ ]) [
       ''
-        You have not added any users to your system. This may result in an unusable system.
-
-        Consider setting `modules.os.users` and `modules.os.mainUser`.
+        No users are defined in modules.os.users — your system may be inaccessible!
+        Define at least one user using `modules.os.users` and `modules.os.mainUser`.
       ''
     ];
   };
