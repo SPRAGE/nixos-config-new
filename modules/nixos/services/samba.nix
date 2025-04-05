@@ -1,110 +1,61 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ config, lib, pkgs, ... }:
 
 let
-  cfg = config.services.sambaShares;
-in
-{
-  options.services.sambaShares = {
-    enable = lib.mkEnableOption "Samba with non-system users per share";
+  cfg = config.services.sambaAdvanced;
+in {
+  options.services.sambaAdvanced = {
+    enable = lib.mkEnableOption "Enable advanced Samba configuration";
+
+    openFirewall = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+      description = "Open firewall ports for Samba and WSDD";
+    };
+
+    globalConfig = lib.mkOption {
+      type = lib.types.attrsOf lib.types.str;
+      default = {
+        workgroup = "WORKGROUP";
+        "server string" = "smbnix";
+        "netbios name" = "smbnix";
+        security = "user";
+        "hosts allow" = "192.168.0. 127.0.0.1 localhost";
+        "hosts deny" = "0.0.0.0/0";
+        "guest account" = "nobody";
+        "map to guest" = "bad user";
+      };
+      description = "Global Samba configuration options.";
+    };
 
     shares = lib.mkOption {
-      description = "List of Samba shares with access usernames.";
-      type = lib.types.listOf (
-        lib.types.submodule {
-          options = {
-            name = lib.mkOption {
-              type = lib.types.str;
-              description = "Share name.";
-            };
+      type = lib.types.attrsOf (lib.types.attrsOf lib.types.str);
+      default = {};
+      description = "A set of share definitions (e.g. public/private).";
+    };
 
-            path = lib.mkOption {
-              type = lib.types.path;
-              description = "Path to directory to share.";
-            };
-
-            allowedUsers = lib.mkOption {
-              type = lib.types.listOf lib.types.str;
-              description = "List of Samba-only users allowed to access this share.";
-            };
-          };
-        }
-      );
+    enableWSDD = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+      description = "Enable WSDD for Windows network discovery.";
     };
   };
 
   config = lib.mkIf cfg.enable {
-    # Create system user and group that owns all shares
-    users.users.samba-share = {
-      isSystemUser = true;
-      home = "/var/empty";
-      group = "samba-share";
-    };
-
-    users.groups.samba-share = { };
-
-    environment.systemPackages = with pkgs; [ samba ];
-
     services.samba = {
       enable = true;
-
       settings = {
-        global = {
-          "server string" = "NixOS Samba Server";
-          security = "user";
-          "map to guest" = "never";
-          "obey pam restrictions" = false;
-        };
-
-        shares = builtins.listToAttrs (
-          map (share: {
-            name = share.name;
-            value = lib.mkIniSection {
-              path = share.path;
-              writable = true;
-              browseable = true;
-              "valid users" = share.allowedUsers;
-              "force user" = "samba-share";
-            };
-          }) cfg.shares
-        );
-
+        global = cfg.globalConfig;
+        shares = lib.mapAttrs (_: lib.mkIniSection) cfg.shares;
       };
+      openFirewall = cfg.openFirewall;
     };
 
-    # Ensure shared directories exist with correct permissions
-    systemd.tmpfiles.rules = map (share: "d ${share.path} 0755 samba-share samba-share") cfg.shares;
-
-    # Open standard Samba ports
-    networking.firewall.allowedTCPPorts = [
-      139
-      445
-    ];
-    networking.firewall.allowedUDPPorts = [
-      137
-      138
-    ];
-
-    # Optionally create Samba users during activation (uses placeholder password)
-    system.activationScripts.sambaUsers = {
-      text = ''
-        ${lib.concatStringsSep "\n" (
-          lib.unique (
-            lib.flatten (
-              map (
-                share:
-                map (
-                  user: "echo '${user}:yourpassword' | ${pkgs.samba}/bin/smbpasswd -a -s ${user} || true"
-                ) share.allowedUsers
-              ) cfg.shares
-            )
-          )
-        )}
-      '';
+    services.samba-wsdd = lib.mkIf cfg.enableWSDD {
+      enable = true;
+      openFirewall = cfg.openFirewall;
     };
+
+    networking.firewall.enable = true;
+    networking.firewall.allowPing = true;
   };
 }
