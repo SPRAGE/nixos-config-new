@@ -24,8 +24,5 @@ in
     #home
     home-manager
 
-    #ntfs
-    ntfs-3g
-
   ];
 }

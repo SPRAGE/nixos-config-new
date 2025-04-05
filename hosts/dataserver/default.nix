@@ -98,9 +98,9 @@
     #   ];
     # };
 
-    # programs = {
-    #   thunar.enable = true;
-    # };
+    programs = {
+      ntfs-3g.enable = true;
+    };
 
     os = {
       mainUser = "pai";
