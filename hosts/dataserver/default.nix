@@ -21,7 +21,7 @@
   services.sambaAdvanced = {
     enable = true;
 
-    global = {
+    globalConfig = {
       workgroup = "WORKGROUP";
       security = "user";
       "map to guest" = "bad user";
