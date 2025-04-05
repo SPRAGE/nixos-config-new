@@ -3,6 +3,15 @@
 let
   inherit (lib) mkOption types optionals mapAttrs mkMerge;
   user = config.modules.os.mainUser;
+
+  # all user names
+  allUsers = [ user ] ++ builtins.attrNames config.modules.os.otherUsers;
+
+  # group for each user
+  userGroups = builtins.listToAttrs (map (u: {
+    name = u;
+    value = {};
+  }) allUsers);
 in
 {
   options.modules.os = {
@@ -53,6 +62,7 @@ in
           isNormalUser = true;
           shell = pkgs.zsh;
           initialPassword = "changeme"; # Replace with hashedPasswordFile for production
+          group = user;
           extraGroups = [
             "wheel"
           ] ++ optionals config.networking.networkmanager.enable [ "networkmanager" ]
@@ -65,10 +75,14 @@ in
         isSystemUser = true;
         createHome = false;
         home = "/var/empty";
+        group = name;
         description = "System user from modules.os.otherUsers";
         extraGroups = groups;
       }) config.modules.os.otherUsers)
     ];
+
+    # Add a matching group for each user
+    users.groups = userGroups;
 
     warnings = optionals (config.modules.os.users == [ ]) [
       ''
