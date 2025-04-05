@@ -35,12 +35,22 @@ in
     ] ++ concatLists [ homeManager ];
   };
 
-  # VM
+  # shaunoffice
   shaunoffice = nixosSystem {
     inherit specialArgs;
     # Modules that are used
     modules = [
       ./shaunoffice
+      ../modules/nixos
+    ] ++ concatLists [ homeManager ];
+  };
+
+  # dataserver
+  dataserver = nixosSystem {
+    inherit specialArgs;
+    # Modules that are used
+    modules = [
+      ./dataserver
       ../modules/nixos
     ] ++ concatLists [ homeManager ];
   };
