@@ -1,8 +1,14 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.services.sambaAdvanced;
-in {
+in
+{
   options.services.sambaAdvanced = {
     enable = lib.mkEnableOption "Enable advanced Samba configuration";
 
@@ -29,7 +35,7 @@ in {
 
     shares = lib.mkOption {
       type = lib.types.attrsOf (lib.types.attrsOf lib.types.str);
-      default = {};
+      default = { };
       description = "A set of share definitions (e.g. public/private).";
     };
 
@@ -45,7 +51,7 @@ in {
       enable = true;
       settings = {
         global = cfg.globalConfig;
-        shares = lib.mapAttrs (_: lib.mkIniSection) cfg.shares;
+        shares = cfg.shares;
       };
       openFirewall = cfg.openFirewall;
     };
