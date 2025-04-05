@@ -18,7 +18,10 @@
     kernelPackages = pkgs.linuxPackages_latest;
   };
 
-  services.samba.settings = {
+  services.samba = {
+    enable = true;
+
+    settings = {
     global = {
       workgroup = "WORKGROUP";
       security = "user";
