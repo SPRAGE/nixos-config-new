@@ -24,7 +24,5 @@ in
     #home
     home-manager
 
-    
-
   ];
 }

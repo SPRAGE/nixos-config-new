@@ -10,18 +10,18 @@ in
 {
   imports = [
     # inputs.spicetify.homeManagerModules.default
-    ./desktop
+    # ./desktop
     ./programs
     ./roles
     ./services
     ./shell
-    ./theming
+    # ./theming
     ./editors
    
   ];
 
   home = {
-    username = "shaun";
+    username = "pai";
     homeDirectory = "/home/${config.home.username}";
     # <https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion>
     # this is and should remain the version on which you have initiated your config

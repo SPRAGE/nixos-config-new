@@ -29,7 +29,6 @@
           key = "${config.home.homeDirectory}/.ssh/gitkey";
         };
       };
-      
 
       ignores = [
         ".direnv"
