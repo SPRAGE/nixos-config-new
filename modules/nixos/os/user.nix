@@ -19,7 +19,6 @@ in
         isNormalUser = true;
         extraGroups = [
           "wheel"
-          "dialout" # for USB Serial
         ] ++ optionals config.networking.networkmanager.enable [ "networkmanager" ]
           ++ config.modules.os.additionalGroups; # Add additional groups here
         initialPassword = "changeme";
