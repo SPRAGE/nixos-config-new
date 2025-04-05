@@ -20,7 +20,8 @@ in
         extraGroups = [
           "wheel"
           "dialout" # for USB Serial
-        ] ++ optionals config.networking.networkmanager.enable [ "networkmanager" ];
+        ] ++ optionals config.networking.networkmanager.enable [ "networkmanager" ]
+          ++ config.modules.os.additionalGroups; # Add additional groups here
         initialPassword = "changeme";
         # hashedPasswordFile = config.sops.secrets."users.${user}.password".path;
         shell = pkgs.zsh; # Default shell
@@ -59,6 +60,14 @@ in
       description = ''
         Whether to enable passwordless login. This is generally useful on systems with
         FDE (Full Disk Encryption) enabled. It is a security risk for systems without FDE.
+      '';
+    };
+
+    additionalGroups = mkOption {
+      type = with types; listOf str;
+      default = [];
+      description = ''
+        A list of additional groups to be added to the main user's extraGroups.
       '';
     };
   };

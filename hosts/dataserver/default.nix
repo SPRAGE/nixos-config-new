@@ -115,7 +115,7 @@
     os = {
       mainUser = "pai";
       users = [ "pai" ];
-      extraGroups = [ "wheel" "audio" "docker" "networkmanager" ];
+      additionalGroups = [ "docker" ];
       autoLogin = false;
     };
 
