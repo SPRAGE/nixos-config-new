@@ -55,7 +55,6 @@ in
       settings = {
         "map to guest" = "never";
         "obey pam restrictions" = "false";
-        "guest ok" = false;
       };
 
       shares = lib.genAttrs (map (s: s.name) cfg.shares) (
