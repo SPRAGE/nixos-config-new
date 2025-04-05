@@ -18,7 +18,7 @@
     kernelPackages = pkgs.linuxPackages_latest;
   };
 
-services.sambaAdvanced = {
+  services.sambaAdvanced = {
     enable = true;
 
     globalConfig = {
@@ -33,32 +33,29 @@ services.sambaAdvanced = {
     };
 
     shares = {
-      public = {
-        path = "/mnt/Shares/Public";
+      shaun = {
+        path = "/mnt/shaun";
         browseable = "yes";
         "read only" = "no";
         "guest ok" = "yes";
         "create mask" = "0644";
         "directory mask" = "0755";
-        "force user" = "username";
-        "force group" = "groupname";
+        "force user" = "shaun";
+        "force group" = "users";
       };
 
-      private = {
-        path = "/mnt/Shares/Private";
-        browseable = "yes";
-        "read only" = "no";
-        "guest ok" = "no";
-        "create mask" = "0644";
-        "directory mask" = "0755";
-        "force user" = "username";
-        "force group" = "groupname";
-      };
+      # private = {
+      #   path = "/mnt/Shares/Private";
+      #   browseable = "yes";
+      #   "read only" = "no";
+      #   "guest ok" = "no";
+      #   "create mask" = "0644";
+      #   "directory mask" = "0755";
+      #   "force user" = "username";
+      #   "force group" = "groupname";
+      # };
     };
   };
-}
-
-
 
   modules.hardware = {
 
@@ -118,7 +115,11 @@ services.sambaAdvanced = {
 
     os = {
       mainUser = "pai";
-      users = [ "pai" ];
+      users = [
+        "pai"
+        "karan"
+        "shaun"
+      ];
       additionalGroups = [ "docker" ];
       autoLogin = false;
     };
