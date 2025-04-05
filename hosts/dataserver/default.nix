@@ -23,17 +23,31 @@
 
     disks = [
       {
-        mountPoint = "/mnt/data";
+        mountPoint = "/mnt/karan";
         uuid = "7D133D5F1C140076"; # Replace with your disk's UUID
         fsType = "ntfs-3g";
-        options = [ "rw" "nofail" ];
+        options = [ "rw" "nofail" "umask=000" ];
+      }
+
+      {
+        mountPoint = "/mnt/shaun";
+        uuid = "bdfefd75-37a2-4d2b-b6d5-cb14d5396d2d"; # Replace with your disk's UUID
+        fsType = "ext4";
+        options = [ "rw" "nofail" "umask=000" ];
+      }
+
+      {
+        mountPoint = "/mnt/hdd";
+        uuid = "C252DCB252DCAC83"; # Replace with your disk's UUID
+        fsType = "ntfs-3g";
+        options = [ "rw" "nofail" "umask=000" ];
       }
     ];
   };
 
   networking = {
-    hostName = "shaunoffice";
-    # interfaces.enp8s0.wakeOnLan.enable = true;
+    hostName = "datasever";
+    interfaces.enp2s0.wakeOnLan.enable = true;
   };
 
   virtualisation.docker.rootless = {
@@ -41,10 +55,6 @@
     setSocketVariable = true;
   };
 
-  # home-manager modules
-  # home-manager.users.${config.modules.os.mainUser}.config.modules = {
-  #   theme.wallpaper = ../../modules/home/shaun/theming/wallpaper;
-  # };
 
   modules = {
 
