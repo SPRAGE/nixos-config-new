@@ -18,47 +18,54 @@
     kernelPackages = pkgs.linuxPackages_latest;
   };
 
-  services.sambaAdvanced = {
-    enable = true;
-
-    openFirewall = true; # Explicitly enable firewall rules for Samba
-    enableWSDD = true;   # Enable WSDD for Windows network discovery
-
-    globalConfig = {
-      workgroup = "WORKGROUP";
-      "server string" = "Dataserver Samba"; # Updated server string
-      security = "user";
+  services.samba = {
+  enable = true;
+  securityType = "user";
+  openFirewall = true;
+  settings = {
+    global = {
+      "workgroup" = "WORKGROUP";
+      "server string" = "smbnix";
+      "netbios name" = "smbnix";
+      "security" = "user";
+      #"use sendfile" = "yes";
+      #"max protocol" = "smb2";
+      # note: localhost is the ipv6 localhost ::1
+      "hosts allow" = "192.168.0. 127.0.0.1 localhost";
+      "hosts deny" = "0.0.0.0/0";
+      "guest account" = "nobody";
       "map to guest" = "bad user";
     };
-
-    shares = {
-
-      "shaun" = {
-        "path" = "/mnt/shaun";
-        "browseable" = "true";
-        "read only" = "false";
-        "guest ok" = "false";
-        "valid users" = "shaun";
-        "force user" = "shaun";
-        "force group" = "users";
-        "create mask" = "0644";
-        "directory mask" = "0755";
-      };
-
-      "karan" = {
-        "path" = "/mnt/karan";
-        "browseable" = "true";
-        "read only" = "false";
-        "guest ok" = "false";
-        "valid users" = "karan";
-        "force user" = "karan";
-        "force group" = "users";
-        "create mask" = "0644";
-        "directory mask" = "0755";
-      };
-
+    "public" = {
+      "path" = "/mnt/shaun";
+      "browseable" = "yes";
+      "read only" = "no";
+      "guest ok" = "no";
+      "create mask" = "0644";
+      "directory mask" = "0755";
+      "force user" = "shaun";
+      # "force group" = "groupname";
+    };
+    "private" = {
+      "path" = "/mnt/karan";
+      "browseable" = "yes";
+      "read only" = "no";
+      "guest ok" = "no";
+      "create mask" = "0644";
+      "directory mask" = "0755";
+      "force user" = "karan";
+      # "force group" = "groupname";
     };
   };
+};
+
+services.samba-wsdd = {
+  enable = true;
+  openFirewall = true;
+};
+
+networking.firewall.enable = true;
+networking.firewall.allowPing = true;
 
   modules.hardware = {
 
