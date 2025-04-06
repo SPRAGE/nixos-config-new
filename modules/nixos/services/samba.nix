@@ -22,7 +22,7 @@ in
       type = lib.types.attrsOf lib.types.str;
       default = {
         workgroup = "WORKGROUP";
-        "server string" = "smbnix";
+        "server string" = "Samba Server"; # Updated default server string
         "netbios name" = "smbnix";
         security = "user";
         "hosts allow" = "192.168.0. 127.0.0.1 localhost";
@@ -37,12 +37,26 @@ in
       type = lib.types.attrsOf (lib.types.attrsOf lib.types.str);
       default = { };
       description = "A set of share definitions (e.g. public/private).";
+      example = {
+        "example-share" = {
+          "path" = "/path/to/share";
+          "browseable" = "true";
+          "read only" = "false";
+          "guest ok" = "false";
+        };
+      };
     };
 
     enableWSDD = lib.mkOption {
       type = lib.types.bool;
       default = true;
       description = "Enable WSDD for Windows network discovery.";
+    };
+
+    enableFirewall = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+      description = "Enable the system firewall.";
     };
   };
 
@@ -61,7 +75,8 @@ in
       openFirewall = cfg.openFirewall;
     };
 
-    networking.firewall.enable = true;
-    networking.firewall.allowPing = true;
+    # Make firewall enabling configurable
+    networking.firewall.enable = cfg.enableFirewall;
+    networking.firewall.allowPing = cfg.enableFirewall;
   };
 }

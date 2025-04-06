@@ -21,8 +21,12 @@
   services.sambaAdvanced = {
     enable = true;
 
+    openFirewall = true; # Explicitly enable firewall rules for Samba
+    enableWSDD = true;   # Enable WSDD for Windows network discovery
+
     globalConfig = {
       workgroup = "WORKGROUP";
+      "server string" = "Dataserver Samba"; # Updated server string
       security = "user";
       "map to guest" = "bad user";
     };
