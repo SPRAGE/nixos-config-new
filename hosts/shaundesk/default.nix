@@ -131,10 +131,10 @@
     };
   };
 
-  hardware = {
-    # Udev rules for vial
-    keyboard.qmk.enable = true;
+  # hardware = {
+  #   # Udev rules for vial
+  #   keyboard.qmk.enable = true;
 
-  };
+  # };
 
 }
