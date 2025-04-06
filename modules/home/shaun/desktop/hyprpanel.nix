@@ -18,7 +18,7 @@ in
     # systemd.enable = true;
     hyprland.enable = true;
     overwrite.enable = true;
-    layout = {
+    settings.layout = {
       "bar.layouts" = {
         "0" = {
           "left" = [
