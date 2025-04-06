@@ -23,11 +23,11 @@ services.sambaAdvanced = {
   enable = true;
 
   shares = {
-    public = {
+    shaun = {
       path = "/mnt/shaun";
       forceUser = "shaun";
     };
-    private = {
+    karan = {
       path = "/mnt/karan";
       forceUser = "karan";
     };
