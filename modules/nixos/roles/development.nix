@@ -19,8 +19,8 @@ in
     programs.nix-ld.enable = true;
 
     services.udev.packages = with pkgs; [
-      platformio
-      openocd
+      # platformio
+      # openocd
     ];
 
   };
