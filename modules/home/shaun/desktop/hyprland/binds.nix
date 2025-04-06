@@ -24,6 +24,7 @@ let
       [
         "$mod, ${ws}, workspace, ${toString (x + 1)}"
         "ALT SHIFT, ${ws}, movetoworkspace, ${toString (x + 1)}"
+        "$mod SHIFT, ${ws}, movetoworkspace, ${toString (x + 1)}"
       ]
     ) 10
   );
@@ -57,7 +58,6 @@ in
         "$mod, right, movefocus, r"
         "$mod, up, movefocus, u"
         "$mod, down, movefocus, d"
-        "ALT, Tab, focuscurrentorlast"
 
         # move window
         "$mod SHIFT, left, movewindow, l"
