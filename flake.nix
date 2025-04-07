@@ -80,11 +80,10 @@
     gaming.url = "github:fufexan/nix-gaming";
 
     #Github private repos
-     auth-server = {
-      url = "git+ssh://git@github.com/SPRAGE/auth-server.git?ref=main&shallow=1";
-      # rev = "6b6493836c69529ed91258c1aef19c86f81020db";
-      inputs.nixpkgs.follows = "nixpkgs"; # if it uses nixpkgs
+    auth-server = {
+      url = "git+ssh://git@github.com/SPRAGE/auth-server.git?rev=6b6493836c69529ed91258c1aef19c86f81020db&shallow=1";
     };
+
 
 
 
