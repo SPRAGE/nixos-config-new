@@ -81,7 +81,7 @@
 
     #Github private repos
      auth-server = {
-      url = "github:SPRAGE/auth-server";
+      url = "git+ssh://git@github.com/SPRAGE/auth-server";
       inputs.nixpkgs.follows = "nixpkgs"; # if it uses nixpkgs
     };
 
