@@ -18,53 +18,55 @@ in
     # systemd.enable = true;
     hyprland.enable = true;
     overwrite.enable = true;
-    layout = {
-      "bar.layouts" = {
-        "0" = {
-          "left" = [
-            "dashboard"
-            "workspaces"
-            "windowtitle"
-          ];
-          "middle" = [ ]; # Add this line
-          "right" = [
-            "clock"
-          ];
-        };
+    settings = {
+      layout = {
+        "bar.layouts" = {
+          "0" = {
+            "left" = [
+              "dashboard"
+              "workspaces"
+              "windowtitle"
+            ];
+            "middle" = [ ]; # Add this line
+            "right" = [
+              "clock"
+            ];
+          };
 
-        "1" = {
-          "left" = [
-            "dashboard"
-            "workspaces"
-            "windowtitle"
-          ];
-          "middle" = [
-            "clock"
-            "media"
-          ];
-          "right" = [
-            "volume"
-            "network"
-            "systray"
-            "notifications"
-          ];
-        };
-        "2" = {
-          "left" = [
-            "dashboard"
-            "workspaces"
-            "windowtitle"
-          ];
-          "middle" = [
-            "clock"
-            "media"
-          ];
-          "right" = [
-            "volume"
-            "network"
-            "systray"
-            "notifications"
-          ];
+          "1" = {
+            "left" = [
+              "dashboard"
+              "workspaces"
+              "windowtitle"
+            ];
+            "middle" = [
+              "clock"
+              "media"
+            ];
+            "right" = [
+              "volume"
+              "network"
+              "systray"
+              "notifications"
+            ];
+          };
+          "2" = {
+            "left" = [
+              "dashboard"
+              "workspaces"
+              "windowtitle"
+            ];
+            "middle" = [
+              "clock"
+              "media"
+            ];
+            "right" = [
+              "volume"
+              "network"
+              "systray"
+              "notifications"
+            ];
+          };
         };
       };
     };
