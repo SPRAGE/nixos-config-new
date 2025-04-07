@@ -81,7 +81,7 @@
 
     #Github private repos
     auth-server = {
-      url = "git+ssh://git@github.com/SPRAGE/auth-server.git?ref=flake-pin&rev=6b6493836c69529ed91258c1aef19c86f81020db&shallow=1";
+      url = "git+ssh://git@github.com/SPRAGE/auth-server.git";
     };
 
 

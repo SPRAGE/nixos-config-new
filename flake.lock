@@ -54,15 +54,13 @@
       "locked": {
         "lastModified": 1743984625,
         "narHash": "sha256-RRirGTwpWVN1R7X8kv1iE/RtVjqIl9W/bjnY9ZjzENY=",
-        "ref": "refs/heads/main",
+        "ref": "refs/heads/master",
         "rev": "6b6493836c69529ed91258c1aef19c86f81020db",
-        "shallow": true,
+        "revCount": 4,
         "type": "git",
         "url": "ssh://git@github.com/SPRAGE/auth-server.git"
       },
       "original": {
-        "rev": "6b6493836c69529ed91258c1aef19c86f81020db",
-        "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/SPRAGE/auth-server.git"
       }
