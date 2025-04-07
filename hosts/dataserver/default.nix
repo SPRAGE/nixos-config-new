@@ -19,7 +19,16 @@
   };
 
 
-services.sambaAdvanced = {
+services = {
+  auth-server = {
+    enable = true;
+    port = 8443;
+
+    # configFile = /etc/auth-server/config.toml; # Optional
+  };
+
+
+  sambaAdvanced = {
   enable = true;
 
   shares = {

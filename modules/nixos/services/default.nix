@@ -4,5 +4,6 @@
     ./logrotate.nix
     ./samba.nix
     ./systemd.nix
+    ./personal-services
   ];
 }

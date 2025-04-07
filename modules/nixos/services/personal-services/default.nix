@@ -1,0 +1,5 @@
+{
+  imports = [
+    ./auth-server.nix
+  ];
+}

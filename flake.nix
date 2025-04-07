@@ -78,6 +78,15 @@
     nvix.url = "github:SPRAGE/nvix";
     # gaming tweaks and addons
     gaming.url = "github:fufexan/nix-gaming";
+
+    #Github private repos
+     auth-server = {
+      url = "github:SPRAGE/auth-server";
+      inputs.nixpkgs.follows = "nixpkgs"; # if it uses nixpkgs
+    };
+
+
+
   };
 
   outputs =
