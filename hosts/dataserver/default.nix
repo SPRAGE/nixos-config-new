@@ -42,6 +42,7 @@ services = {
     };
   };
 };
+};
 
 
   modules.hardware = {
