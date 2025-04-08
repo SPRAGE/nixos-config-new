@@ -4,6 +4,7 @@
   pkgs,
   ...
 }:
+
 let
   cfg = config.modules.programs.remmina;
 
@@ -18,6 +19,10 @@ let
       name = "remmina/${fileName}";
       value.source = cfg.connectionFilesDir + "/${fileName}";
     }) remminaFileNames
+  );
+
+  remminaPathsToRemove = lib.concatStringsSep " " (
+    map (fileName: "${config.xdg.dataHome}/remmina/${fileName}") remminaFileNames
   );
 in
 {
@@ -41,6 +46,12 @@ in
       default = false;
       description = "Disable tabbing in Remmina.";
     };
+
+    overwrite = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+      description = "If true, delete existing connection files before writing new ones.";
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -48,10 +59,17 @@ in
 
     xdg.dataFile = remminaFileAttrs;
 
-    home.file."${config.xdg.configHome}/remmina/remmina.pref".text = lib.mkIf (!builtins.pathExists "${config.xdg.configHome}/remmina/remmina.pref") ''
-      [remmina_pref]
-      show_toolbar=${toString (!cfg.disableToolbar)}
-      tab_mode=${if cfg.disableTabbing then "false" else "true"}
+    home.file."${config.xdg.configHome}/remmina/remmina.pref".text =
+      lib.mkIf (!builtins.pathExists "${config.xdg.configHome}/remmina/remmina.pref")
+        ''
+          [remmina_pref]
+          show_toolbar=${toString (!cfg.disableToolbar)}
+          tab_mode=${if cfg.disableTabbing then "false" else "true"}
+        '';
+
+    home.activation.removeOldRemminaFiles = lib.mkIf cfg.overwrite ''
+      echo "Removing existing remmina connection files..."
+      rm -f ${remminaPathsToRemove} || true
     '';
   };
 }
