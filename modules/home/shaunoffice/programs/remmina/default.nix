@@ -48,7 +48,7 @@ in
 
     xdg.dataFile = remminaFileAttrs;
 
-    home.file."${config.xdg.configHome}/remmina/remmina.pref".text = ''
+    home.file."${config.xdg.configHome}/remmina/remmina.pref".text = lib.mkIf (!builtins.pathExists "${config.xdg.configHome}/remmina/remmina.pref") ''
       [remmina_pref]
       show_toolbar=${toString (!cfg.disableToolbar)}
       tab_mode=${if cfg.disableTabbing then "false" else "true"}

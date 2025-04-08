@@ -114,7 +114,7 @@ in
     };
 
     input = {
-      follow_mouse = 1; # focus change on cursor move
+      follow_mouse = 0; # focus change on cursor move
       sensitivity = 1;
       accel_profile = "flat";
       off_window_axis_events = true;
