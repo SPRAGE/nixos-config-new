@@ -14,6 +14,7 @@ in
       theme.stylix.enable = mkDefault true;
       programs.remmina = {
         enable = true;
+        overwrite = true;
         disableToolbar = true;
         disableTabbing = true;
 
