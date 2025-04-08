@@ -13,6 +13,7 @@ in
       # services.nextcloud-client.enable = mkDefault true;
       theme.stylix.enable = mkDefault true;
       programs.remmina = {
+        enable = true;
         disableToolbar = true;
         disableTabbing = true;
 

@@ -27,5 +27,8 @@ in
     #anydesk
     anydesk
 
+    #gajim
+    gajim
+
   ];
 }
