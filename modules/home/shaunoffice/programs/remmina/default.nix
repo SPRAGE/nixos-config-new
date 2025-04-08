@@ -21,9 +21,9 @@ let
     }) remminaFileNames
   );
 
-  remminaPathsToRemove = lib.concatStringsSep " " (
-    map (fileName: "${config.xdg.dataHome}/remmina/${fileName}") remminaFileNames
-  );
+  remminaPathsToRemove = map (
+    fileName: "${config.xdg.dataHome}/remmina/${fileName}"
+  ) remminaFileNames;
 in
 {
   options.modules.programs.remmina = {
@@ -50,7 +50,7 @@ in
     overwrite = lib.mkOption {
       type = lib.types.bool;
       default = false;
-      description = "If true, delete existing connection files before writing new ones.";
+      description = "If true, delete existing connection files and backups before writing new ones.";
     };
   };
 
@@ -68,8 +68,10 @@ in
         '';
 
     home.activation.removeOldRemminaFiles = lib.mkIf cfg.overwrite ''
-      echo "Removing existing remmina connection files..."
-      rm -f ${remminaPathsToRemove} || true
+      echo "Cleaning up old Remmina connection and backup files..."
+      ${lib.concatStringsSep "\n" (
+        map (filePath: ''rm -f "${filePath}" "${filePath}.backup" || true'') remminaPathsToRemove
+      )}
     '';
   };
 }
