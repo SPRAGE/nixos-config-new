@@ -15,9 +15,15 @@ in
       programs.remmina = {
         enable = true;
         overwrite = true;
-        disableToolbar = true;
-        disableTabbing = true;
+        # connectionFilesDir = ./remmina-connections;
 
+        showToolbar = false;
+        tabMode = 3;
+        groupByGroup = false;
+        hideToolbar = true;
+        darkTheme = true;
+        saveViewMode = true;
+        confirmClose = true;
       };
       # programs.spicetify.enable = mkDefault true;
       # programs.orca-slicer.enable = mkDefault true;
