@@ -10,20 +10,22 @@ let
 
   remminaFiles = builtins.readDir cfg.connectionFilesDir;
 
-  remminaFileNames = builtins.filter (f: lib.hasSuffix ".remmina" f) (
+  connectionFileNames = builtins.filter (f: lib.hasSuffix ".remmina" f) (
     builtins.attrNames remminaFiles
   );
 
-  remminaFileAttrs = builtins.listToAttrs (
-    map (fileName: {
-      name = "remmina/${fileName}";
-      value.source = cfg.connectionFilesDir + "/${fileName}";
-    }) remminaFileNames
-  );
+  remminaSourceTargetPairs = map (fileName: {
+    src = "${cfg.connectionFilesDir}/${fileName}";
+    dest = "${config.home.homeDirectory}/.local/share/remmina/${fileName}";
+  }) connectionFileNames;
 
-  remminaPathsToRemove = map (
-    fileName: "${config.xdg.dataHome}/remmina/${fileName}"
-  ) remminaFileNames;
+  prefFile = "${config.xdg.configHome}/remmina/remmina.pref";
+
+  prefText = ''
+    [remmina_pref]
+    show_toolbar=${toString (!cfg.disableToolbar)}
+    tab_mode=${if cfg.disableTabbing then "false" else "true"}
+  '';
 in
 {
   options.modules.programs.remmina = {
@@ -55,22 +57,36 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = with pkgs; [ remmina ];
+    home.packages = [ pkgs.remmina ];
 
-    xdg.dataFile = remminaFileAttrs;
+    # Just install the pref file declaratively (no conflict here)
+    home.file."${prefFile}".text = prefText;
 
-    home.file."${config.xdg.configHome}/remmina/remmina.pref".text =
-      lib.mkIf (!builtins.pathExists "${config.xdg.configHome}/remmina/remmina.pref")
-        ''
-          [remmina_pref]
-          show_toolbar=${toString (!cfg.disableToolbar)}
-          tab_mode=${if cfg.disableTabbing then "false" else "true"}
-        '';
+    # Everything else — handle manually in activation
+    home.activation.manageRemminaFiles = ''
+      echo "Preparing Remmina connection files..."
 
-    home.activation.removeOldRemminaFiles = lib.mkIf cfg.overwrite ''
-      echo "Cleaning up old Remmina connection and backup files..."
+      mkdir -p "${config.home.homeDirectory}/.local/share/remmina"
+
       ${lib.concatStringsSep "\n" (
-        map (filePath: ''rm -f "${filePath}" "${filePath}.backup" || true'') remminaPathsToRemove
+        map (
+          pair:
+          if cfg.overwrite then
+            ''
+              echo "Overwriting ${pair.dest}..."
+              rm -f "${pair.dest}" "${pair.dest}.backup" || true
+              ln -sf "${pair.src}" "${pair.dest}"
+            ''
+          else
+            ''
+              if [ ! -e "${pair.dest}" ]; then
+                echo "Linking ${pair.src} -> ${pair.dest}"
+                ln -s "${pair.src}" "${pair.dest}"
+              else
+                echo "Skipping ${pair.dest} (already exists)"
+              fi
+            ''
+        ) remminaSourceTargetPairs
       )}
     '';
   };
