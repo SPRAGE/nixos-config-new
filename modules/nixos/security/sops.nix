@@ -8,7 +8,7 @@
 let
   inherit (lib) optionalString listToAttrs;
 
-  secretsPath = builtins.toString inputs.nix-secrets;
+  secretsPath = "${inputs.nix-secrets}/secrets.yaml";
   isPersistence = config.modules.boot.impermanence.enable;
 
   disableSops = false; # Toggle this to enable/disable SOPS
