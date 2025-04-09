@@ -61,7 +61,8 @@ in
         ${user} = {
           isNormalUser = true;
           shell = pkgs.zsh;
-          initialPassword = "changeme"; # Replace with hashedPasswordFile for production
+          # initialPassword = "changeme"; # Replace with hashedPasswordFile for production
+          hashedPasswordFile = config.sops.secrets."users.${user}".path;
           group = user;
           extraGroups = [
             "wheel"
