@@ -11,7 +11,7 @@ let
   secretsPath = builtins.toString inputs.nix-secrets;
   isPersistence = config.modules.boot.impermanence.enable;
 
-  disableSops = true; # Toggle this to enable/disable SOPS
+  disableSops = false; # Toggle this to enable/disable SOPS
 
   # Get all users: main user plus other system-only users
   allUsers =
