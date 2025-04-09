@@ -689,10 +689,10 @@
     "nix-secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1744072125,
-        "narHash": "sha256-37bLTtgqvVUqBHcaPyor/vKA+U1DledDe4aMNKlYyEA=",
+        "lastModified": 1744160702,
+        "narHash": "sha256-ccG4Y+0B8bMNyydhZXgXNWdyotvNScyyGfOOveCtGi0=",
         "ref": "main",
-        "rev": "65acbaa74a9af0e7ef04e37ff3b7c72603100f37",
+        "rev": "06f3c0ebd255e9c31ddc157825359c8f82682dd5",
         "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/SPRAGE/nix-secrets.git"
