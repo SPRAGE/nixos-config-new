@@ -74,10 +74,10 @@
     gaming.url = "github:fufexan/nix-gaming";
 
     # my sops-nix private repo
-    # nix-secrets = {
-    #   url = "git+ssh://git@github.com/SPRAGE/nix-secrets.git?ref=main&shallow=1";
-    #   flake = false;
-    # };
+    nix-secrets = {
+      url = "git+ssh://git@github.com/SPRAGE/nix-secrets.git?ref=main&shallow=1";
+      flake = false;
+    };
     #Github private repos
     # auth-server = {
     #   url = "git+ssh://git@github.com/SPRAGE/auth-server.git";
