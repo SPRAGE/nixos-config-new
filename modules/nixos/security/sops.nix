@@ -6,22 +6,29 @@
   ...
 }:
 let
-  inherit (lib) optionalString;
-  isEd25519 = k: k.type == "ed25519";
-  getKeyPath = k: k.path;
-  keys = builtins.filter isEd25519 config.services.openssh.hostKeys;
+  inherit (lib) optionalString listToAttrs;
 
   secretsPath = builtins.toString inputs.nix-secrets;
-
   isPersistence = config.modules.boot.impermanence.enable;
 
-  # Parameter to easily disable sops temporarily
-  disableSops = true; # Set to true to disable sops
+  disableSops = true; # Toggle this to enable/disable SOPS
+
+  # Get all users: main user plus other system-only users
+  allUsers =
+    [ config.modules.os.mainUser ]
+    ++ builtins.attrNames config.modules.os.otherUsers;
+
+  # Generate a secret entry for each user password
+  userSecrets = listToAttrs (map (username: {
+    name = "users.${username}";
+    value = {
+      neededForUsers = true;
+    };
+  }) allUsers);
 in
 {
   imports = if !disableSops then [ inputs.sops-nix.nixosModules.sops ] else [];
 
-  # Only configure sops if not disabled
   config = if !disableSops then {
     environment.systemPackages = with pkgs; [
       age
@@ -34,15 +41,12 @@ in
       validateSopsFiles = false;
 
       age = {
-        # automatically import host SSH keys as age keys
-        sshKeyPaths = map getKeyPath keys;
-        # key that is expected to already be in the file system
         keyFile = "${optionalString isPersistence "/persist"}/var/lib/sops-nix/key.txt";
-        # This will generate a new key if the key specified above does not exist
-        generateKey = true;
+        generateKey = false;
+        sshKeyPaths = [];
       };
 
-      secrets."users.shaun.password".neededForUsers = true;
+      secrets = userSecrets;
     };
   } else {};
 }
