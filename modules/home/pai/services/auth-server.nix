@@ -10,7 +10,7 @@ let
   cfg = config.services.auth-server;
 in
 {
-  options.services.auth-server = {
+  options.modules.services.auth-server = {
     enable = lib.mkEnableOption "Enable the Rust Auth Server";
   };
 
