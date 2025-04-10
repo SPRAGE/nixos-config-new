@@ -1,22 +1,11 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
-
-with lib;
+{ config, pkgs, lib, ... }:
 
 let
-  cfg = config.modules.programs.valkey;
+  inherit (lib) mkIf mkEnableOption mkOption types;
 in
 {
   options.modules.programs.valkey = {
-    enable = mkOption {
-      type = types.bool;
-      default = false;
-      description = "Enable the Valkey key-value store service.";
-    };
+    enable = mkEnableOption "Enable Valkey (Redis-compatible server)";
 
     port = mkOption {
       type = types.port;
@@ -27,46 +16,24 @@ in
     dataDir = mkOption {
       type = types.str;
       default = "/var/lib/valkey";
-      description = "Data directory for Valkey.";
+      description = "Data directory for Valkey persistence.";
     };
 
     extraConfig = mkOption {
       type = types.lines;
       default = "";
-      description = "Extra Valkey configuration lines.";
+      description = "Extra configuration lines for valkey.conf.";
     };
   };
 
-  config = mkIf cfg.enable {
-    users.users.valkey = {
-      description = "Valkey user";
-      isSystemUser = true;
-      home = cfg.dataDir;
-    };
-
-    systemd.services.valkey = {
-      description = "Valkey Server";
-      after = [ "network.target" ];
-      wantedBy = [ "multi-user.target" ];
-
-      serviceConfig = {
-        ExecStart = ''
-          ${pkgs.valkey}/bin/valkey-server \
-            --port ${toString cfg.port} \
-            --dir ${cfg.dataDir} \
-            --bind 127.0.0.1 \
-            ${pkgs.writeText "valkey-extra.conf" cfg.extraConfig}
-        '';
-        Restart = "always";
-        User = "valkey";
-        WorkingDirectory = cfg.dataDir;
-      };
+  config = mkIf config.modules.programs.valkey.enable {
+    services.valkey = {
+      enable = true;
+      port = config.modules.programs.valkey.port;
+      dataDir = config.modules.programs.valkey.dataDir;
+      extraConfig = config.modules.programs.valkey.extraConfig;
     };
 
     environment.systemPackages = [ pkgs.valkey ];
-
-    systemd.tmpfiles.rules = [
-      "d ${cfg.dataDir} 0755 valkey valkey - -"
-    ];
   };
 }
