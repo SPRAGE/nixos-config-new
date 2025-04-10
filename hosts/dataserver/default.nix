@@ -19,9 +19,9 @@
   };
 
   services = {
-    auth-server = {
-      enable = true;
-    };
+    # auth-server = {
+    #   enable = true;
+    # };
 
     sambaAdvanced = {
       enable = true;
