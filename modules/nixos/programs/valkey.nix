@@ -1,7 +1,17 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 let
-  inherit (lib) mkIf mkEnableOption mkOption types;
+  inherit (lib)
+    mkIf
+    mkEnableOption
+    mkOption
+    types
+    ;
   cfg = config.modules.programs.valkey;
 in
 {
@@ -28,8 +38,11 @@ in
   };
 
   config = mkIf cfg.enable {
+    users.groups.valkey = { };
+
     users.users.valkey = {
       isSystemUser = true;
+      group = "valkey";
       description = "Valkey server user";
       home = cfg.dataDir;
     };
