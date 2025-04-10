@@ -109,6 +109,9 @@
       };
       autoLogin = false;
     };
+    programs = {
+      valkey.enable = true;
+    };
 
     networking.optomizeTcp = true;
 
@@ -116,9 +119,6 @@
       enableKernelTweaks = true;
       impermanence.enable = false;
     };
-  };
-  programs = {
-    valkey.enable = true;
   };
 
   hardware = {
