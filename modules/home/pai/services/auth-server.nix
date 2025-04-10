@@ -7,7 +7,7 @@
 }:
 
 let
-  cfg = config.services.auth-server;
+  cfg = config.modules.services.auth-server;
 in
 {
   options.modules.services.auth-server = {
