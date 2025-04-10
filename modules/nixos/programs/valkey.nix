@@ -2,6 +2,7 @@
 
 let
   inherit (lib) mkIf mkEnableOption mkOption types;
+  cfg = config.modules.programs.valkey;
 in
 {
   options.modules.programs.valkey = {
@@ -26,13 +27,35 @@ in
     };
   };
 
-  config = mkIf config.modules.programs.valkey.enable {
-    services.valkey = {
-      enable = true;
-      port = config.modules.programs.valkey.port;
-      dataDir = config.modules.programs.valkey.dataDir;
-      extraConfig = config.modules.programs.valkey.extraConfig;
+  config = mkIf cfg.enable {
+    users.users.valkey = {
+      isSystemUser = true;
+      description = "Valkey server user";
+      home = cfg.dataDir;
     };
+
+    systemd.services.valkey = {
+      description = "Valkey (Redis-compatible key-value store)";
+      after = [ "network.target" ];
+      wantedBy = [ "multi-user.target" ];
+
+      serviceConfig = {
+        ExecStart = ''
+          ${pkgs.valkey}/bin/valkey-server \
+            --port ${toString cfg.port} \
+            --dir ${cfg.dataDir} \
+            --bind 127.0.0.1 \
+            ${pkgs.writeText "valkey-extra.conf" cfg.extraConfig}
+        '';
+        User = "valkey";
+        WorkingDirectory = cfg.dataDir;
+        Restart = "always";
+      };
+    };
+
+    systemd.tmpfiles.rules = [
+      "d ${cfg.dataDir} 0755 valkey valkey - -"
+    ];
 
     environment.systemPackages = [ pkgs.valkey ];
   };
