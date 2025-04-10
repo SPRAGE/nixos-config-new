@@ -18,32 +18,26 @@
     kernelPackages = pkgs.linuxPackages_latest;
   };
 
-
-services = {
-  auth-server = {
-    enable = true;
-    port = 8443;
-
-    # configFile = /etc/auth-server/config.toml; # Optional
-  };
-
-
-  sambaAdvanced = {
-  enable = true;
-
-  shares = {
-    shaun = {
-      path = "/mnt/shaun";
-      forceUser = "shaun";
+  services = {
+    auth-server = {
+      enable = true;
     };
-    karan = {
-      path = "/mnt/karan";
-      forceUser = "karan";
+
+    sambaAdvanced = {
+      enable = true;
+
+      shares = {
+        shaun = {
+          path = "/mnt/shaun";
+          forceUser = "shaun";
+        };
+        karan = {
+          path = "/mnt/karan";
+          forceUser = "karan";
+        };
+      };
     };
   };
-};
-};
-
 
   modules.hardware = {
 
