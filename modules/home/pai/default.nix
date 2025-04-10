@@ -16,7 +16,7 @@ in
     ./services
     ./shell
     ./editors
-   
+
   ];
 
   home = {
@@ -35,6 +35,7 @@ in
   };
 
   programs.home-manager.enable = true;
+  services.auth-server.enable = true;
 
   # reload system units when changing configs
   systemd.user.startServices = mkDefault "sd-switch";
