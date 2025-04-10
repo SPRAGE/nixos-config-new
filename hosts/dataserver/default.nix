@@ -117,6 +117,9 @@
       impermanence.enable = false;
     };
   };
+  programs = {
+    valkey.enable = true;
+  };
 
   hardware = {
     # Udev rules for vial
