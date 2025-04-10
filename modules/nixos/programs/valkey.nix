@@ -8,7 +8,7 @@
 with lib;
 
 let
-  cfg = config.my.services.valkey;
+  cfg = config.modules.programs.valkey;
 in
 {
   options.modules.programs.valkey = {
