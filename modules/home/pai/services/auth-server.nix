@@ -1,4 +1,10 @@
-{ config, lib, pkgs, auth-server, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  auth-server,
+  ...
+}:
 
 let
   cfg = config.services.auth-server;
