@@ -5,7 +5,8 @@ let
     mkIf
     mkEnableOption
     mkOption
-    types;
+    types
+    concatStringsSep;
 
   cfg = config.modules.programs.valkey;
 in
@@ -25,15 +26,36 @@ in
       description = "Data directory for Valkey persistence.";
     };
 
+    users = mkOption {
+      type = types.listOf (types.submodule {
+        options = {
+          name = mkOption {
+            type = types.str;
+            description = "Username for Valkey ACL.";
+          };
+          hash = mkOption {
+            type = types.str;
+            description = "SHA-256 hashed password.";
+          };
+          acl = mkOption {
+            type = types.str;
+            default = "allcommands allkeys";
+            description = "ACL string (permissions, key patterns, etc).";
+          };
+        };
+      });
+      default = [ ];
+      description = "List of Valkey users with hashed passwords and custom ACLs.";
+    };
+
     extraConfig = mkOption {
       type = types.lines;
       default = "";
-      description = "Extra configuration lines to append to valkey.conf.";
+      description = "Extra lines for valkey.conf.";
     };
   };
 
   config = mkIf cfg.enable {
-    # Create valkey group and user
     users.groups.valkey = { };
 
     users.users.valkey = {
@@ -43,20 +65,23 @@ in
       home = cfg.dataDir;
     };
 
-    # Write valkey.conf to /etc/valkey/valkey.conf
+    # Generate ACL file with per-user custom ACLs
+    environment.etc."valkey/users.acl".text = concatStringsSep "\n" (
+      map (u: "user ${u.name} on #${u.hash} ${u.acl}") cfg.users
+    );
+
     environment.etc."valkey/valkey.conf".text = ''
       port ${toString cfg.port}
       dir ${cfg.dataDir}
       bind 127.0.0.1
+      aclfile /etc/valkey/users.acl
       ${cfg.extraConfig}
     '';
 
-    # Ensure data directory exists with proper permissions
     systemd.tmpfiles.rules = [
       "d ${cfg.dataDir} 0755 valkey valkey - -"
     ];
 
-    # Define systemd service
     systemd.services.valkey = {
       description = "Valkey (Redis-compatible key-value store)";
       after = [ "network.target" ];
@@ -70,10 +95,8 @@ in
       };
     };
 
-    # Optional: Fix memory overcommit warning
     boot.kernel.sysctl."vm.overcommit_memory" = 1;
 
-    # Provide valkey in system packages
     environment.systemPackages = [ pkgs.valkey ];
   };
 }
