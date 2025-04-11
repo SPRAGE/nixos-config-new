@@ -128,6 +128,12 @@
           }
         ];
       };
+
+      personal = {
+        auth-server = {
+          enable = true;
+        };
+      };
     };
     networking.optomizeTcp = true;
 
