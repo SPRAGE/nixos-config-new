@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 let
   inherit (lib)
@@ -6,7 +11,8 @@ let
     mkEnableOption
     mkOption
     types
-    concatStringsSep;
+    concatStringsSep
+    ;
 
   cfg = config.modules.programs.valkey;
 in
@@ -16,6 +22,7 @@ in
 
     configFile = mkOption {
       type = types.path;
+      default = ./valkey.conf;
       description = ''
         Path to a custom valkey.conf file.
         It will be copied to /etc/valkey/valkey.conf.
@@ -31,23 +38,25 @@ in
     };
 
     users = mkOption {
-      type = types.listOf (types.submodule {
-        options = {
-          name = mkOption {
-            type = types.str;
-            description = "Username for Valkey ACL.";
+      type = types.listOf (
+        types.submodule {
+          options = {
+            name = mkOption {
+              type = types.str;
+              description = "Username for Valkey ACL.";
+            };
+            hash = mkOption {
+              type = types.str;
+              description = "SHA-256 hashed password for the user.";
+            };
+            acl = mkOption {
+              type = types.str;
+              default = "allcommands allkeys";
+              description = "ACL string (permissions, key patterns, etc).";
+            };
           };
-          hash = mkOption {
-            type = types.str;
-            description = "SHA-256 hashed password for the user.";
-          };
-          acl = mkOption {
-            type = types.str;
-            default = "allcommands allkeys";
-            description = "ACL string (permissions, key patterns, etc).";
-          };
-        };
-      });
+        }
+      );
       default = [ ];
       description = "Optional list of Valkey users with hashed passwords and custom ACLs.";
     };
@@ -79,7 +88,7 @@ in
         userLines = map (u: "user ${u.name} on #${u.hash} ${u.acl}") cfg.users;
         defaultLine = if cfg.disableDefaultUser then [ "user default off" ] else [ ];
       in
-        concatStringsSep "\n" (defaultLine ++ userLines)
+      concatStringsSep "\n" (defaultLine ++ userLines)
     );
 
     # Ensure data directory exists
