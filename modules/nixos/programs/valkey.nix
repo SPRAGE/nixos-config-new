@@ -1,17 +1,12 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}:
+{ config, pkgs, lib, ... }:
 
 let
   inherit (lib)
     mkIf
     mkEnableOption
     mkOption
-    types
-    ;
+    types;
+
   cfg = config.modules.programs.valkey;
 in
 {
@@ -33,11 +28,12 @@ in
     extraConfig = mkOption {
       type = types.lines;
       default = "";
-      description = "Extra configuration lines for valkey.conf.";
+      description = "Extra configuration lines to append to valkey.conf.";
     };
   };
 
   config = mkIf cfg.enable {
+    # Create valkey group and user
     users.groups.valkey = { };
 
     users.users.valkey = {
@@ -47,29 +43,37 @@ in
       home = cfg.dataDir;
     };
 
+    # Write valkey.conf to /etc/valkey/valkey.conf
+    environment.etc."valkey/valkey.conf".text = ''
+      port ${toString cfg.port}
+      dir ${cfg.dataDir}
+      bind 127.0.0.1
+      ${cfg.extraConfig}
+    '';
+
+    # Ensure data directory exists with proper permissions
+    systemd.tmpfiles.rules = [
+      "d ${cfg.dataDir} 0755 valkey valkey - -"
+    ];
+
+    # Define systemd service
     systemd.services.valkey = {
       description = "Valkey (Redis-compatible key-value store)";
       after = [ "network.target" ];
       wantedBy = [ "multi-user.target" ];
 
       serviceConfig = {
-        ExecStart = ''
-          ${pkgs.valkey}/bin/valkey-server \
-            --port ${toString cfg.port} \
-            --dir ${cfg.dataDir} \
-            --bind 127.0.0.1 \
-            ${pkgs.writeText "valkey-extra.conf" cfg.extraConfig}
-        '';
+        ExecStart = "${pkgs.valkey}/bin/valkey-server /etc/valkey/valkey.conf";
         User = "valkey";
         WorkingDirectory = cfg.dataDir;
         Restart = "always";
       };
     };
 
-    systemd.tmpfiles.rules = [
-      "d ${cfg.dataDir} 0755 valkey valkey - -"
-    ];
+    # Optional: Fix memory overcommit warning
+    boot.kernel.sysctl."vm.overcommit_memory" = 1;
 
+    # Provide valkey in system packages
     environment.systemPackages = [ pkgs.valkey ];
   };
 }
