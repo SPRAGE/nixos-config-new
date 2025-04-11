@@ -35,7 +35,7 @@ in
           };
           hash = mkOption {
             type = types.str;
-            description = "SHA-256 hashed password.";
+            description = "SHA-256 hashed password for the user.";
           };
           acl = mkOption {
             type = types.str;
@@ -45,7 +45,13 @@ in
         };
       });
       default = [ ];
-      description = "List of Valkey users with hashed passwords and custom ACLs.";
+      description = "List of Valkey users with hashed passwords and ACL rules.";
+    };
+
+    disableDefaultUser = mkOption {
+      type = types.bool;
+      default = true;
+      description = "Whether to disable the default Valkey user.";
     };
 
     extraConfig = mkOption {
@@ -56,6 +62,7 @@ in
   };
 
   config = mkIf cfg.enable {
+    # System user/group
     users.groups.valkey = { };
 
     users.users.valkey = {
@@ -65,11 +72,15 @@ in
       home = cfg.dataDir;
     };
 
-    # Generate ACL file with per-user custom ACLs
-    environment.etc."valkey/users.acl".text = concatStringsSep "\n" (
-      map (u: "user ${u.name} on #${u.hash} ${u.acl}") cfg.users
-    );
+    # Generate users.acl file
+    environment.etc."valkey/users.acl".text =
+      let
+        userLines = map (u: "user ${u.name} on #${u.hash} ${u.acl}") cfg.users;
+        defaultLine = if cfg.disableDefaultUser then [ "user default off" ] else [ ];
+      in
+        concatStringsSep "\n" (defaultLine ++ userLines);
 
+    # Generate valkey.conf
     environment.etc."valkey/valkey.conf".text = ''
       port ${toString cfg.port}
       dir ${cfg.dataDir}
@@ -78,10 +89,12 @@ in
       ${cfg.extraConfig}
     '';
 
+    # Ensure data directory exists
     systemd.tmpfiles.rules = [
       "d ${cfg.dataDir} 0755 valkey valkey - -"
     ];
 
+    # Systemd service
     systemd.services.valkey = {
       description = "Valkey (Redis-compatible key-value store)";
       after = [ "network.target" ];
@@ -95,8 +108,10 @@ in
       };
     };
 
+    # Optional: Avoid warning about memory overcommit
     boot.kernel.sysctl."vm.overcommit_memory" = 1;
 
+    # Provide valkey binary for convenience
     environment.systemPackages = [ pkgs.valkey ];
   };
 }
