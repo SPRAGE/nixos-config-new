@@ -112,6 +112,7 @@
     programs = {
       valkey = {
         enable = true;
+        disableDefaultUser = true;
         users = [
           {
             name = "read";
