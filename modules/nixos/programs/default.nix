@@ -1,6 +1,6 @@
 {
   imports = [
     ./thunar.nix
-    ./valkey.nix
+    ./valkey
   ];
 }
