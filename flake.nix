@@ -80,7 +80,7 @@
     #};
     #Github private repos
     auth-server = {
-      url = "git+ssh://git@github.com/SPRAGE/auth-server.git?ref=master";
+      url = "git+ssh://git@github.com/SPRAGE/auth-server.git?ref=master&shallow=1";
     };
 
   };
