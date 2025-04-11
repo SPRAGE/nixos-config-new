@@ -79,9 +79,9 @@
     #  flake = false;
     #};
     #Github private repos
-    auth-server = {
-      url = "git+ssh://git-personal/SPRAGE/auth-server.git?ref=master&shallow=1";
-    };
+    # auth-server = {
+    #   url = "git+ssh://git-personal/SPRAGE/auth-server.git?ref=master&shallow=1";
+    # };
 
   };
 
