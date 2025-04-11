@@ -112,7 +112,7 @@
     programs = {
       valkey = {
         enable = true;
-        configFile = ./valkey.conf;
+        # configFile = ./valkey.conf;
         dataDir = "/var/lib/valkey";
         disableDefaultUser = true;
         users = [
