@@ -139,6 +139,12 @@ in
       description = "Whether to disable all ClickHouse logging (files + system logs).";
     };
 
+    openPorts = mkOption {
+      type = types.bool;
+      default = true;
+      description = "Open ClickHouse ports in the firewall (9000, 8123, 9009).";
+    };
+
     users = mkOption {
       type = types.listOf (
         types.submodule {
@@ -187,6 +193,12 @@ in
 
     environment.etc."clickhouse-server/users.xml".source =
       if cfg.usersFile != null then cfg.usersFile else generatedUsersXml;
+
+    networking.firewall.allowedTCPPorts = mkIf cfg.openPorts [
+      9000 # Native TCP protocol (clickhouse-client)
+      8123 # HTTP API
+      9009 # Interserver communication (for clusters)
+    ];
 
     # Systemd service to run as clickhouse
     systemd.services.clickhouse-server = {
