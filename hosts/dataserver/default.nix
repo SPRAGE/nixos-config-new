@@ -140,6 +140,11 @@
             profile = "default";
           }
           {
+            name = "default";
+            hash = "62362d60d7efa6e6844e5ad8621bd5fa57b573d0435e339c1f77feb28ae07cfe";
+            profile = "readonly";
+          }
+          {
             name = "read";
             hash = "62362d60d7efa6e6844e5ad8621bd5fa57b573d0435e339c1f77feb28ae07cfe";
             profile = "readonly";
