@@ -29,7 +29,7 @@ let
       <users>
         <!-- Disable the default user -->
         <default>
-          <password_sha256_hex></password_sha256_hex>
+          <password_sha256_hex>cbf06754df2f70dd1f853bdccaec98cc6d8ba861a2a91d357540b9d561b6ceb7</password_sha257_hex>
           <networks />
           <profile>readonly</profile>
           <quota>default</quota>
