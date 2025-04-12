@@ -11,7 +11,7 @@
 
     <users>
         <default>
-            <password></password>
+            <password_sha256_hex>5060a3874499a874ae0e6d3d8b576121037d322e97de5632c8726e94c480ae86</password_sha256_hex>
             <networks>
             </networks>
             <profile>readonly</profile>
