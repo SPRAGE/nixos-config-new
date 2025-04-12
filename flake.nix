@@ -109,6 +109,11 @@
         ./flake
         ./pkgs
       ];
+      perSystem =
+        { pkgs, system, ... }:
+        {
+          packages.auth-server = inputs.auth-server.packages.${system}.default;
+        };
 
       flake = {
         # entry-point for nixosConfigurations
