@@ -56,13 +56,12 @@
         "narHash": "sha256-RRirGTwpWVN1R7X8kv1iE/RtVjqIl9W/bjnY9ZjzENY=",
         "ref": "master",
         "rev": "6b6493836c69529ed91258c1aef19c86f81020db",
-        "shallow": true,
+        "revCount": 4,
         "type": "git",
         "url": "ssh://git@github.com/SPRAGE/auth-server.git"
       },
       "original": {
         "ref": "master",
-        "shallow": true,
         "type": "git",
         "url": "ssh://git@github.com/SPRAGE/auth-server.git"
       }
