@@ -7,8 +7,7 @@ let
     mkIf
     types
     optionalString
-    concatStringsSep
-    ;
+    concatStringsSep;
 
   cfg = config.modules.programs.clickhouse;
 
@@ -22,20 +21,17 @@ let
       </profiles>
 
       <users>
+        <!-- Disable the default user -->
+        <default>
+          <password_sha256_hex></password_sha256_hex>
+          <networks />
+          <profile>readonly</profile>
+          <quota>default</quota>
+          <access_management>0</access_management>
+        </default>
+
         ${concatStringsSep "\n" (
-          [
-            # Disable default user
-            ''
-              <default>
-                <password_sha256_hex></password_sha256_hex>
-                <networks />
-                <profile>readonly</profile>
-                <quota>default</quota>
-                <access_management>0</access_management>
-              </default>
-            ''
-          ]
-          ++ (map (u: ''
+          map (u: ''
             <${u.name}>
               <password_sha256_hex>${u.hash}</password_sha256_hex>
               <networks><ip>::/0</ip></networks>
@@ -43,7 +39,7 @@ let
               <quota>default</quota>
               <access_management>${if u.profile == "default" then "1" else "0"}</access_management>
             </${u.name}>
-          '') cfg.users)
+          '') cfg.users
         )}
       </users>
 
@@ -111,30 +107,30 @@ let
 in
 {
   options.modules.programs.clickhouse = {
-    enable = mkEnableOption "Enable ClickHouse server";
+    enable = mkEnableOption "Enable the ClickHouse database server";
 
     configFile = mkOption {
       type = types.nullOr types.path;
       default = null;
-      description = "Optional path to custom config.xml (overrides auto-generated one).";
+      description = "Custom `config.xml` file. If null, a minimal version is generated.";
     };
 
     usersFile = mkOption {
       type = types.nullOr types.path;
       default = null;
-      description = "Optional path to custom users.xml (overrides auto-generated one).";
+      description = "Custom `users.xml` file. If null, one is generated from `users` option.";
     };
 
     dataDir = mkOption {
       type = types.str;
       default = "/var/lib/clickhouse";
-      description = "Directory where ClickHouse stores data.";
+      description = "Data directory for ClickHouse (must be writable by the clickhouse user).";
     };
 
     disableLogs = mkOption {
       type = types.bool;
       default = true;
-      description = "Disable all ClickHouse logs.";
+      description = "Whether to disable all ClickHouse logging (files + system logs).";
     };
 
     users = mkOption {
@@ -142,57 +138,64 @@ in
         options = {
           name = mkOption {
             type = types.str;
-            description = "ClickHouse username.";
+            description = "Username for ClickHouse.";
           };
+
           hash = mkOption {
             type = types.str;
             description = "SHA-256 hashed password.";
           };
+
           profile = mkOption {
             type = types.str;
             default = "readonly";
-            description = "Profile for the user ('default' or 'readonly').";
+            description = "User profile (`default` or `readonly`).";
           };
         };
       });
       default = [ ];
-      description = "Users to create with password hashes and access profiles.";
+      description = "List of users with password hashes and optional profiles.";
     };
   };
 
   config = mkIf cfg.enable {
+    # System user and group
     users.groups.clickhouse = {};
-
     users.users.clickhouse = {
       isSystemUser = true;
       group = "clickhouse";
+      description = "ClickHouse DBMS system user";
       home = cfg.dataDir;
-      description = "ClickHouse database server user";
     };
 
+    # Ensure data directory exists and is owned properly
     systemd.tmpfiles.rules = [
       "d ${cfg.dataDir} 0750 clickhouse clickhouse - -"
     ];
 
+    # Place config and user definitions in /etc
     environment.etc."clickhouse-server/config.xml".source =
       if cfg.configFile != null then cfg.configFile else generatedConfigXml;
 
     environment.etc."clickhouse-server/users.xml".source =
       if cfg.usersFile != null then cfg.usersFile else generatedUsersXml;
 
+    # Systemd service to run as clickhouse
     systemd.services.clickhouse-server = {
-      description = "ClickHouse DBMS";
+      description = "ClickHouse Database Server";
       after = [ "network.target" ];
       wantedBy = [ "multi-user.target" ];
 
       serviceConfig = {
         ExecStart = "${pkgs.clickhouse}/bin/clickhouse-server --config-file=/etc/clickhouse-server/config.xml";
         User = "clickhouse";
+        Group = "clickhouse";
         WorkingDirectory = cfg.dataDir;
         Restart = "always";
       };
     };
 
+    # Provide clickhouse-client + utilities system-wide
     environment.systemPackages = [ pkgs.clickhouse ];
   };
 }
