@@ -52,11 +52,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1743984625,
-        "narHash": "sha256-RRirGTwpWVN1R7X8kv1iE/RtVjqIl9W/bjnY9ZjzENY=",
+        "lastModified": 1744458893,
+        "narHash": "sha256-Fu0SO11NtQthWSWdVZYJuJNTcHHIvrxz+4UMBmw3otw=",
         "ref": "master",
-        "rev": "6b6493836c69529ed91258c1aef19c86f81020db",
-        "revCount": 4,
+        "rev": "d04e6b34752d9c378ad0523a6c01e3b245955d05",
+        "revCount": 5,
         "type": "git",
         "url": "ssh://git@github.com/SPRAGE/auth-server.git"
       },
