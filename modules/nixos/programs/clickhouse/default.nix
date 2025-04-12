@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   inherit (lib)
@@ -7,7 +12,8 @@ let
     mkIf
     types
     optionalString
-    concatStringsSep;
+    concatStringsSep
+    ;
 
   cfg = config.modules.programs.clickhouse;
 
@@ -59,50 +65,50 @@ let
   '';
 
   generatedConfigXml = pkgs.writeText "clickhouse-config.xml" ''
-    <clickhouse>
-      <logger>
-        <level>${if cfg.disableLogs then "none" else "information"}</level>
-        <console>false</console>
-        <log>/dev/null</log>
-        <errorlog>/dev/null</errorlog>
-      </logger>
+        <clickhouse>
+    <logger>
+      <level>${if cfg.disableLogs then "none" else "information"}</level>
+      <log>${cfg.dataDir}/ch_logs/clickhouse-server.log</log>
+      <errorlog>${cfg.dataDir}/ch_logs/clickhouse-server.err.log</errorlog>
+      <console>false</console>
+    </logger>
 
-      <path>${cfg.dataDir}/</path>
-      <tmp_path>${cfg.dataDir}/tmp/</tmp_path>
-      <user_files_path>${cfg.dataDir}/user_files/</user_files_path>
-      <format_schema_path>${cfg.dataDir}/format_schemas/</format_schema_path>
-      <custom_cached_disks_base_directory>${cfg.dataDir}/caches/</custom_cached_disks_base_directory>
+          <path>${cfg.dataDir}/</path>
+          <tmp_path>${cfg.dataDir}/tmp/</tmp_path>
+          <user_files_path>${cfg.dataDir}/user_files/</user_files_path>
+          <format_schema_path>${cfg.dataDir}/format_schemas/</format_schema_path>
+          <custom_cached_disks_base_directory>${cfg.dataDir}/caches/</custom_cached_disks_base_directory>
 
-      <user_directories>
-        <users_xml>
-          <path>users.xml</path>
-        </users_xml>
-        <local_directory>
-          <path>${cfg.dataDir}/access/</path>
-        </local_directory>
-      </user_directories>
+          <user_directories>
+            <users_xml>
+              <path>users.xml</path>
+            </users_xml>
+            <local_directory>
+              <path>${cfg.dataDir}/access/</path>
+            </local_directory>
+          </user_directories>
 
-      ${optionalString cfg.disableLogs ''
-        <query_log remove="1"/>
-        <trace_log remove="1"/>
-        <query_thread_log remove="1"/>
-        <query_views_log remove="1"/>
-        <part_log remove="1"/>
-        <text_log remove="1"/>
-        <metric_log remove="1"/>
-        <latency_log remove="1"/>
-        <error_log remove="1"/>
-        <query_metric_log remove="1"/>
-        <asynchronous_metric_log remove="1"/>
-        <opentelemetry_span_log remove="1"/>
-        <crash_log remove="1"/>
-        <processors_profile_log remove="1"/>
-        <asynchronous_insert_log remove="1"/>
-        <backup_log remove="1"/>
-        <s3queue_log remove="1"/>
-        <blob_storage_log remove="1"/>
-      ''}
-    </clickhouse>
+          ${optionalString cfg.disableLogs ''
+            <query_log remove="1"/>
+            <trace_log remove="1"/>
+            <query_thread_log remove="1"/>
+            <query_views_log remove="1"/>
+            <part_log remove="1"/>
+            <text_log remove="1"/>
+            <metric_log remove="1"/>
+            <latency_log remove="1"/>
+            <error_log remove="1"/>
+            <query_metric_log remove="1"/>
+            <asynchronous_metric_log remove="1"/>
+            <opentelemetry_span_log remove="1"/>
+            <crash_log remove="1"/>
+            <processors_profile_log remove="1"/>
+            <asynchronous_insert_log remove="1"/>
+            <backup_log remove="1"/>
+            <s3queue_log remove="1"/>
+            <blob_storage_log remove="1"/>
+          ''}
+        </clickhouse>
   '';
 in
 {
@@ -134,25 +140,27 @@ in
     };
 
     users = mkOption {
-      type = types.listOf (types.submodule {
-        options = {
-          name = mkOption {
-            type = types.str;
-            description = "Username for ClickHouse.";
-          };
+      type = types.listOf (
+        types.submodule {
+          options = {
+            name = mkOption {
+              type = types.str;
+              description = "Username for ClickHouse.";
+            };
 
-          hash = mkOption {
-            type = types.str;
-            description = "SHA-256 hashed password.";
-          };
+            hash = mkOption {
+              type = types.str;
+              description = "SHA-256 hashed password.";
+            };
 
-          profile = mkOption {
-            type = types.str;
-            default = "readonly";
-            description = "User profile (`default` or `readonly`).";
+            profile = mkOption {
+              type = types.str;
+              default = "readonly";
+              description = "User profile (`default` or `readonly`).";
+            };
           };
-        };
-      });
+        }
+      );
       default = [ ];
       description = "List of users with password hashes and optional profiles.";
     };
@@ -160,7 +168,7 @@ in
 
   config = mkIf cfg.enable {
     # System user and group
-    users.groups.clickhouse = {};
+    users.groups.clickhouse = { };
     users.users.clickhouse = {
       isSystemUser = true;
       group = "clickhouse";
