@@ -1,8 +1,15 @@
-{ config, lib, pkgs, inputs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}:
 
 let
   authServerPkg = inputs.auth-server.packages.${pkgs.system}.default;
-in {
+in
+{
   options.services.auth-server = {
     enable = lib.mkEnableOption "Rust-based Auth Server";
 
@@ -27,7 +34,7 @@ in {
       createHome = true;
     };
 
-    users.groups.auth = {};
+    users.groups.auth = { };
 
     environment.systemPackages = [ authServerPkg ];
 
@@ -39,12 +46,12 @@ in {
       wantedBy = [ "multi-user.target" ];
 
       serviceConfig = {
-        ExecStart =
-          lib.concatStringsSep " " (
-            [ "${authServerPkg}/bin/auth-server" ] ++
-            lib.optional (config.services.auth-server.configFile != null)
-              "--config ${config.services.auth-server.configFile}"
-          );
+        ExecStart = lib.concatStringsSep " " (
+          [ "${authServerPkg}/bin/auth-server" ]
+          ++ lib.optional (
+            config.services.auth-server.configFile != null
+          ) "--config ${config.services.auth-server.configFile}"
+        );
 
         Restart = "always";
         User = "pai";
