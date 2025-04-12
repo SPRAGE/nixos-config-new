@@ -152,21 +152,19 @@
         ];
       };
 
-      # personal = {
-      # };
+      personal = {
+        auth-server = {
+          enable = true;
+          package = inputs.auth-server.packages.${pkgs.system}.default;
+          port = 8443;
+        };
+      };
     };
     networking.optomizeTcp = true;
 
     boot = {
       enableKernelTweaks = true;
       impermanence.enable = false;
-    };
-  };
-  services = {
-    auth-server = {
-      enable = true;
-      package = inputs.auth-server.packages.${pkgs.system}.default;
-      port = 8443;
     };
   };
 
