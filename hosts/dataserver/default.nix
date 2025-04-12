@@ -129,6 +129,10 @@
         ];
       };
 
+      clickhouse = {
+        enable = true;
+      };
+
       # personal = {
       #   auth-server = {
       #     enable = true;
