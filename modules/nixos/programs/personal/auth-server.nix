@@ -1,10 +1,17 @@
-{ config, lib, pkgs, inputs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}:
 
 let
-  cfg = config.services.auth-server;
+  cfg = config.programs.personal.auth-server;
   authServerPkg = cfg.package or (throw "services.auth-server.package is required");
-in {
-  options.services.auth-server = {
+in
+{
+  options.programs.personal.auth-server = {
     enable = lib.mkEnableOption "Enable the Rust-based Auth Server";
 
     package = lib.mkOption {
@@ -26,7 +33,7 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    users.groups.auth = {};
+    users.groups.auth = { };
     users.users.auth = {
       isSystemUser = true;
       group = "auth";
@@ -46,7 +53,10 @@ in {
       serviceConfig = {
         ExecStart = lib.concatStringsSep " " (
           [ "${cfg.package}/bin/auth-server" ]
-          ++ lib.optionals (cfg.configFile != null) [ "--config" "${cfg.configFile}" ]
+          ++ lib.optionals (cfg.configFile != null) [
+            "--config"
+            "${cfg.configFile}"
+          ]
         );
 
         Restart = "on-failure";
