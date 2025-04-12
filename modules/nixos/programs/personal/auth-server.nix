@@ -7,11 +7,11 @@
 }:
 
 let
-  cfg = config.programs.personal.auth-server;
+  cfg = config.modules.programs.personal.auth-server;
   authServerPkg = cfg.package or (throw "services.auth-server.package is required");
 in
 {
-  options.programs.personal.auth-server = {
+  options.modules.programs.personal.auth-server = {
     enable = lib.mkEnableOption "Enable the Rust-based Auth Server";
 
     package = lib.mkOption {
