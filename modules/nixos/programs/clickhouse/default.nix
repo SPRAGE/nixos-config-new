@@ -65,50 +65,54 @@ let
   '';
 
   generatedConfigXml = pkgs.writeText "clickhouse-config.xml" ''
-        <clickhouse>
-    <logger>
-      <level>${if cfg.disableLogs then "none" else "information"}</level>
-      <log>${cfg.dataDir}/ch_logs/clickhouse-server.log</log>
-      <errorlog>${cfg.dataDir}/ch_logs/clickhouse-server.err.log</errorlog>
-      <console>false</console>
-    </logger>
+    <clickhouse>
+      <logger>
+        <level>${if cfg.disableLogs then "none" else "information"}</level>
+        <log>${cfg.dataDir}/ch_logs/clickhouse-server.log</log>
+        <errorlog>${cfg.dataDir}/ch_logs/clickhouse-server.err.log</errorlog>
+        <console>false</console>
+      </logger>
 
-          <path>${cfg.dataDir}/</path>
-          <tmp_path>${cfg.dataDir}/tmp/</tmp_path>
-          <user_files_path>${cfg.dataDir}/user_files/</user_files_path>
-          <format_schema_path>${cfg.dataDir}/format_schemas/</format_schema_path>
-          <custom_cached_disks_base_directory>${cfg.dataDir}/caches/</custom_cached_disks_base_directory>
+      <path>${cfg.dataDir}/</path>
+      <tmp_path>${cfg.dataDir}/tmp/</tmp_path>
+      <user_files_path>${cfg.dataDir}/user_files/</user_files_path>
+      <format_schema_path>${cfg.dataDir}/format_schemas/</format_schema_path>
+      <custom_cached_disks_base_directory>${cfg.dataDir}/caches/</custom_cached_disks_base_directory>
 
-          <user_directories>
-            <users_xml>
-              <path>users.xml</path>
-            </users_xml>
-            <local_directory>
-              <path>${cfg.dataDir}/access/</path>
-            </local_directory>
-          </user_directories>
+      <user_directories>
+        <users_xml>
+          <path>users.xml</path>
+        </users_xml>
+        <local_directory>
+          <path>${cfg.dataDir}/access/</path>
+        </local_directory>
+      </user_directories>
 
-          ${optionalString cfg.disableLogs ''
-            <query_log remove="1"/>
-            <trace_log remove="1"/>
-            <query_thread_log remove="1"/>
-            <query_views_log remove="1"/>
-            <part_log remove="1"/>
-            <text_log remove="1"/>
-            <metric_log remove="1"/>
-            <latency_log remove="1"/>
-            <error_log remove="1"/>
-            <query_metric_log remove="1"/>
-            <asynchronous_metric_log remove="1"/>
-            <opentelemetry_span_log remove="1"/>
-            <crash_log remove="1"/>
-            <processors_profile_log remove="1"/>
-            <asynchronous_insert_log remove="1"/>
-            <backup_log remove="1"/>
-            <s3queue_log remove="1"/>
-            <blob_storage_log remove="1"/>
-          ''}
-        </clickhouse>
+      <tcp_port>9000</tcp_port>
+      <http_port>8123</http_port>
+      <listen_host>0.0.0.0</listen_host>
+      # <listen_host>::1</listen_host>
+      ${optionalString cfg.disableLogs ''
+        <query_log remove="1"/>
+        <trace_log remove="1"/>
+        <query_thread_log remove="1"/>
+        <query_views_log remove="1"/>
+        <part_log remove="1"/>
+        <text_log remove="1"/>
+        <metric_log remove="1"/>
+        <latency_log remove="1"/>
+        <error_log remove="1"/>
+        <query_metric_log remove="1"/>
+        <asynchronous_metric_log remove="1"/>
+        <opentelemetry_span_log remove="1"/>
+        <crash_log remove="1"/>
+        <processors_profile_log remove="1"/>
+        <asynchronous_insert_log remove="1"/>
+        <backup_log remove="1"/>
+        <s3queue_log remove="1"/>
+        <blob_storage_log remove="1"/>
+      ''}
+    </clickhouse>
   '';
 in
 {
