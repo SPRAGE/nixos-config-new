@@ -74,6 +74,7 @@ in
         ProtectHome = true;
         PrivateTmp = true;
         NoNewPrivileges = true;
+        Environment = "LD_LIBRARY_PATH=${pkgs.openssl.out}/lib";
       };
     };
 
