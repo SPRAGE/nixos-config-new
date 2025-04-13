@@ -83,7 +83,13 @@
   networking = {
     hostName = "datasever";
     interfaces.enp2s0.wakeOnLan.enable = true;
-    firewall.allowedTCPPorts = [ 8443 ];
+    firewall.allowedTCPPorts = [
+      8443 # auth-server
+      6379 # redis
+      8123 # ch http
+      9000 # ch native
+
+    ];
 
   };
 
