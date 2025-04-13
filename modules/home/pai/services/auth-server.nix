@@ -1,33 +1,43 @@
-{
-  config,
-  lib,
-  pkgs,
-  auth-server,
-  ...
-}:
+{ config, lib, pkgs, ... }:
 
 let
+  inherit (lib) mkIf mkEnableOption mkOption types;
   cfg = config.modules.services.auth-server;
 in
 {
   options.modules.services.auth-server = {
-    enable = lib.mkEnableOption "Enable the Rust Auth Server";
+    enable = mkEnableOption "Enable Rust-based Auth Server as a user service";
+
+    package = mkOption {
+      type = types.package;
+      description = "The auth-server package to run.";
+    };
+
+    configFile = mkOption {
+      type = types.nullOr types.path;
+      default = null;
+      description = "Optional TOML config file for auth-server.";
+    };
   };
 
-  config = lib.mkIf cfg.enable {
-    home.packages = [
-      auth-server.packages.${pkgs.system}.default
-    ];
-
+  config = mkIf cfg.enable {
     systemd.user.services.auth-server = {
       Unit = {
-        Description = "Rust Auth Server";
+        Description = "User-space Rust Auth Server";
         After = [ "network.target" ];
       };
+
       Service = {
-        ExecStart = "${auth-server.packages.${pkgs.system}.default}/bin/auth-server";
+        ExecStart = lib.concatStringsSep " " (
+          [ "${cfg.package}/bin/auth-server" ]
+          ++ lib.optionals (cfg.configFile != null) [
+            "--config" "${cfg.configFile}"
+          ]
+        );
         Restart = "on-failure";
+        Environment = "LD_LIBRARY_PATH=${pkgs.openssl.out}/lib";
       };
+
       Install = {
         WantedBy = [ "default.target" ];
       };

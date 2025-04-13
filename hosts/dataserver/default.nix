@@ -107,7 +107,7 @@
         karan = [ "sambashare" ];
 
       };
-      autoLogin = false;
+      autoLogin = true;
     };
     programs = {
       valkey = {
@@ -152,14 +152,14 @@
         ];
       };
 
-      personal = {
-        auth-server = {
-          enable = true;
-          package = inputs.auth-server.packages.${pkgs.system}.default;
-          port = 8443;
-          runAsUser = "personal";
-        };
-      };
+      # personal = {
+      #   auth-server = {
+      #     enable = true;
+      #     package = inputs.auth-server.packages.${pkgs.system}.default;
+      #     port = 8443;
+      #     runAsUser = "personal";
+      #   };
+      # };
     };
     networking.optomizeTcp = true;
 

@@ -2,7 +2,7 @@
   imports = [
     ./thunar.nix
     ./valkey
-    ./personal
+    # ./personal
     ./clickhouse
   ];
 }
