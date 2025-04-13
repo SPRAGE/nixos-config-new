@@ -83,6 +83,8 @@
   networking = {
     hostName = "datasever";
     interfaces.enp2s0.wakeOnLan.enable = true;
+    firewall.allowedTCPPorts = [ 8443 ];
+
   };
 
   virtualisation.docker = {
@@ -159,7 +161,7 @@
       #     port = 8443;
       #     runAsUser = "personal";
       #   };
-      # };
+      u# };
     };
     networking.optomizeTcp = true;
 
