@@ -1,7 +1,17 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
-  inherit (lib) mkIf mkEnableOption mkOption types;
+  inherit (lib)
+    mkIf
+    mkEnableOption
+    mkOption
+    types
+    ;
   cfg = config.modules.services.auth-server;
 in
 {
@@ -31,11 +41,16 @@ in
         ExecStart = lib.concatStringsSep " " (
           [ "${cfg.package}/bin/auth-server" ]
           ++ lib.optionals (cfg.configFile != null) [
-            "--config" "${cfg.configFile}"
+            "--config"
+            "${cfg.configFile}"
           ]
         );
         Restart = "on-failure";
-        Environment = "LD_LIBRARY_PATH=${pkgs.openssl.out}/lib";
+        Environment = [
+          "LD_LIBRARY_PATH=${pkgs.openssl.out}/lib"
+          "RUST_LOG=error"
+
+        ];
       };
 
       Install = {
