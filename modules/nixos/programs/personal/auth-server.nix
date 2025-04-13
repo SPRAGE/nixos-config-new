@@ -3,6 +3,9 @@
 let
   cfg = config.modules.programs.personal.auth-server;
   authServerPkg = cfg.package or (throw "modules.programs.personal.auth-server.package is required");
+
+  userExists = builtins.hasAttr cfg.runAsUser config.users.users;
+  groupExists = builtins.hasAttr cfg.runAsUser config.users.groups;
 in
 {
   options.modules.programs.personal.auth-server = {
@@ -32,45 +35,50 @@ in
     };
   };
 
-  config = lib.mkIf cfg.enable {
-    users.groups.${cfg.runAsUser} = { };
-    users.users.${cfg.runAsUser} = {
-      isSystemUser = true;
-      group = cfg.runAsUser;
-      home = "/var/lib/auth-server";
-      createHome = true;
-    };
-
-    environment.systemPackages = [ cfg.package ];
-
-    networking.firewall.allowedTCPPorts = [ cfg.port ];
-
-    systemd.services.auth-server = {
-      description = "Rust Auth Server";
-      after = [ "network.target" ];
-      wantedBy = [ "multi-user.target" ];
-
-      serviceConfig = {
-        ExecStart = lib.concatStringsSep " " (
-          [ "${cfg.package}/bin/auth-server" ]
-          ++ lib.optionals (cfg.configFile != null) [
-            "--config"
-            "${cfg.configFile}"
-          ]
-        );
-
-        Restart = "on-failure";
-        User = cfg.runAsUser;
-        Group = cfg.runAsUser;
-
-        WorkingDirectory = "/var/lib/auth-server";
-        StateDirectory = "auth-server";
-
-        Environment = "LD_LIBRARY_PATH=${pkgs.openssl.out}/lib";
-
-        StandardOutput = "journal";
-        StandardError = "journal";
+  config = lib.mkIf cfg.enable (
+    {
+      # Conditionally add the user and group if not already defined
+    } // (lib.optionalAttrs (!groupExists) {
+      users.groups.${cfg.runAsUser} = { };
+    }) // (lib.optionalAttrs (!userExists) {
+      users.users.${cfg.runAsUser} = {
+        isSystemUser = true;
+        group = cfg.runAsUser;
+        home = "/var/lib/auth-server";
+        createHome = true;
       };
-    };
-  };
+    }) // {
+      environment.systemPackages = [ cfg.package ];
+
+      networking.firewall.allowedTCPPorts = [ cfg.port ];
+
+      systemd.services.auth-server = {
+        description = "Rust Auth Server";
+        after = [ "network.target" ];
+        wantedBy = [ "multi-user.target" ];
+
+        serviceConfig = {
+          ExecStart = lib.concatStringsSep " " (
+            [ "${cfg.package}/bin/auth-server" ]
+            ++ lib.optionals (cfg.configFile != null) [
+              "--config"
+              "${cfg.configFile}"
+            ]
+          );
+
+          Restart = "on-failure";
+          User = cfg.runAsUser;
+          Group = cfg.runAsUser;
+
+          WorkingDirectory = "/var/lib/auth-server";
+          StateDirectory = "auth-server";
+
+          Environment = "LD_LIBRARY_PATH=${pkgs.openssl.out}/lib";
+
+          StandardOutput = "journal";
+          StandardError = "journal";
+        };
+      };
+    }
+  );
 }
