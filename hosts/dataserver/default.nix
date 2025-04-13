@@ -157,6 +157,7 @@
           enable = true;
           package = inputs.auth-server.packages.${pkgs.system}.default;
           port = 8443;
+          runAsUser = "pai";
         };
       };
     };

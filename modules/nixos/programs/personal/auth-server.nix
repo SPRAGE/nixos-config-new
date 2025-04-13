@@ -1,14 +1,8 @@
-{
-  config,
-  lib,
-  pkgs,
-  inputs,
-  ...
-}:
+{ config, lib, pkgs, inputs, ... }:
 
 let
   cfg = config.modules.programs.personal.auth-server;
-  authServerPkg = cfg.package or (throw "services.auth-server.package is required");
+  authServerPkg = cfg.package or (throw "modules.programs.personal.auth-server.package is required");
 in
 {
   options.modules.programs.personal.auth-server = {
@@ -30,13 +24,19 @@ in
       default = 8443;
       description = "Port to expose for incoming HTTPS requests.";
     };
+
+    runAsUser = lib.mkOption {
+      type = lib.types.str;
+      default = "auth";
+      description = "User under which the auth server should run.";
+    };
   };
 
   config = lib.mkIf cfg.enable {
-    users.groups.auth = { };
-    users.users.auth = {
+    users.groups.${cfg.runAsUser} = { };
+    users.users.${cfg.runAsUser} = {
       isSystemUser = true;
-      group = "auth";
+      group = cfg.runAsUser;
       home = "/var/lib/auth-server";
       createHome = true;
     };
@@ -60,14 +60,12 @@ in
         );
 
         Restart = "on-failure";
-        User = "auth";
-        Group = "auth";
+        User = cfg.runAsUser;
+        Group = cfg.runAsUser;
 
-        # Runtime dirs
         WorkingDirectory = "/var/lib/auth-server";
         StateDirectory = "auth-server";
 
-        # For OpenSSL dynamic linking
         Environment = "LD_LIBRARY_PATH=${pkgs.openssl.out}/lib";
 
         StandardOutput = "journal";
