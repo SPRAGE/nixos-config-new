@@ -157,6 +157,10 @@
           enable = true;
           package = inputs.auth-server.packages.${pkgs.system}.default;
           port = 8443;
+<<<<<<< HEAD
+=======
+          runAsUser = "personal";
+>>>>>>> 29ac01c (Feat: Analysis server)
         };
       };
     };
