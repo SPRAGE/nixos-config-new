@@ -86,6 +86,9 @@
     analysis-server = {
       url = "git+ssh://git@github.com/SPRAGE/analysis-server.git?ref=main";
     };
+    ingestion-server = {
+      url = "git+ssh://git@github.com/SPRAGE/ingestion-service.git?ref=main";
+    };
   };
 
   outputs =
@@ -115,7 +118,10 @@
       perSystem =
         { pkgs, system, ... }:
         {
-          packages.auth-server = inputs.auth-server.packages.${system}.default;
+          # packages.auth-server = inputs.auth-server.packages.${system}.default;
+          # packages.analysis-server = inputs.auth-server.packages.${system}.default;
+          # packages.ingestion-server = inputs.auth-server.packages.${system}.ingestion-server;
+          #
         };
 
       flake = {

@@ -29,6 +29,11 @@ in
         package = inputs.analysis-server.packages.${pkgs.system}.default;
         configFile = null; # or ./config.toml
       };
+      ingestion-server = {
+        enable = true;
+        package = inputs.ingestion-server.packages.${pkgs.system}.ingestion-server;
+        configFile = null; # or ./config.toml
+      };
 
       valkey = {
         enable = true;
