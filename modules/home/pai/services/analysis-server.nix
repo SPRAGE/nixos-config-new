@@ -49,7 +49,7 @@ in
         Restart = "on-failure";
         Environment = [
           "LD_LIBRARY_PATH=${pkgs.openssl.out}/lib"
-          "RUST_LOG=info"
+          "RUST_LOG=warn"
         ];
       };
 
