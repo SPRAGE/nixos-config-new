@@ -24,6 +24,11 @@ in
         package = inputs.auth-server.packages.${pkgs.system}.default;
         configFile = null; # or ./config.toml
       };
+      analysis-server = {
+        enable = true;
+        package = inputs.analysis-server.packages.${pkgs.system}.default;
+        configFile = null; # or ./config.toml
+      };
 
       valkey = {
         enable = true;
@@ -44,13 +49,12 @@ in
 
         disableDefaultUser = true;
       };
-    
 
-    clickhouse = {
-      enable = true;
-      listenHost = "0.0.0.0";
-      dataDir = "/mnt/shaun/clickhouse";
-      users = [
+      clickhouse = {
+        enable = true;
+        listenHost = "0.0.0.0";
+        dataDir = "/mnt/shaun/clickhouse";
+        users = [
           {
             name = "shaun";
             hash = "5060a3874499a874ae0e6d3d8b576121037d322e97de5632c8726e94c480ae86";
