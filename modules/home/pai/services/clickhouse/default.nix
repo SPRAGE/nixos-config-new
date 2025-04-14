@@ -188,7 +188,7 @@ in {
 
       Service = {
         ExecStart = "${pkgs.clickhouse}/bin/clickhouse-server --config-file=${configDir}/config.xml";
-        WorkingDirectory = dataDir;
+        # WorkingDirectory = dataDir;
         Restart = "always";
       };
 
