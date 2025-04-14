@@ -1,6 +1,5 @@
 {
   imports = [
     ./thunar.nix
-    ./clickhouse
   ];
 }
