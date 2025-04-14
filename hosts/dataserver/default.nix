@@ -87,7 +87,9 @@
       8443 # auth-server
       6379 # redis
       8123 # ch http
-      9000 # ch native
+      9000 # Native TCP protocol (clickhouse-client)
+      8123 # HTTP API
+      9009 # Interserver communication (for clusters)
 
     ];
 
@@ -118,24 +120,7 @@
       autoLogin = true;
     };
     programs = {
-      # valkey = {
-      #   enable = true;
-      #   # configFile = ./valkey.conf;
-      #   dataDir = "/var/lib/valkey";
-      #   disableDefaultUser = true;
-      #   users = [
-      #     {
-      #       name = "read";
-      #       hash = "8877c58975fc1f061338418bc0424b5b08c95ff412dc08a68cfa879f45dbbf10"; # sha256
-      #       acl = "~readonly:* +get +info";
-      #     }
-      #     {
-      #       name = "shaun";
-      #       hash = "a65aaf4f6cd6b72db0280c4f4f0abdee8d65ec047e4a21b7fadb0a4f89f3fb52"; # sha256
-      #       acl = "allcommands allkeys";
-      #     }
-      #   ];
-      # };
+      
       clickhouse = {
         enable = true;
         dataDir = "/mnt/shaun/clickhouse-data";
