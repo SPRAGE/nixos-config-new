@@ -44,7 +44,7 @@ in
 
         disableDefaultUser = true;
       };
-    };
+    
 
     clickhouse = {
       enable = true;
@@ -68,7 +68,7 @@ in
           }
         ];
 
+      };
     };
-
   };
 }
