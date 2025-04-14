@@ -28,7 +28,7 @@ in
       valkey = {
         enable = true;
         port = 6379;
-        bind = [ "192.168.0.x" ];
+        bind = [ "*" ];
         aclUsers = [
           {
             name = "read";

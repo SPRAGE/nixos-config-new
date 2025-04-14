@@ -1,9 +1,4 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ config, lib, pkgs, ... }:
 
 let
   inherit (lib)
@@ -11,20 +6,40 @@ let
     mkOption
     mkIf
     types
-    concatStringsSep
-    optionals
-    ;
+    concatStringsSep;
+
   cfg = config.modules.services.valkey;
+
+  aclFilePath = "${config.xdg.configHome}/valkey/users.acl";
+  confFilePath = "${config.xdg.configHome}/valkey/valkey.conf";
+
+  generatedConf = ''
+    bind ${concatStringsSep " " cfg.bind}
+    port ${toString cfg.port}
+    dir ${cfg.dataDir}
+    logfile "${cfg.dataDir}/valkey.log"
+    pidfile "${cfg.dataDir}/valkey.pid"
+    aclfile ${aclFilePath}
+
+    # Disable persistence
+    save ""
+    appendonly no
+
+    daemonize no
+    databases 16
+    always-show-logo no
+    lazyfree-lazy-eviction yes
+    lazyfree-lazy-expire yes
+    lazyfree-lazy-server-del yes
+    replica-lazy-flush yes
+    lazyfree-lazy-user-del yes
+    lazyfree-lazy-user-flush yes
+  '';
+
 in
 {
   options.modules.services.valkey = {
     enable = mkEnableOption "Enable Valkey (user-level)";
-
-    configFile = mkOption {
-      type = types.nullOr types.path;
-      default = null;
-      description = "Optional custom valkey.conf to use. If null, one is generated.";
-    };
 
     dataDir = mkOption {
       type = types.str;
@@ -35,13 +50,13 @@ in
     port = mkOption {
       type = types.port;
       default = 6379;
-      description = "Port to listen on.";
+      description = "Port Valkey should listen on.";
     };
 
     bind = mkOption {
       type = types.listOf types.str;
       default = [ "127.0.0.1" ];
-      description = "List of IPs to bind to.";
+      description = "IP addresses Valkey should bind to.";
     };
 
     aclUsers = mkOption {
@@ -81,26 +96,19 @@ in
       mkdir -p ${cfg.dataDir}
     '';
 
-    # Optionally generate ACL file
+    # Generate ACL file
     xdg.configFile."valkey/users.acl".text = mkIf (cfg.aclUsers != [ ] || cfg.disableDefaultUser) (
       let
         userLines = map (u: "user ${u.name} on #${u.hash} ${u.acl}") cfg.aclUsers;
         defaultLine = if cfg.disableDefaultUser then [ "user default off" ] else [ ];
       in
-      concatStringsSep "\n" (defaultLine ++ userLines)
+        concatStringsSep "\n" (defaultLine ++ userLines)
     );
 
-    # Optionally generate config file
-    xdg.configFile."valkey/valkey.conf".text = mkIf (cfg.configFile == null) ''
-      bind ${concatStringsSep " " cfg.bind}
-      port ${toString cfg.port}
-      dir ${cfg.dataDir}
-      logfile "${cfg.dataDir}/valkey.log"
-      pidfile "${cfg.dataDir}/valkey.pid"
-      aclfile ${config.xdg.configHome}/valkey/users.acl
-    '';
+    # Generate full valkey.conf dynamically
+    xdg.configFile."valkey/valkey.conf".text = generatedConf;
 
-    # Valkey user service
+    # User-level Valkey systemd service
     systemd.user.services.valkey = {
       Unit = {
         Description = "Valkey user-level key-value store";
@@ -108,11 +116,7 @@ in
       };
 
       Service = {
-        ExecStart = lib.concatStringsSep " " (
-          [ "${pkgs.valkey}/bin/valkey-server" ]
-          ++ optionals (cfg.configFile != null) [ "${cfg.configFile}" ]
-          ++ optionals (cfg.configFile == null) [ "${config.xdg.configHome}/valkey/valkey.conf" ]
-        );
+        ExecStart = "${pkgs.valkey}/bin/valkey-server ${confFilePath}";
         WorkingDirectory = cfg.dataDir;
         Restart = "on-failure";
       };
