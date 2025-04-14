@@ -49,7 +49,7 @@ in
     clickhouse = {
       enable = true;
       listenHost = "0.0.0.0";
-      dataDir = "/mnt/shaun/clickhouse"
+      dataDir = "/mnt/shaun/clickhouse";
       users = [
           {
             name = "shaun";
