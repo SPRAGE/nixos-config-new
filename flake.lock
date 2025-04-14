@@ -74,11 +74,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1744463927,
-        "narHash": "sha256-ZQQQkOSlbJz0s7e+c7TZ6reMn2uLuJEk54fRSkEeF68=",
+        "lastModified": 1744598077,
+        "narHash": "sha256-3F6KM4L58kw15I46pL6qI57pG+I759UjcOcp+fNinYw=",
         "ref": "master",
-        "rev": "8d8c8005fe29f8ebbda2ccabf4c11ee0160a7f22",
-        "revCount": 6,
+        "rev": "14b3ecf221d94c69b251d73fd83e6cb5b4c400bc",
+        "revCount": 8,
         "type": "git",
         "url": "ssh://git@github.com/SPRAGE/auth-server.git"
       },
@@ -651,11 +651,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1744498625,
-        "narHash": "sha256-pL52uCt9CUoTTmysGG91c2FeU7XUvpB7Cep6yon2vDk=",
+        "lastModified": 1744584414,
+        "narHash": "sha256-uk9NgZvkTkHEuTdnZ2GGO/Y4q4sbHdAMzPPoASpIpWo=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "db56335ca8942d86f2200664acdbd5b9212b26ad",
+        "rev": "ac3c1f4fa40497b07f1f3ea3c4f644ce5dbcd2a4",
         "type": "github"
       },
       "original": {
@@ -1282,11 +1282,11 @@
         "tinted-zed": "tinted-zed"
       },
       "locked": {
-        "lastModified": 1744270948,
-        "narHash": "sha256-+1psY8uBaDdkqV/P3G40SzulPvUcb9VHisqQnDozC0U=",
+        "lastModified": 1744572782,
+        "narHash": "sha256-CFNluxLqxmDPQYxi37nBd4wrpB0lI4Os8nRA7UWAJK0=",
         "owner": "danth",
         "repo": "stylix",
-        "rev": "ce45f19e8acb43e5f02888d873d451e2f994546b",
+        "rev": "042db377bccc99b1a724b076c89ba803e411d889",
         "type": "github"
       },
       "original": {
