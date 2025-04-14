@@ -119,33 +119,7 @@
       };
       autoLogin = true;
     };
-    # programs = {
-      
-    #   clickhouse = {
-    #     enable = true;
-    #     dataDir = "/mnt/shaun/clickhouse-data";
-    #     disableLogs = true;
 
-    #     users = [
-    #       {
-    #         name = "shaun";
-    #         hash = "5060a3874499a874ae0e6d3d8b576121037d322e97de5632c8726e94c480ae86";
-    #         profile = "default";
-    #       }
-    #       {
-    #         name = "default";
-    #         hash = "62362d60d7efa6e6844e5ad8621bd5fa57b573d0435e339c1f77feb28ae07cfe";
-    #         profile = "readonly";
-    #       }
-    #       {
-    #         name = "read";
-    #         hash = "62362d60d7efa6e6844e5ad8621bd5fa57b573d0435e339c1f77feb28ae07cfe";
-    #         profile = "readonly";
-    #       }
-    #     ];
-    #   };
-
-    # };
     networking.optomizeTcp = true;
 
     boot = {

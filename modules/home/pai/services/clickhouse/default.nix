@@ -172,6 +172,10 @@ in {
 
   config = mkIf cfg.enable {
     home.packages = [ pkgs.clickhouse ];
+    home.activation.createClickhouseDataDir = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        mkdir -p '${cfg.dataDir}'
+        '';
+
 
     xdg.configFile."clickhouse/config.xml".source = generatedConfigXml;
     xdg.configFile."clickhouse/users.xml".source = generatedUsersXml;
