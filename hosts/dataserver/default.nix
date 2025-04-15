@@ -90,6 +90,8 @@
       9000 # Native TCP protocol (clickhouse-client)
       8123 # HTTP API
       9009 # Interserver communication (for clusters)
+      50001 # analysis server
+      50002 # ingestion server
 
     ];
 
