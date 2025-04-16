@@ -30,6 +30,12 @@ in
       default = null;
       description = "Optional path to the TOML config file used by ingestion-server.";
     };
+
+    rustLogLevel = mkOption {
+      type = types.str;
+      default = "warn";
+      description = "The log level for the RUST_LOG environment variable (e.g., debug, info, warn, error).";
+    };
   };
 
   config = mkIf cfg.enable {
@@ -51,7 +57,7 @@ in
         Restart = "on-failure";
         Environment = [
           "LD_LIBRARY_PATH=${pkgs.openssl.out}/lib"
-          "RUST_LOG=warn"
+          "RUST_LOG=${cfg.rustLogLevel}"
         ];
       };
 
