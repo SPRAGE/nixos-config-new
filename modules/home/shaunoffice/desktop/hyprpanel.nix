@@ -82,7 +82,7 @@ in
           workspaces = 1;
           monitorSpecific = false;
           hideUnoccupied = true;
-          showApplicationIcons = true;
+          showApplicationIcons = false;
           showWsIcons = true;
           ignored = "98";
         };
