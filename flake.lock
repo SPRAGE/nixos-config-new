@@ -769,11 +769,11 @@
         "nixpkgs": "nixpkgs_5"
       },
       "locked": {
-        "lastModified": 1744763768,
-        "narHash": "sha256-apZEAq4o7I0QgZPc+JVc7M1w5TEX0X40xTXdNAWMotI=",
+        "lastModified": 1744763884,
+        "narHash": "sha256-8+J9CuOtdLM/VXHVLGOGQSG+3riWsGrfvL6lNNOZ0s8=",
         "ref": "main",
-        "rev": "96fd81bafd2e62724d473b0a639cb76b03efa244",
-        "revCount": 17,
+        "rev": "3b37e1431d109fb877c11d7a17fe49ee9d27ebb3",
+        "revCount": 18,
         "type": "git",
         "url": "ssh://git@github.com/SPRAGE/ingestion-service.git"
       },
