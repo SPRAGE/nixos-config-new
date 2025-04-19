@@ -11,7 +11,7 @@ let
 
   cfg = config.modules.services.clickhouse;
 
-  dataDir = "${config.home.homeDirectory}/.local/share/clickhouse";
+  dataDir = cfg.dataDir;
   configDir = "${config.xdg.configHome}/clickhouse";
 
   generatedUsersXml = pkgs.writeText "clickhouse-users.xml" ''
