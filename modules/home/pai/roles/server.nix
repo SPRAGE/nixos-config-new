@@ -35,6 +35,12 @@ in
         configFile = null; # or ./config.toml
         rustLogLevel = "debug";
       };
+      historical-data-updater = {
+        enable = true;
+        package = inputs.ingestion-server.packages.${pkgs.system}.historical-data-updater;
+        configFile = null; # or ./config.toml
+        rustLogLevel = "debug";
+      };
 
       valkey = {
         enable = true;
