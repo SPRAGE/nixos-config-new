@@ -48,12 +48,15 @@ in
       };
 
       Service = {
-        ExecStartPre = "${pkgs.bash}/bin/bash -c " + lib.escapeShellArg ''
-  set -eux
-  export PATH="${lib.makeBinPath [ pkgs.apacheKafka pkgs.coreutils pkgs.gnused pkgs.gnugrep ]}:$PATH"
+        ExecStartPre = ''
   mkdir -p "${cfg.dataDir}/logs"
 
-  cat > "${cfg.dataDir}/kraft.properties" <<EOF
+  cat > "${cfg.dataDir}/init-kraft.sh" <<EOF
+#!${pkgs.bash}/bin/bash
+set -eux
+export PATH="${lib.makeBinPath [ pkgs.apacheKafka pkgs.coreutils pkgs.gnused pkgs.gnugrep ]}:$PATH"
+
+cat > "${cfg.dataDir}/kraft.properties" <<EOC
 process.roles=broker,controller
 node.id=${toString cfg.nodeId}
 controller.quorum.voters=${toString cfg.nodeId}@${cfg.hostIp}:${toString cfg.controllerPort}
@@ -69,15 +72,20 @@ num.io.threads=8
 log.retention.hours=1
 log.retention.check.interval.ms=300000
 message.max.bytes=20971520
+EOC
+
+if [ ! -f "${cfg.dataDir}/logs/meta.properties" ]; then
+  kafka-storage.sh format \
+    --cluster-id=${cfg.clusterId} \
+    --config "${cfg.dataDir}/kraft.properties" \
+    --ignore-formatted
+fi
 EOF
 
-  if [ ! -f "${cfg.dataDir}/logs/meta.properties" ]; then
-    kafka-storage.sh format \
-      --cluster-id=${cfg.clusterId} \
-      --config "${cfg.dataDir}/kraft.properties" \
-      --ignore-formatted
-  fi
+  chmod +x "${cfg.dataDir}/init-kraft.sh"
 '';
+
+ExecStartPre = "${cfg.dataDir}/init-kraft.sh";
 
         ExecStart = "${pkgs.apacheKafka}/bin/kafka-server-start ${cfg.dataDir}/kraft.properties";
         Restart = "always";
