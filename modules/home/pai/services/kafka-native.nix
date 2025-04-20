@@ -4,32 +4,29 @@ let
   inherit (lib)
     mkEnableOption mkOption mkIf types;
   cfg = config.modules.services.kafkaKRaft;
-in {
+in
+{
   options.modules.services.kafkaKRaft = {
-    enable = mkEnableOption "Enable Kafka 4.x in KRaft (no Zookeeper) mode";
+    enable = mkEnableOption "Run Kafka 4.x in KRaft mode without Zookeeper";
 
     dataDir = mkOption {
       type = types.path;
       default = "${config.home.homeDirectory}/.local/share/kafka-kraft";
-      description = "Kafka data directory";
     };
 
     nodeId = mkOption {
       type = types.int;
       default = 1;
-      description = "Unique node ID for this Kafka broker";
     };
 
     clusterId = mkOption {
       type = types.str;
-      default = "MkCluster-KRaft-Test"; # You can generate with uuidgen if needed
-      description = "Kafka KRaft cluster ID";
+      default = "kraft-cluster-id"; # Can generate via `uuidgen` if desired
     };
 
     hostIp = mkOption {
       type = types.str;
       default = "127.0.0.1";
-      description = "Host IP to bind and advertise for external Kafka connections";
     };
 
     kafkaPort = mkOption {
@@ -46,41 +43,17 @@ in {
   config = mkIf cfg.enable {
     systemd.user.services.kafka = {
       Unit = {
-        Description = "Apache Kafka 4.x (KRaft mode)";
+        Description = "Apache Kafka 4.x (KRaft)";
         After = [ "network.target" ];
       };
 
       Service = {
-       ExecStartPre = ''
-        ${pkgs.coreutils}/bin/mkdir -p ${cfg.dataDir}/logs
+        ExecStartPre = ''
+          export PATH=${lib.makeBinPath [ pkgs.apacheKafka pkgs.coreutils pkgs.gnused pkgs.gnugrep ]}
+          mkdir -p "${cfg.dataDir}/logs"
 
-        if [ ! -f ${cfg.dataDir}/logs/meta.properties ]; then
-          echo "Bootstrapping Kafka KRaft metadata..."
-          ${pkgs.apacheKafka}/bin/kafka-storage.sh format \
-            --ignore-formatted \
-            --cluster-id=${cfg.clusterId} \
-            --config ${cfg.dataDir}/kraft.properties
-        fi
-      '';
-
-        ExecStart = "${pkgs.apacheKafka}/bin/kafka-server-start.sh ${cfg.dataDir}/kraft.properties";
-
-        Restart = "always";
-
-        Environment = [
-          "PATH=${lib.makeBinPath [ pkgs.apacheKafka pkgs.coreutils pkgs.gnused pkgs.gnugrep ]}"
-        ];
-      };
-
-      Install = {
-        WantedBy = [ "default.target" ];
-      };
-    };
-
-    home.activation.kafkaKRaftConfig = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-      mkdir -p "${cfg.dataDir}"
-
-      cat > "${cfg.dataDir}/kraft.properties" <<EOF
+          echo "Generating kraft.properties..."
+          cat > "${cfg.dataDir}/kraft.properties" <<EOF
 process.roles=broker,controller
 node.id=${toString cfg.nodeId}
 controller.quorum.voters=${toString cfg.nodeId}@${cfg.hostIp}:${toString cfg.controllerPort}
@@ -97,6 +70,26 @@ log.retention.hours=1
 log.retention.check.interval.ms=300000
 message.max.bytes=20971520
 EOF
-    '';
+
+          if [ ! -f "${cfg.dataDir}/logs/meta.properties" ]; then
+            echo "Formatting storage with kafka-storage.sh..."
+            kafka-storage.sh format \
+              --cluster-id=${cfg.clusterId} \
+              --config "${cfg.dataDir}/kraft.properties" \
+              --ignore-formatted
+          fi
+        '';
+
+        ExecStart = "${pkgs.apacheKafka}/bin/kafka-server-start.sh ${cfg.dataDir}/kraft.properties";
+        Restart = "always";
+        Environment = [
+          "PATH=${lib.makeBinPath [ pkgs.apacheKafka pkgs.coreutils pkgs.gnused pkgs.gnugrep ]}"
+        ];
+      };
+
+      Install = {
+        WantedBy = [ "default.target" ];
+      };
+    };
   };
 }

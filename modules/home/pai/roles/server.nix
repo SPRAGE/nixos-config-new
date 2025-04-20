@@ -88,7 +88,7 @@ in
       kafkaKRaft = {
         enable = true;
         dataDir = "/mnt/shaun/kafka-kraft";
-        clusterId = "MyKafkaClusterShaun"; # Optional: you can use `uuidgen` for randomness
+        clusterId = "63c32934-29e7-448b-8de3-da94924282f6"; # Optional: you can use `uuidgen` for randomness
         hostIp = "192.168.0.7";
       };
       # kafkaUiDocker = {
