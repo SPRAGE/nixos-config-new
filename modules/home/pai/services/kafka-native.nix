@@ -48,6 +48,9 @@ in
       Service = {
         ExecStart = "${pkgs.zookeeper}/bin/zkServer.sh start-foreground ${cfg.dataDir}/zoo.cfg";
         Restart = "always";
+        Environment = [
+          "PATH=${lib.makeBinPath [ pkgs.zookeeper pkgs.coreutils pkgs.gnused pkgs.gnugrep ]}"
+        ];
       };
 
       Install = {
