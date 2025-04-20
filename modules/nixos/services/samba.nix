@@ -33,7 +33,6 @@ in
   config = lib.mkIf cfg.enable {
     services.samba = {
       enable = true;
-      securityType = "user";
       openFirewall = true;
 
       settings = {
@@ -46,6 +45,7 @@ in
           "hosts deny" = "0.0.0.0/0";
           "guest account" = "nobody";
           "map to guest" = "bad user";
+          "security" = "user";
         };
 
         # Generate shares from cfg.shares
