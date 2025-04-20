@@ -51,16 +51,17 @@ in {
       };
 
       Service = {
-        ExecStartPre = ''
-          ${pkgs.coreutils}/bin/mkdir -p ${cfg.dataDir}
-          if [ ! -f ${cfg.dataDir}/meta.properties ]; then
-            echo "Bootstrapping Kafka KRaft metadata..."
-            ${pkgs.apacheKafka}/bin/kafka-storage.sh format \
-              --ignore-formatted \
-              --cluster-id=${cfg.clusterId} \
-              --config ${cfg.dataDir}/kraft.properties
-          fi
-        '';
+       ExecStartPre = ''
+        ${pkgs.coreutils}/bin/mkdir -p ${cfg.dataDir}/logs
+
+        if [ ! -f ${cfg.dataDir}/logs/meta.properties ]; then
+          echo "Bootstrapping Kafka KRaft metadata..."
+          ${pkgs.apacheKafka}/bin/kafka-storage.sh format \
+            --ignore-formatted \
+            --cluster-id=${cfg.clusterId} \
+            --config ${cfg.dataDir}/kraft.properties
+        fi
+      '';
 
         ExecStart = "${pkgs.apacheKafka}/bin/kafka-server-start.sh ${cfg.dataDir}/kraft.properties";
 
