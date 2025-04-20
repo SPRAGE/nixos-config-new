@@ -80,7 +80,7 @@ EOF
           fi
         '';
 
-        ExecStart = "${pkgs.apacheKafka}/bin/kafka-server-start.sh ${cfg.dataDir}/kraft.properties";
+        ExecStart = "${pkgs.apacheKafka}/bin/kafka-server-start ${cfg.dataDir}/kraft.properties";
         Restart = "always";
         Environment = [
           "PATH=${lib.makeBinPath [ pkgs.apacheKafka pkgs.coreutils pkgs.gnused pkgs.gnugrep ]}"
