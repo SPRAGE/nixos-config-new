@@ -89,10 +89,14 @@ in
         enable = true;
         dataDir = "/mnt/shaun/kafka-native";
         hostIp = "192.168.0.7";
+        zookeeperAdminServer = {
+          enable = true;
+          port = 8085;
+        };
       };
       kafkaUiDocker = {
         enable = true;
-        port = 8080;
+        port = 8086;
         bootstrapServers = "192.168.0.7:9094";
         zookeeperConnect = "localhost:2181";
       };

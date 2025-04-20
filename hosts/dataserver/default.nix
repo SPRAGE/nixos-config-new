@@ -95,7 +95,8 @@
       9094 # Kafka external
       9092 # Kafka internal
       2181 # Zookeeper
-      9095 # Kafka UI
+      8085 # Zookeeper AdminServer
+      8086 # Kafka UI
 
     ];
 

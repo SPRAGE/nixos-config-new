@@ -35,10 +35,24 @@ in
       type = types.port;
       default = 2181;
     };
+
+    zookeeperAdminServer = {
+      enable = mkOption {
+        type = types.bool;
+        default = false;
+        description = "Enable Zookeeper AdminServer (Jetty-based web UI)";
+      };
+
+      port = mkOption {
+        type = types.port;
+        default = 8085;
+        description = "Port for Zookeeper AdminServer (if enabled)";
+      };
+    };
   };
 
   config = mkIf cfg.enable {
-    # Zookeeper native
+    # Zookeeper
     systemd.user.services.zookeeper = {
       Unit = {
         Description = "Zookeeper Server";
@@ -46,7 +60,8 @@ in
       };
 
       Service = {
-        ExecStart = "${pkgs.zookeeper}/bin/zkServer.sh start-foreground ${cfg.dataDir}/zoo.cfg";
+        ExecStartPre = ''${pkgs.coreutils}/bin/test -f ${cfg.dataDir}/zoo.cfg'';
+        ExecStart = "${pkgs.zookeeper}/bin/zookeeper-server-start ${cfg.dataDir}/zoo.cfg";
         Restart = "always";
         Environment = [
           "PATH=${lib.makeBinPath [ pkgs.zookeeper pkgs.coreutils pkgs.gnused pkgs.gnugrep ]}"
@@ -58,7 +73,7 @@ in
       };
     };
 
-    # Kafka native
+    # Kafka
     systemd.user.services.kafka = {
       Unit = {
         Description = "Apache Kafka Broker";
@@ -76,15 +91,19 @@ in
       };
     };
 
-    # Minimal config files (generated during activation)
+    # Generate config files
     home.activation.kafkaConfigs = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
       mkdir -p "${cfg.dataDir}"
 
-      cat > "${cfg.dataDir}/zoo.cfg" <<EOF
-tickTime=2000
-dataDir=${cfg.dataDir}/zoo-data
-clientPort=${toString cfg.zookeeperPort}
-EOF
+      echo "tickTime=2000" > "${cfg.dataDir}/zoo.cfg"
+      echo "dataDir=${cfg.dataDir}/zoo-data" >> "${cfg.dataDir}/zoo.cfg"
+      echo "clientPort=${toString cfg.zookeeperPort}" >> "${cfg.dataDir}/zoo.cfg"
+      ${if cfg.zookeeperAdminServer.enable then ''
+        echo "admin.enableServer=true" >> "${cfg.dataDir}/zoo.cfg"
+        echo "admin.serverPort=${toString cfg.zookeeperAdminServer.port}" >> "${cfg.dataDir}/zoo.cfg"
+      '' else ''
+        echo "admin.enableServer=false" >> "${cfg.dataDir}/zoo.cfg"
+      ''}
 
       cat > "${cfg.dataDir}/kafka.properties" <<EOF
 broker.id=1
