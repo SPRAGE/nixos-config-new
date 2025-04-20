@@ -108,12 +108,13 @@ in
       cat > "${cfg.dataDir}/kafka.properties" <<EOF
 process.roles=broker
 node.id=1
+controller.quorum.voters=0@dummy:9093
 
-log.dirs=/mnt/shaun/kafka-native/kafka-logs
-zookeeper.connect=localhost:2181
+log.dirs=${cfg.dataDir}/kafka-logs
+zookeeper.connect=localhost:${toString cfg.zookeeperPort}
 
-listeners=PLAINTEXT://192.168.0.2:9094
-advertised.listeners=PLAINTEXT://192.168.0.2:9094
+listeners=PLAINTEXT://${cfg.hostIp}:${toString cfg.kafkaPortExternal}
+advertised.listeners=PLAINTEXT://${cfg.hostIp}:${toString cfg.kafkaPortExternal}
 
 num.network.threads=3
 num.io.threads=8
