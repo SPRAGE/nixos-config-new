@@ -61,7 +61,7 @@ in
 
       Service = {
         ExecStartPre = ''${pkgs.coreutils}/bin/test -f ${cfg.dataDir}/zoo.cfg'';
-        ExecStart = "${pkgs.zookeeper}/bin/zookeeper-server-start ${cfg.dataDir}/zoo.cfg";
+        ExecStart = "${pkgs.zookeeper}/bin/zkServer.sh start-foreground ${cfg.dataDir}/zoo.cfg";
         Restart = "always";
         Environment = [
           "PATH=${lib.makeBinPath [ pkgs.zookeeper pkgs.coreutils pkgs.gnused pkgs.gnugrep ]}"
