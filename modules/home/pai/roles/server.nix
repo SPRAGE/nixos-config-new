@@ -91,6 +91,15 @@ in
         clusterId = "63c32934-29e7-448b-8de3-da94924282f6"; # Optional: you can use `uuidgen` for randomness
         hostIp = "192.168.0.7";
       };
+      kafkaUi = {
+        enable = true;
+        kafkaBootstrapServers = "192.168.0.7:9092"; # Or "127.0.0.1:9092"
+        port = 8080;
+        clusterName = "kraft-shaun";
+      };
+
+
+
       # kafkaUiDocker = {
       #   enable = true;
       #   port = 8086;
