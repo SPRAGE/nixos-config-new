@@ -4,8 +4,7 @@ let
   inherit (lib)
     mkEnableOption mkOption mkIf types;
   cfg = config.modules.services.kafkaKRaft;
-in
-{
+in {
   options.modules.services.kafkaKRaft = {
     enable = mkEnableOption "Run Kafka 4.x in KRaft mode without Zookeeper";
 
@@ -21,7 +20,7 @@ in
 
     clusterId = mkOption {
       type = types.str;
-      default = "kraft-cluster-id"; # Can generate via `uuidgen` if desired
+      default = "kraft-cluster-id";
     };
 
     hostIp = mkOption {
@@ -41,21 +40,11 @@ in
   };
 
   config = mkIf cfg.enable {
-    systemd.user.services.kafka = {
-      Unit = {
-        Description = "Apache Kafka 4.x (KRaft)";
-        After = [ "network.target" ];
-      };
+    # Write kraft.properties and init script
+    home.activation.kafkaConfigs = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+      mkdir -p "${cfg.dataDir}/logs"
 
-      Service = {
-        ExecStartPre = ''
-  ${pkgs.bash}/bin/bash -c '
-    set -eux
-    export PATH="${lib.makeBinPath [ pkgs.apacheKafka pkgs.coreutils pkgs.gnused pkgs.gnugrep ]}:$PATH"
-
-    mkdir -p "${cfg.dataDir}/logs"
-
-    cat > "${cfg.dataDir}/kraft.properties" <<EOF
+      cat > "${cfg.dataDir}/kraft.properties" <<EOF
 process.roles=broker,controller
 node.id=${toString cfg.nodeId}
 controller.quorum.voters=${toString cfg.nodeId}@${cfg.hostIp}:${toString cfg.controllerPort}
@@ -73,15 +62,30 @@ log.retention.check.interval.ms=300000
 message.max.bytes=20971520
 EOF
 
-    if [ ! -f "${cfg.dataDir}/logs/meta.properties" ]; then
-      kafka-storage.sh format \
-        --cluster-id=${cfg.clusterId} \
-        --config "${cfg.dataDir}/kraft.properties" \
-        --ignore-formatted
-    fi
-  '
-'';
+      cat > "${cfg.dataDir}/init-kraft.sh" <<EOF
+#!${pkgs.bash}/bin/bash
+set -eux
+export PATH="${lib.makeBinPath [ pkgs.apacheKafka pkgs.coreutils pkgs.gnused pkgs.gnugrep ]}:$PATH"
 
+if [ ! -f "${cfg.dataDir}/logs/meta.properties" ]; then
+  kafka-storage.sh format \
+    --cluster-id=${cfg.clusterId} \
+    --config "${cfg.dataDir}/kraft.properties" \
+    --ignore-formatted
+fi
+EOF
+
+      chmod +x "${cfg.dataDir}/init-kraft.sh"
+    '';
+
+    systemd.user.services.kafka = {
+      Unit = {
+        Description = "Apache Kafka 4.x (KRaft)";
+        After = [ "network.target" ];
+      };
+
+      Service = {
+        ExecStartPre = "${cfg.dataDir}/init-kraft.sh";
         ExecStart = "${pkgs.apacheKafka}/bin/kafka-server-start ${cfg.dataDir}/kraft.properties";
         Restart = "always";
         Environment = [
