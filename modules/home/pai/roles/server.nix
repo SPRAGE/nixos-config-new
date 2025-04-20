@@ -85,6 +85,18 @@ in
         ];
 
       };
+      kafkaNative = {
+        enable = true;
+        dataDir = "/mnt/shaun/kafka-native";
+        hostIp = "192.168.0.7";
+      };
+      kafkaUiDocker = {
+        enable = true;
+        bootstrapServers = "192.168.0.7:9094";
+        zookeeperConnect = "localhost:2181";
+      };
+
+
     };
   };
 }

@@ -7,6 +7,8 @@
     ./ingestion-server.nix
     ./analysis-server.nix
     ./hist-data.nix
+    ./kafka-native.nix
+    ./kafka-ui.nix
 
     # ./sops.nix
     ./xdg.nix
