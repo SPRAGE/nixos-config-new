@@ -92,6 +92,7 @@ in
       };
       kafkaUiDocker = {
         enable = true;
+        port = 8080;
         bootstrapServers = "192.168.0.7:9094";
         zookeeperConnect = "localhost:2181";
       };
