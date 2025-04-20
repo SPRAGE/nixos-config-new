@@ -94,7 +94,7 @@ in
       kafkaUi = {
         enable = true;
         kafkaBootstrapServers = "192.168.0.7:9092"; # Or "127.0.0.1:9092"
-        port = 8080;
+        port = 8086;
         clusterName = "kraft-shaun";
       };
 
