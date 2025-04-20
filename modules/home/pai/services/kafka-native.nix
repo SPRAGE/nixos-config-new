@@ -52,7 +52,7 @@ in {
 
       Service = {
         ExecStartPre = ''
-          mkdir -p ${cfg.dataDir}
+          ${pkgs.coreutils}/bin/mkdir -p ${cfg.dataDir}
           if [ ! -f ${cfg.dataDir}/meta.properties ]; then
             echo "Bootstrapping Kafka KRaft metadata..."
             ${pkgs.apacheKafka}/bin/kafka-storage.sh format \
