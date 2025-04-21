@@ -37,7 +37,7 @@ in
       };
       index-consumer = {
         enable = true;
-        package = inputs.websocket-server.packages.${pkgs.system}.index-consumer;
+        package = inputs.websocket-server.packages.${pkgs.system}.index_consumer;
         configFile = null; # or ./config.toml
         rustLogLevel = "debug";
       };

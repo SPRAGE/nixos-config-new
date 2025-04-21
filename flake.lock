@@ -1374,7 +1374,7 @@
         "starship-yazi": "starship-yazi",
         "stylix": "stylix",
         "treefmt-nix": "treefmt-nix_2",
-        "websocket_server": "websocket_server"
+        "websocket-server": "websocket-server"
       }
     },
     "rust-analyzer-src": {
@@ -1777,7 +1777,7 @@
         "type": "github"
       }
     },
-    "websocket_server": {
+    "websocket-server": {
       "inputs": {
         "fenix": "fenix_5",
         "flake-utils": "flake-utils_7",
