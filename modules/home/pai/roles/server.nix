@@ -57,7 +57,7 @@ in
         enable = true;
         package = inputs.websocket-server.packages.${pkgs.system}.ws_manager;
         configFile = null; # or ./config.toml
-        rustLogLevel = "error";
+        rustLogLevel = "debug";
       };
       historical-data-updater = {
         enable = true;
