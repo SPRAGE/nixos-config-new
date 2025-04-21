@@ -9,6 +9,7 @@
     ./hist-data.nix
     ./kafka-native.nix
     ./kafka-ui.nix
+    ./consumers
 
     # ./sops.nix
     ./xdg.nix
