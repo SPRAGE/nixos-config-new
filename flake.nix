@@ -89,7 +89,7 @@
     ingestion-server = {
       url = "git+ssh://git@github.com/SPRAGE/ingestion-service.git?ref=main";
     };
-    websocket_server = {
+    websocket-server = {
       url = "git+ssh://git@github.com/SPRAGE/websocket-client.git?ref=main";
     };
   };

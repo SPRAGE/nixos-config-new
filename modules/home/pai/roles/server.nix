@@ -35,6 +35,12 @@ in
         configFile = null; # or ./config.toml
         rustLogLevel = "warn";
       };
+      index-consumer = {
+        enable = true;
+        package = inputs.websocket-server.packages.${pkgs.system}.index-consumer;
+        configFile = null; # or ./config.toml
+        rustLogLevel = "debug";
+      };
       historical-data-updater = {
         enable = true;
         package = inputs.ingestion-server.packages.${pkgs.system}.historical-data-updater;
@@ -98,15 +104,12 @@ in
         clusterName = "kraft-shaun";
       };
 
-
-
       # kafkaUiDocker = {
       #   enable = true;
       #   port = 8086;
       #   bootstrapServers = "192.168.0.7:9094";
       #   zookeeperConnect = "localhost:2181";
       # };
-
 
     };
   };
