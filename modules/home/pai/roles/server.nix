@@ -33,31 +33,37 @@ in
         enable = true;
         package = inputs.ingestion-server.packages.${pkgs.system}.ingestion-server;
         configFile = null; # or ./config.toml
-        rustLogLevel = "warn";
+        rustLogLevel = "error";
       };
       index-consumer = {
         enable = true;
         package = inputs.websocket-server.packages.${pkgs.system}.index_consumer;
         configFile = null; # or ./config.toml
-        rustLogLevel = "warn";
+        rustLogLevel = "error";
       };
       futures-consumer = {
         enable = true;
         package = inputs.websocket-server.packages.${pkgs.system}.futures_consumer;
         configFile = null; # or ./config.toml
-        rustLogLevel = "warn";
+        rustLogLevel = "error";
       };
       greeks-consumer = {
         enable = true;
         package = inputs.websocket-server.packages.${pkgs.system}.greeks_consumer;
         configFile = null; # or ./config.toml
-        rustLogLevel = "warn";
+        rustLogLevel = "error";
+      };
+      ws-manager = {
+        enable = true;
+        package = inputs.websocket-server.packages.${pkgs.system}.ws_manager;
+        configFile = null; # or ./config.toml
+        rustLogLevel = "error";
       };
       historical-data-updater = {
         enable = true;
         package = inputs.ingestion-server.packages.${pkgs.system}.historical-data-updater;
         configFile = null; # or ./config.toml
-        rustLogLevel = "warn";
+        rustLogLevel = "error";
       };
 
       valkey = {
