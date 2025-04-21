@@ -39,13 +39,25 @@ in
         enable = true;
         package = inputs.websocket-server.packages.${pkgs.system}.index_consumer;
         configFile = null; # or ./config.toml
-        rustLogLevel = "debug";
+        rustLogLevel = "warn";
+      };
+      futures-consumer = {
+        enable = true;
+        package = inputs.websocket-server.packages.${pkgs.system}.futures_consumer;
+        configFile = null; # or ./config.toml
+        rustLogLevel = "warn";
+      };
+      greeks-consumer = {
+        enable = true;
+        package = inputs.websocket-server.packages.${pkgs.system}.greeks_consumer;
+        configFile = null; # or ./config.toml
+        rustLogLevel = "warn";
       };
       historical-data-updater = {
         enable = true;
         package = inputs.ingestion-server.packages.${pkgs.system}.historical-data-updater;
         configFile = null; # or ./config.toml
-        rustLogLevel = "debug";
+        rustLogLevel = "warn";
       };
 
       valkey = {
