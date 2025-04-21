@@ -43,7 +43,7 @@ in
       Unit = {
         Description = "User-space index-consumer service";
         After = [ "kafka.service" ]; # Wait for Kafka
-        Requires = [ "kafka.service" ]; # Fail if Kafka is not available
+        Requires = [ "kafka.service" "redis.service"  ]; # Fail if Kafka is not available
       };
 
       Service = {
