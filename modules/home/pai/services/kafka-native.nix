@@ -124,12 +124,12 @@ in
       let
         topicCommands = concatMapStrings (topic: ''
           echo "Creating topic ${topic.name}..."
-          ${pkgs.apacheKafka}/bin/kafka-topics.sh \\
-            --bootstrap-server ${cfg.hostIp}:${toString cfg.kafkaPort} \\
-            --create \\
-            --if-not-exists \\
-            --topic "${topic.name}" \\
-            --partitions ${toString topic.partitions} \\
+          ${pkgs.apacheKafka}/bin/kafka-topics.sh \
+            --bootstrap-server ${cfg.hostIp}:${toString cfg.kafkaPort} \
+            --create \
+            --if-not-exists \
+            --topic "${topic.name}" \
+            --partitions ${toString topic.partitions} \
             --replication-factor ${toString topic.replication}
         '') cfg.topics;
       in
