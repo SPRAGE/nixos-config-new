@@ -92,11 +92,11 @@
       9009 # Interserver communication (for clusters)
       50001 # analysis server
       50002 # ingestion server
+      50003 # Kafka UI
       9094 # Kafka external
       9092 # Kafka internal
       2181 # Zookeeper
       8085 # Zookeeper AdminServer
-      8086 # Kafka UI
 
     ];
 
