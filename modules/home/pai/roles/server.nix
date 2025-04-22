@@ -120,6 +120,11 @@ in
             partitions = 1;
             replication = 1;
           }
+          {
+            name = "text_messages";
+            partitions = 1;
+            replication = 1;
+          }
         ];
       };
       kafkaUi = {
