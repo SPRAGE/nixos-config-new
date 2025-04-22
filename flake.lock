@@ -1785,11 +1785,11 @@
         "nixpkgs": "nixpkgs_13"
       },
       "locked": {
-        "lastModified": 1745280087,
-        "narHash": "sha256-eqP8gvzSRMFsoi3jfFKR++2UHY0JC0KeXaQecgP11nk=",
+        "lastModified": 1745283158,
+        "narHash": "sha256-/N7s93XCZKLIwb6ex2zLrSzdTAOSwGh1M2QPrPZqueU=",
         "ref": "main",
-        "rev": "82f4bf0fde1bad8ea6849a25775e3c1222a1bbfb",
-        "revCount": 9,
+        "rev": "30dd487535e8f2e82a2cffb009205ae75eecdf49",
+        "revCount": 10,
         "type": "git",
         "url": "ssh://git@github.com/SPRAGE/websocket-client.git"
       },

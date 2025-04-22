@@ -42,7 +42,7 @@ in
     systemd.user.services.greeks-consumer = {
       Unit = {
         Description = "User-space greeks-consumer service";
-        After = [ "kafka.service" ]; # Wait for Kafka
+        After = [ "kafka.service" "valkey.service" "futures-consumer" ]; # Wait for Kafka
         Requires = [ "kafka.service" "valkey.service" "futures-consumer"  ]; # Fail if Kafka is not available
       };
 
