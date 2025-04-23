@@ -11,12 +11,18 @@ let
   cfg = config.modules.services.index-consumer;
 
   waitForKafka = pkgs.writeShellScript "wait-for-kafka" ''
+    export PATH=${
+      lib.makeBinPath [
+        pkgs.apacheKafka
+        pkgs.coreutils      # for sleep
+        pkgs.gnugrep        # for grep
+      ]
+    }
+
     echo "🕒 Waiting for Kafka to become ready..."
 
-    for i in {1..50}; do
-      if ${pkgs.apacheKafka}/bin/kafka-topics.sh \
-        --bootstrap-server 192.168.0.7:9092 \
-        --list | grep -q "__consumer_offsets"; then
+    for i in {1..20}; do
+      if kafka-topics.sh --bootstrap-server 192.168.0.7:9092 --list | grep -q "__consumer_offsets"; then
         echo "✅ Kafka is ready."
         exit 0
       fi
@@ -27,6 +33,7 @@ let
     echo "❌ Timed out waiting for Kafka readiness."
     exit 1
   '';
+
 in
 {
   options.modules.services.index-consumer = {
