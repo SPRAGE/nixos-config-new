@@ -134,13 +134,6 @@ in
         clusterName = "kraft-shaun";
       };
 
-      kafkaUiDocker = {
-        enable = true;
-        port = 8086;
-        bootstrapServers = "192.168.0.7:9094";
-        zookeeperConnect = "localhost:2181";
-      };
-
     };
   };
 }
