@@ -125,6 +125,14 @@ in
             partitions = 1;
             replication = 1;
           }
+          {
+            name = "__consumer_offsets";
+            partitions = 1;
+            replication = 1;
+            config = {
+              "cleanup.policy" = "compact";
+            }
+          }
         ];
       };
       kafkaUi = {
