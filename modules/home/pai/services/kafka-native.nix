@@ -85,7 +85,7 @@ in
       controller.quorum.voters=${toString cfg.nodeId}@${cfg.hostIp}:${toString cfg.controllerPort}
       controller.listener.names=CONTROLLER
 
-      listeners=PLAINTEXT://${cfg.hostIp}:${toString cfg.kafkaPort},CONTROLLER://${cfg.hostIp}:${toString cfg.controllerPort}
+      listeners=PLAINTEXT://0.0.0.0:${toString cfg.kafkaPort},CONTROLLER://0.0.0.0:${toString cfg.controllerPort}
       advertised.listeners=PLAINTEXT://${cfg.hostIp}:${toString cfg.kafkaPort}
       listener.security.protocol.map=PLAINTEXT:PLAINTEXT,CONTROLLER:PLAINTEXT
 
