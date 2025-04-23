@@ -121,7 +121,7 @@ in
             replication = 1;
           }
           {
-            name = "text_messages";
+            name = "text_message";
             partitions = 1;
             replication = 1;
           }
