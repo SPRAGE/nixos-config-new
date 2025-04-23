@@ -55,7 +55,7 @@ in
       Unit = {
         Description = "User-space ws-manager service";
         After = [ "kafka.service" ];
-        Requires = [ "kafka.service" "valkey.service" "futures-consumer.service" ];
+        Requires = [ "kafka.service" "valkey.service" ];
       };
 
       Service = {
