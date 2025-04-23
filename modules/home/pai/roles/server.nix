@@ -42,13 +42,13 @@ in
         rustLogLevel = "error";
       };
       futures-consumer = {
-        enable = false;
+        enable = true;
         package = inputs.websocket-server.packages.${pkgs.system}.futures_consumer;
         configFile = null; # or ./config.toml
         rustLogLevel = "error";
       };
       greeks-consumer = {
-        enable = false;
+        enable = true;
         package = inputs.websocket-server.packages.${pkgs.system}.greeks_consumer;
         configFile = null; # or ./config.toml
         rustLogLevel = "error";
