@@ -15,6 +15,30 @@ let
     ;
 
   cfg = config.modules.services.greeks-consumer;
+
+  waitForKafka = pkgs.writeShellScript "wait-for-kafka" ''
+    export PATH=${
+      lib.makeBinPath [
+        pkgs.apacheKafka
+        pkgs.coreutils      # for sleep
+        pkgs.gnugrep        # for grep
+      ]
+    }
+
+    echo "🕒 Waiting for Kafka to become ready..."
+
+    for i in {1..20}; do
+      if kafka-topics.sh --bootstrap-server 192.168.0.7:9092 --list | grep -q "__consumer_offsets"; then
+        echo "✅ Kafka is ready."
+        exit 0
+      fi
+      echo "⏳ Kafka not ready yet, retrying in 1s... ($i/20)"
+      sleep 1
+    done
+
+    echo "❌ Timed out waiting for Kafka readiness."
+    exit 1
+  '';
 in
 {
   options.modules.services.greeks-consumer = {
@@ -47,6 +71,7 @@ in
       };
 
       Service = {
+        ExecStartPre = waitForKafka;
         ExecStart = lib.concatStringsSep " " (
           [ "${cfg.package}/bin/greeks_consumer" ]
           ++ lib.optionals (cfg.configFile != null) [
