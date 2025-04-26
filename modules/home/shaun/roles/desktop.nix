@@ -13,7 +13,7 @@ in
       # services.nextcloud-client.enable = mkDefault true;
       theme.stylix.enable = mkDefault true;
       # programs.spicetify.enable = mkDefault true;
-      # programs.orca-slicer.enable = mkDefault true;
+      programs.index-frontend.enable = mkDefault true;
     };
   };
 }

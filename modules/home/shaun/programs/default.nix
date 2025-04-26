@@ -3,6 +3,7 @@
     ./browsers
     ./rofi
     # ./orcaslicer.nix
+    ./index_frontend.nix
     ./packages.nix
     # ./spicetify.nix
     # ./vesktop
