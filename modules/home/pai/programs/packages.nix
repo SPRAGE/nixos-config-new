@@ -24,5 +24,7 @@ in
     #home
     home-manager
 
+    index-frontend.packages.${pkgs.system}.index-frontend
+
   ];
 }
