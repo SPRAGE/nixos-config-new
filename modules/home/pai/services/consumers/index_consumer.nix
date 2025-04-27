@@ -85,7 +85,7 @@ in
       };
 
       Install = {
-        WantedBy = [ "default.target" ];
+        WantedBy = [ "multi-user.target" ];
       };
     };
   };

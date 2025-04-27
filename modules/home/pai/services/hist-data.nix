@@ -55,7 +55,7 @@ in
       };
 
       Install = {
-        WantedBy = [ "default.target" ]; # Needed to make timer startable
+        WantedBy = [ "multi-user.target" ]; # Needed to make timer startable
       };
     };
 
