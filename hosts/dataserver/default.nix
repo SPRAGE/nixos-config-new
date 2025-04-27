@@ -119,7 +119,7 @@
         "pai"
       ];
       additionalGroups = [ "docker" ];
-
+      enableLinger = true;
       otherUsers = {
         shaun = [ "sambashare" ];
         karan = [ "sambashare" ];

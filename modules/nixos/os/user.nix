@@ -41,6 +41,11 @@ in
       default = [];
       description = "Extra groups for the main user (e.g. docker, video, etc.).";
     };
+    enableLinger = mkOption {
+      type        = types.bool;
+      default     = false;
+      description = "If true, enable systemd user lingering for all users in modules.os.users and modules.os.otherUsers.";
+    };
 
     otherUsers = mkOption {
       type = types.attrsOf (types.listOf types.str);
@@ -68,6 +73,8 @@ in
             "wheel"
           ] ++ optionals config.networking.networkmanager.enable [ "networkmanager" ]
             ++ config.modules.os.additionalGroups;
+
+          linger = config.modules.os.enableLinger;
         };
       }
 
@@ -79,12 +86,13 @@ in
         group = name;
         description = "System user from modules.os.otherUsers";
         extraGroups = groups;
+        linger = false;
       }) config.modules.os.otherUsers)
     ];
 
     # Add a matching group for each user
     users.groups = userGroups;
-
+    services.logind.killUserProcesses = false;
     warnings = optionals (config.modules.os.users == [ ]) [
       ''
         No users are defined in modules.os.users — your system may be inaccessible!
