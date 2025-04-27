@@ -14,7 +14,7 @@ in
         forwardAgent = true;
       };
       # 🐙 GitHub alias using your custom key
-      "github-shaun" = {
+      "github-personal" = {
         hostname = "github.com";
         user = "git";
         identityFile = "~/.ssh/gitkey";
