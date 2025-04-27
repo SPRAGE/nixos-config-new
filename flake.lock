@@ -30,11 +30,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1745667032,
-        "narHash": "sha256-smRG27icgnjqX2STPq+zOnqOv50//GsYnC0Yz1Zvlvc=",
+        "lastModified": 1745715235,
+        "narHash": "sha256-mEKnho+L8bYUcS+ea/kq1C6zd0HMVGhK7YTAJXW1ycU=",
         "ref": "main",
-        "rev": "1d81488aaf94d5a997592abc117f2f9455164c57",
-        "revCount": 7,
+        "rev": "c0b8e821ee13d8d1968f9dcf68ce66f7d8848b2f",
+        "revCount": 8,
         "type": "git",
         "url": "ssh://git@github.com/SPRAGE/analysis-server.git"
       },
