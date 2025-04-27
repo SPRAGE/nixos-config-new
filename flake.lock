@@ -846,11 +846,11 @@
         "nixpkgs": "nixpkgs_5"
       },
       "locked": {
-        "lastModified": 1745667496,
-        "narHash": "sha256-cMGpx9R8P6AvtADQS3noni3017Z8tS+8jo1bk8GkJTs=",
+        "lastModified": 1745717316,
+        "narHash": "sha256-n0WK3k1XnExxNKFH5QhyZRGHAiDyJz5XwXPe+gXnhJU=",
         "ref": "main",
-        "rev": "ea758f88cebbb2707c28a0625e833690a725504e",
-        "revCount": 6,
+        "rev": "193936daf9c873db5bbb96816e0bac4de51b07a6",
+        "revCount": 7,
         "type": "git",
         "url": "ssh://git@github.com/SPRAGE/index_frontend.git"
       },
