@@ -78,10 +78,10 @@ in
     };
 
     # Fix broken rotatated cursor
-    cursor = {
-      no_hardware_cursors = true;
-      use_cpu_buffer = 0;
-    };
+    # cursor = {
+    #   no_hardware_cursors = true;
+    #   use_cpu_buffer = 0;
+    # };
 
     decoration = {
       rounding = 16;
