@@ -54,9 +54,9 @@ in
         ];
       };
 
-      Install = {
-        WantedBy = [ "default.target" "multi-user.target" ];
-      };
+      # Install = {
+      #   WantedBy = [ "default.target" "multi-user.target" ];
+      # };
     };
 
     systemd.user.timers.historical-data-updater = {
