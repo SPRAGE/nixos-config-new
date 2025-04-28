@@ -30,11 +30,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1745715235,
-        "narHash": "sha256-mEKnho+L8bYUcS+ea/kq1C6zd0HMVGhK7YTAJXW1ycU=",
+        "lastModified": 1745801631,
+        "narHash": "sha256-YBXRd41rqHrB3aKygdP4djtVbuxqG73/9yXln+Z/qc4=",
         "ref": "main",
-        "rev": "c0b8e821ee13d8d1968f9dcf68ce66f7d8848b2f",
-        "revCount": 8,
+        "rev": "3f73dfe9087501928baeb4115d30165740aac4b0",
+        "revCount": 9,
         "type": "git",
         "url": "ssh://git@github.com/SPRAGE/analysis-server.git"
       },
@@ -662,11 +662,11 @@
         "nixpkgs": "nixpkgs_4"
       },
       "locked": {
-        "lastModified": 1745545937,
-        "narHash": "sha256-joiviAxX26H0RFIe8E5iP3gSAV/f3v5Ae4SUZ85IDnE=",
+        "lastModified": 1745718727,
+        "narHash": "sha256-Q+8ki5/0doymTb/6yZyB1IgKy7vIkWG5IILIzw9Vz1U=",
         "owner": "fufexan",
         "repo": "nix-gaming",
-        "rev": "8ae51ad90e1c75b8b77102240a02b6dea65fc15a",
+        "rev": "f42092f4379fe71bf810a71c1c33f1f807b97746",
         "type": "github"
       },
       "original": {
@@ -768,11 +768,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1745627989,
-        "narHash": "sha256-mOCdFmxocBPae7wg7RYWOtJzWMJk34u9493ItY0dVqw=",
+        "lastModified": 1745782215,
+        "narHash": "sha256-mx27J2HYQT+nGXTyUWKrUuxRzpr1FVVr59ZH4oNzOyw=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "4d2d32231797bfa7213ae5e8ac89d25f8caaae82",
+        "rev": "7b2aae3fb39928aecc5e41c10a9c87c4881614d5",
         "type": "github"
       },
       "original": {
@@ -868,11 +868,11 @@
         "nixpkgs": "nixpkgs_6"
       },
       "locked": {
-        "lastModified": 1745666966,
-        "narHash": "sha256-MeKdlrhCWW5YFC++yC0TZU49MpUzE0XuJNLfneCL/cg=",
+        "lastModified": 1745801641,
+        "narHash": "sha256-CjzMienN9dnAx/ZZq2ZloZhDojJwIqEeUrbfH0I/uJU=",
         "ref": "main",
-        "rev": "c5ec2cf4cc075595bb9c2177dc3c55cf086a8888",
-        "revCount": 42,
+        "rev": "846e61f3143fdbf96bae61bf7cf1941c4d8e2fff",
+        "revCount": 43,
         "type": "git",
         "url": "ssh://git@github.com/SPRAGE/ingestion-service.git"
       },
@@ -1060,11 +1060,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1745120797,
-        "narHash": "sha256-owQ0VQ+7cSanTVPxaZMWEzI22Q4bGnuvhVjLAJBNQ3E=",
+        "lastModified": 1745725746,
+        "narHash": "sha256-iR+idGZJ191cY6NBXyVjh9QH8GVWTkvZw/w+1Igy45A=",
         "owner": "nix-community",
         "repo": "nix-index-database",
-        "rev": "69716041f881a2af935021c1182ed5b0cc04d40e",
+        "rev": "187524713d0d9b2d2c6f688b81835114d4c2a7c6",
         "type": "github"
       },
       "original": {
@@ -1246,11 +1246,11 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1744868846,
-        "narHash": "sha256-5RJTdUHDmj12Qsv7XOhuospjAjATNiTMElplWnJE9Hs=",
+        "lastModified": 1745377448,
+        "narHash": "sha256-jhZDfXVKdD7TSEGgzFJQvEEZ2K65UMiqW5YJ2aIqxMA=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "ebe4301cbd8f81c4f8d3244b3632338bbeb6d49c",
+        "rev": "507b63021ada5fee621b6ca371c4fca9ca46f52c",
         "type": "github"
       },
       "original": {
@@ -1896,11 +1896,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1744961264,
-        "narHash": "sha256-aRmUh0AMwcbdjJHnytg1e5h5ECcaWtIFQa6d9gI85AI=",
+        "lastModified": 1745780832,
+        "narHash": "sha256-jGzkZoJWx+nJnPe0Z2xQBUOqMKuR1slVFQrMjFTKgeM=",
         "owner": "numtide",
         "repo": "treefmt-nix",
-        "rev": "8d404a69efe76146368885110f29a2ca3700bee6",
+        "rev": "b2b6c027d708fbf4b01c9c11f6e80f2800b5a624",
         "type": "github"
       },
       "original": {
