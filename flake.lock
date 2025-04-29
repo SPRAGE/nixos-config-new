@@ -30,11 +30,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1745801631,
-        "narHash": "sha256-YBXRd41rqHrB3aKygdP4djtVbuxqG73/9yXln+Z/qc4=",
+        "lastModified": 1745887273,
+        "narHash": "sha256-i3dt2ZtYVKCVkE4CHX2hWR5DifxHCq2rExEYOEHhKwU=",
         "ref": "main",
-        "rev": "3f73dfe9087501928baeb4115d30165740aac4b0",
-        "revCount": 9,
+        "rev": "cc084271954d5f761fecf812d30cc88a6820639f",
+        "revCount": 10,
         "type": "git",
         "url": "ssh://git@github.com/SPRAGE/analysis-server.git"
       },
@@ -846,11 +846,11 @@
         "nixpkgs": "nixpkgs_5"
       },
       "locked": {
-        "lastModified": 1745717316,
-        "narHash": "sha256-n0WK3k1XnExxNKFH5QhyZRGHAiDyJz5XwXPe+gXnhJU=",
+        "lastModified": 1745887519,
+        "narHash": "sha256-rHQs4EqHCOK10WJ3B3ZtIEMrGsQwAWwlLmdoofi99Z4=",
         "ref": "main",
-        "rev": "193936daf9c873db5bbb96816e0bac4de51b07a6",
-        "revCount": 7,
+        "rev": "f8a984987bc47d63bdacec97954ec26bc3bdb12c",
+        "revCount": 8,
         "type": "git",
         "url": "ssh://git@github.com/SPRAGE/index_frontend.git"
       },
@@ -868,11 +868,11 @@
         "nixpkgs": "nixpkgs_6"
       },
       "locked": {
-        "lastModified": 1745803774,
-        "narHash": "sha256-wRwr+ZI4bXqSM1Sp6jxtJRuGMgUzW/Da/+JMHds3pc4=",
+        "lastModified": 1745887302,
+        "narHash": "sha256-5tBde4EwofvvRxUpUwtPUhD2Rs7oaEd5uYcZtx6XMko=",
         "ref": "main",
-        "rev": "33fba0725e16520c33f51332670470acf80736b3",
-        "revCount": 44,
+        "rev": "4ce81f82b0d733453c504edecac15b0f86e18bba",
+        "revCount": 45,
         "type": "git",
         "url": "ssh://git@github.com/SPRAGE/ingestion-service.git"
       },
