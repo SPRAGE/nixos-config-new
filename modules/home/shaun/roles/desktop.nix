@@ -1,6 +1,7 @@
 {
   osConfig,
   lib,
+  inputs,
   ...
 }:
 let
@@ -16,7 +17,7 @@ in
 
     services.solaar = {
       enable = true;
-      package = inputs.solaar.packages.${pkgs.system}.default;
+      # package = inputs.solaar.packages.${pkgs.system}.default;
       window = "hide";
       batteryIcons = "regular";
       extraArgs = "";
