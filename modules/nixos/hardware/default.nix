@@ -11,6 +11,7 @@ in
     ./printing.nix
     ./sound.nix
     ./mounts.nix
+    ./hidraw-permissions.nix
   ];
 
   options.modules.hardware = {

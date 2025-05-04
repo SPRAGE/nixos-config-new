@@ -47,6 +47,7 @@
       cpu.type = "amd";
       gpu.type = "amd";
       sound.enable = true;
+      
 
       mounts = {
         enable = true;
@@ -124,6 +125,10 @@
     os = {
       mainUser = "shaun";
       autoLogin = true;
+      users = [
+        "shaun"
+      ];
+      additionalGroups = [ "plugdev" "input" ];
     };
 
     networking.optomizeTcp = true;
