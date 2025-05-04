@@ -81,7 +81,9 @@
       gpuAcceleration.enable = true;
       desktop = {
         enable = true;
-        hyprland.enable = true;
+        windowManager = "sway";
+        sway.enable = true;
+        # hyprland.enable = true;
       };
 
       monitors = [
