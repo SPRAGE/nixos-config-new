@@ -14,7 +14,7 @@ let
 
   initialSession = {
     user = "${os.mainUser}";
-    command = "${desktop.command}";
+    command = "${desktop.defaultWindowManagerCommand}";
   };
 
   defaultSession = {
@@ -25,7 +25,7 @@ let
       "--remember"
       "--remember-user-session"
       "--asterisks"
-      "--sessions '${desktop.command}'"
+      "--sessions '${desktop.defaultWindowManagerCommand}'"
     ];
   };
 in

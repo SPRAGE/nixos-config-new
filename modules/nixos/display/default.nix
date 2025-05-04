@@ -8,7 +8,6 @@ let
     mkIf
     types
     ;
-  id = x: x;
 
   cfg = config.modules.display.desktop;
 in
@@ -18,44 +17,40 @@ in
     ./graphical.nix
     ./monitors.nix
     ./wayland.nix
-    ./xserver.nix 
+    ./xserver.nix
   ];
 
   options.modules.display.desktop = {
     enable = mkEnableOption "Enable graphical desktop environment";
 
-    windowManager = mkOption {
-      type = types.enum [
-        "hyprland"
-        "sway"
-        "i3"
-      ];
+    sway.enable     = mkEnableOption "Enable the Sway window manager";
+    hyprland.enable = mkEnableOption "Enable the Hyprland window manager";
+    i3.enable       = mkEnableOption "Enable the i3 window manager";
+
+    defaultWindowManager = mkOption {
+      type = types.enum [ "sway" "hyprland" "i3" ];
       default = "hyprland";
-      description = "Which window manager to use.";
+      description = "Which window manager to use as the default when starting a session.";
     };
 
-    # isWayland = mkOption {
-    #   type = types.bool;
-    #   default = cfg.windowManager != "i3";
-    #   description = "Whether to enable Wayland-specific modules.";
-    # };
-
-    hyprland.enable = mkEnableOption "Enable Hyprland window manager";
-    sway.enable = mkEnableOption "Enable Sway window manager";
-    # i3.enable = mkEnableOption "Enable i3 window manager";
-
-    command = mkOption {
+    defaultWindowManagerCommand = mkOption {
       type = types.str;
       default =
-        if cfg.sway.enable then
+        if cfg.defaultWindowManager == "sway" then
           "sway"
-        else if cfg.hyprland.enable then
+        else if cfg.defaultWindowManager == "hyprland" then
           "uwsm start hyprland-uwsm.desktop"
-        # else if cfg.i3.enable then
-        #   "i3"
+        else if cfg.defaultWindowManager == "i3" then
+          "i3"
         else
-          "sh -c 'echo No WM enabled >&2; sleep 5'";
-      description = "Startup command for the selected window manager.";
+          "sh -c 'echo No WM defined >&2; sleep 5'";
+      description = "Startup command for the selected default window manager.";
+    };
+
+    isWayland = mkOption {
+      type = types.bool;
+      default = cfg.defaultWindowManager != "i3";
+      description = "Whether to enable Wayland-specific configuration.";
     };
   };
 
@@ -63,15 +58,17 @@ in
     assertions = [
       {
         assertion =
-          lib.length (
-            lib.filter id [
-              cfg.hyprland.enable
-              cfg.sway.enable
-              cfg.i3.enable
-            ]
-          ) == 1;
+          cfg.sway.enable || cfg.hyprland.enable || cfg.i3.enable;
+        message = "At least one window manager (sway, hyprland, i3) must be enabled.";
+      }
 
-        message = "Exactly one window manager must be enabled (Hyprland, Sway, or i3).";
+      {
+        assertion = (
+          (cfg.defaultWindowManager == "sway"     -> cfg.sway.enable)
+          && (cfg.defaultWindowManager == "hyprland" -> cfg.hyprland.enable)
+          && (cfg.defaultWindowManager == "i3"     -> cfg.i3.enable)
+        );
+        message = "The selected defaultWindowManager must be enabled.";
       }
     ];
   };

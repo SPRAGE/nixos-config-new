@@ -76,14 +76,21 @@
         ];
       };
     };
+    services.solaar = {
+    enable = true;
+    package = inputs.solaar.packages.${pkgs.system}.default;
+    window = "hide";
+    batteryIcons = "regular";
+    extraArgs = "";
+  };
 
     display = {
       gpuAcceleration.enable = true;
       desktop = {
         enable = true;
-        windowManager = "sway";
+        defaultWindowManager = "sway";
         sway.enable = true;
-        # hyprland.enable = true;
+        hyprland.enable = true;
       };
 
       monitors = [

@@ -22,6 +22,10 @@ let
       lib'
       location
       ;
+      nix-stable = import inputs.nixpkgs-stable {
+      system = "x86_64-linux"; # or detect dynamically
+      config.allowUnfree = true;
+    };
   };
 in
 {

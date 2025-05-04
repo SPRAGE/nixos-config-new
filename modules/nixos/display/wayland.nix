@@ -24,14 +24,12 @@ in
     # Session for greetd
     (mkIf cfg.hyprland.enable {
       programs.hyprland = {
-        enable =
-          # assert (
-          #   lib.assertMsg (lib.versionOlder config.programs.hyprland.package.version "0.48") "hyprland updated, check orca-slicer."
-          # );
-          true;
-
+        enable = true;
         # needed for setting the wayland environment variables
         withUWSM = true;
+      };
+      programs.sway = {
+        enable = true;
       };
 
       xdg.portal = {

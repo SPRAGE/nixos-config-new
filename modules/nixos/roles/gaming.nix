@@ -6,6 +6,7 @@
   pkgs,
   lib,
   config,
+  nix-stable,
   ...
 }:
 let
@@ -34,7 +35,10 @@ in
         # Open ports in the firewall for Steam Remote Play
         remotePlay.openFirewall = false;
         # Compatibility tools to install
-        extraCompatPackages = with pkgs; [ proton-ge-bin ];
+        extraCompatPackages = with pkgs; [ 
+          proton-ge-bin 
+          # nix-stable.gamescope
+          ];
       };
 
       gamemode = {
@@ -50,7 +54,9 @@ in
 
       gamescope = {
         enable = true;
+        package = nix-stable.gamescope;
       };
+
     };
 
     # required since gamemode 1.8 to change CPU governor
