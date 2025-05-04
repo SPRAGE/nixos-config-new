@@ -18,7 +18,7 @@ in
     ./graphical.nix
     ./monitors.nix
     ./wayland.nix
-    ./xserver.nix # 👈 Add this
+    ./xserver.nix 
   ];
 
   options.modules.display.desktop = {
