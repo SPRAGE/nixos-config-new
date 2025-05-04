@@ -4,6 +4,7 @@
 {
   imports = [
     ./hyprland
+    ./sway
     # ./ags.nix
     # ./anyrun.nix
     ./hypridle.nix
