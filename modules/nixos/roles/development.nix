@@ -18,10 +18,10 @@ in
     # nix-ld is needed for the platformio vscode extension to be able to run binaries
     programs.nix-ld.enable = true;
 
-    services.udev.packages = with pkgs; [
-      # platformio
-      # openocd
-    ];
+    # services.udev.packages = with pkgs; [
+    #   # platformio
+    #   # openocd
+    # ];
 
   };
 }

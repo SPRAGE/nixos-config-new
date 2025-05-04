@@ -25,21 +25,21 @@ in
 
     (mkIf (cfg != "none") {
       # Boot logo
-      boot.plymouth = {
-        enable = true;
-        theme = "lone";
-        themePackages = [ (pkgs.adi1090x-plymouth-themes.override { selected_themes = [ "lone" ]; }) ];
-      };
+      # boot.plymouth = {
+      #   enable = true;
+      #   theme = "lone";
+      #   themePackages = [ (pkgs.adi1090x-plymouth-themes.override { selected_themes = [ "lone" ]; }) ];
+      # };
 
-      # make plymouth work with sleep
-      powerManagement = {
-        powerDownCommands = ''
-          ${pkgs.plymouth} --show-splash
-        '';
-        resumeCommands = ''
-          ${pkgs.plymouth} --quit
-        '';
-      };
+      # # make plymouth work with sleep
+      # powerManagement = {
+      #   powerDownCommands = ''
+      #     ${pkgs.plymouth} --show-splash
+      #   '';
+      #   resumeCommands = ''
+      #     ${pkgs.plymouth} --quit
+      #   '';
+      # };
 
       programs = {
         partition-manager.enable = true;
@@ -61,6 +61,8 @@ in
       };
 
       services.gnome.gnome-keyring.enable = true;
+      services.dbus.packages = [ pkgs.corectrl ];
+      services.udev.packages = [ pkgs.corectrl ];
 
       security.polkit.enable = true;
     })

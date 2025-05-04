@@ -131,7 +131,7 @@
       additionalGroups = [ "plugdev" "input" ];
     };
 
-    networking.optomizeTcp = true;
+    # networking.optomizeTcp = true;
 
     boot = {
       enableKernelTweaks = true;
