@@ -121,6 +121,7 @@
     programs = {
       thunar.enable = true;
       corectrl.enable = true;
+      solaar.enable = true;
     };
 
     os = {
