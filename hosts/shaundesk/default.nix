@@ -120,6 +120,7 @@
 
     programs = {
       thunar.enable = true;
+      corectrl.enable = true;
     };
 
     os = {
