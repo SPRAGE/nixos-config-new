@@ -4,7 +4,6 @@
 {
   imports = [
     ./hyprland
-    ./sway
     ./i3
     ./hypridle.nix
     ./hyprlock.nix

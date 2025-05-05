@@ -51,7 +51,8 @@
       gpuAcceleration.enable = true;
       desktop = {
         enable = true;
-        windowManager = "hyprland";
+        defaultWindowManager = "sway";
+        sway.enable = true;
         hyprland.enable = true;
       };
       monitors = [
@@ -97,7 +98,7 @@
       autoLogin = true;
     };
 
-    networking.optomizeTcp = true;
+    # networking.optomizeTcp = true;
 
     boot = {
       enableKernelTweaks = true;

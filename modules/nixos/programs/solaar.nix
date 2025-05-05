@@ -6,7 +6,7 @@ in {
     enable = mkEnableOption "Enable solaar";
   };
 
-  config = mkIf config.modules.programs.csolaar.enable {
+  config = mkIf config.modules.programs.solaar.enable {
     # Install the solaar package
     environment.systemPackages = [ pkgs.solaar ];
   };
