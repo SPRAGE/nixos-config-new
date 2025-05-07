@@ -13,8 +13,8 @@ in
       "seat * xcursor ${pointer.name} ${toString pointer.size}"
       # cliphist watcher
       "exec --no-startup-id wl-paste --watch cliphist store"
-      # redshift/sunset
-      "exec --no-startup-id ${getExe pkgs.wlsunset} -l 32.7 -L -96.9"
+      # # redshift/sunset
+      # "exec --no-startup-id ${getExe pkgs.wlsunset} -l 32.7 -L -96.9"
       # jump to WS 1 on startup
       "exec --no-startup-id swaymsg workspace 1"
     ];

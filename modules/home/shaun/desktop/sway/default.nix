@@ -18,9 +18,9 @@ in
   };
 
   # “desktop” helper modules → background, idle, lock
-  modules.desktop = {
-    swaybg.enable   = mkDefault true;
-    swayidle.enable = mkDefault false;
-    swaylock.enable = mkDefault true;
-  };
+  # modules.desktop = {
+  #   swaybg.enable   = mkDefault true;
+  #   swayidle.enable = mkDefault false;
+  #   swaylock.enable = mkDefault true;
+  # };
 }
