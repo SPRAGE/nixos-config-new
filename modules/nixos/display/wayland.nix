@@ -59,6 +59,7 @@ in
     (mkIf cfg.hyprland.enable {
       programs.sway = {
         enable = true;
+        extraPackages = with pkgs; [ brightnessctl foot grim pulseaudio swayidle swaylock wmenu waybar ];
       };
 
       xdg.portal = {
