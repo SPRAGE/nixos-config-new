@@ -62,6 +62,8 @@ in
         extraPackages = with pkgs; [ brightnessctl foot grim pulseaudio swayidle swaylock wmenu waybar ];
       };
 
+      programs.waybar.enable = true;
+
       xdg.portal = {
         enable = true;
         # xdgOpenUsePortal = true;
