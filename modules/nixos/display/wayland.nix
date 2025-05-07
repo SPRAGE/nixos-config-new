@@ -28,6 +28,35 @@ in
         # needed for setting the wayland environment variables
         withUWSM = true;
       };
+      
+
+      xdg.portal = {
+        enable = true;
+        # xdgOpenUsePortal = true;
+        # config.common = {
+        #   "org.freedesktop.impl.portal.Secret" = [ "gnome-keyring" ];
+        #   "org.freedesktop.impl.portal.ScreenCast" = [ "hyprland" ];
+        #   "org.freedesktop.impl.portal.Screenshot" = [ "hyprland" ];
+        #   "org.freedesktop.portal.FileChooser" = [ "xdg-desktop-portal-gtk" ];
+        # };
+
+        extraPortals = with pkgs; [
+          # xdg-desktop-portal-hyprland
+          xdg-desktop-portal-gtk
+        ];
+      };
+
+      # allow wayland lockers to unlock the screen
+      security.pam.services.hyprlock.text = "auth include login";
+
+      
+
+
+
+    })
+
+    # Session for greetd
+    (mkIf cfg.hyprland.enable {
       programs.sway = {
         enable = true;
       };
@@ -50,6 +79,13 @@ in
 
       # allow wayland lockers to unlock the screen
       security.pam.services.hyprlock.text = "auth include login";
+
     })
+
+    
+
+
+
+
   ];
 }
