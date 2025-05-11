@@ -10,6 +10,7 @@
     ./kafka-ui.nix
     ./consumers
     ./ws-manager.nix
+    ./internal-ws.nix
 
     # ./sops.nix
     ./xdg.nix
