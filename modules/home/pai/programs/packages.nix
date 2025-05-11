@@ -24,6 +24,9 @@ in
     #home
     home-manager
 
+    #tailscale
+    tailscale
+
 
   ];
 }
