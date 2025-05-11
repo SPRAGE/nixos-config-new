@@ -116,6 +116,10 @@
       server.enable = true;
     };
 
+    programs = {
+      tailscale.enable = true;
+    };
+
     os = {
       mainUser = "pai";
       users = [
