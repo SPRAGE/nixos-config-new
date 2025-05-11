@@ -128,7 +128,7 @@
       autoLogin = true;
     };
 
-    networking.optomizeTcp = true;
+    # networking.optomizeTcp = true;
 
     boot = {
       enableKernelTweaks = true;
@@ -136,10 +136,10 @@
     };
   };
 
-  hardware = {
-    # Udev rules for vial
-    keyboard.qmk.enable = true;
+  # hardware = {
+  #   # Udev rules for vial
+  #   keyboard.qmk.enable = true;
 
-  };
+  # };
 
 }

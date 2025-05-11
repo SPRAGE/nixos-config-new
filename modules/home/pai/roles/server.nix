@@ -35,6 +35,12 @@ in
         configFile = null; # or ./config.toml
         rustLogLevel = "error";
       };
+      internal-websocket = {
+        enable = true;
+        package = inputs.internal-websocket.packages.${pkgs.system}.default;
+        configFile = null; # or ./config.toml
+        rustLogLevel = "warn";
+      };
       index-consumer = {
         enable = true;
         package = inputs.websocket-server.packages.${pkgs.system}.index_consumer;
@@ -59,6 +65,7 @@ in
         configFile = null; # or ./config.toml
         rustLogLevel = "error";
       };
+      
       historical-data-updater = {
         enable = true;
         package = inputs.ingestion-server.packages.${pkgs.system}.historical-data-updater;
