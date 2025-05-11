@@ -56,7 +56,7 @@ in
     })
 
     # Session for greetd
-    (mkIf cfg.hyprland.enable {
+    (mkIf cfg.sway.enable {
       programs.sway = {
         enable = true;
         extraPackages = with pkgs; [ brightnessctl foot grim pulseaudio swayidle swaylock wmenu waybar ];
