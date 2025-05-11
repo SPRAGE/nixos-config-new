@@ -98,6 +98,9 @@
       9092 # Kafka internal
       2181 # Zookeeper
       8085 # Zookeeper AdminServer
+      3000 # index websocket
+      3001 # futures websocket
+      3002 # greeks websocket
 
     ];
 
