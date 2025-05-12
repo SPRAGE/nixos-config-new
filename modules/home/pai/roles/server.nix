@@ -39,7 +39,7 @@ in
         enable = true;
         package = inputs.internal-websocket.packages.${pkgs.system}.default;
         configFile = null; # or ./config.toml
-        rustLogLevel = "warn";
+        rustLogLevel = "info";
       };
       index-consumer = {
         enable = true;
