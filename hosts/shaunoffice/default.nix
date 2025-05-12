@@ -90,6 +90,7 @@
 
     programs = {
       thunar.enable = true;
+      tailscale.enable = true;
     };
 
     os = {
