@@ -77,8 +77,8 @@
     lumastart.url = "github:spector700/lumastart";
     # my neovim flake
     nvix.url = "github:SPRAGE/nvix";
-    # gaming tweaks and addons
-    gaming.url = "github:fufexan/nix-gaming";
+    # # gaming tweaks and addons
+    # gaming.url = "github:fufexan/nix-gaming";
 
     # my sops-nix private repo
     #nix-secrets = {
