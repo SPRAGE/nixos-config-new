@@ -27,6 +27,6 @@ in
       };
       # programs.spicetify.enable = mkDefault true;
       programs.index-frontend.enable = mkDefault true;
-    };ind
+    };
   };
 }
