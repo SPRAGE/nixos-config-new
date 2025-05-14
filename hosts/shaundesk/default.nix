@@ -123,6 +123,7 @@
       corectrl.enable = true;
       solaar.enable = true;
       tailscale.enable = true;
+      
     };
 
     os = {

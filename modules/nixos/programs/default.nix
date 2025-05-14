@@ -4,6 +4,6 @@
     ./corectrl.nix
     ./solaar.nix
     ./tailscale.nix
-    
+    ./neovim.nix
   ];
 }
