@@ -11,7 +11,7 @@ let
   cfg = config.modules.hardware.sound;
 in
 {
-  imports = [ inputs.gaming.nixosModules.pipewireLowLatency ];
+  # imports = [ inputs.gaming.nixosModules.pipewireLowLatency ];
 
   options.modules.hardware.sound = {
     enable = mkEnableOption "Enable Sound";
@@ -34,7 +34,7 @@ in
         };
         pulse.enable = true;
         jack.enable = false;
-        lowLatency.enable = true;
+        # lowLatency.enable = true;
       };
     };
 

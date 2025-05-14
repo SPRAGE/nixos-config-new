@@ -1,4 +1,4 @@
-{ pkgs, config, lib, ... }:
+{ pkgs, config, lib, inputs, ... }:
 let
   inherit (lib) mkIf mkEnableOption;
 in {
@@ -8,7 +8,7 @@ in {
 
   config = mkIf config.modules.programs.nvim.enable {
     # Install the nvim package
-    environment.packages = [
+    environment.systemPackages = [
      inputs.nvix.packages.${pkgs.system}.default
     ];
   };

@@ -66,8 +66,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # my neovim flake
-    nvix.url = "github:niksingh710/nvix";
 
     # Color theming
     stylix.url = "github:danth/stylix";
@@ -78,7 +76,7 @@
     # My app launcher
     lumastart.url = "github:spector700/lumastart";
     # my neovim flake
-    # nvix.url = "github:SPRAGE/nvix";
+    nvix.url = "github:SPRAGE/nixvim";
     # # gaming tweaks and addons
     # gaming.url = "github:fufexan/nix-gaming";
 

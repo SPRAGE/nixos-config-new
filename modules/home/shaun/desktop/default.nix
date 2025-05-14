@@ -3,13 +3,13 @@
 }:
 {
   imports = [
-    ./hyprland
+    # ./hyprland
     # ./sway
     # ./ags.nix
     # ./anyrun.nix
-    ./hypridle.nix
-    ./hyprlock.nix
-    ./hyprpanel.nix
-    ./hyprpaper.nix
+    # ./hypridle.nix
+    # ./hyprlock.nix
+    # ./hyprpanel.nix
+    # ./hyprpaper.nix
   ];
 }

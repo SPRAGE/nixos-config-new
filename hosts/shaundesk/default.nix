@@ -123,7 +123,7 @@
       corectrl.enable = true;
       solaar.enable = true;
       tailscale.enable = true;
-      
+      nvim.enable = true;
     };
 
     os = {
