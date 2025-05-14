@@ -1554,14 +1554,14 @@
       "locked": {
         "lastModified": 1746727421,
         "narHash": "sha256-bYulqfs/30tCoTn8cLixL/YvXrSjKlw34gTlOiTeE8k=",
-        "owner": "niksingh710",
-        "repo": "nvix",
+        "owner": "SPRAGE",
+        "repo": "nixvim",
         "rev": "ee8f5973123e64a67ffa41a4b7946be180a0c090",
         "type": "github"
       },
       "original": {
-        "owner": "niksingh710",
-        "repo": "nvix",
+        "owner": "SPRAGE",
+        "repo": "nixvim",
         "type": "github"
       }
     },

@@ -9,7 +9,7 @@ in {
   config = mkIf config.modules.programs.nvim.enable {
     # Install the nvim package
     environment.systemPackages = [
-     inputs.nvix.packages.${pkgs.system}.default
+     inputs.nvix.packages.${pkgs.system}.full
     ];
   };
 }
