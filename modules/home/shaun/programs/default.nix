@@ -8,6 +8,7 @@
     # ./spicetify.nix
     # ./vesktop
     ./zathura.nix
+    ./remmina
   ];
 
 }
