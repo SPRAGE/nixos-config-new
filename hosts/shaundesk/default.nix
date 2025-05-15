@@ -143,6 +143,16 @@
     };
   };
 
+ 
+  networking.interfaces.tailscale0.ipv4.routes = [
+    {
+      address   = "49.248.209.218";
+      prefixLength = 32;
+      via       = "100.122.246.78";
+      
+    }
+  ];
+
   # hardware = {
   #   # Udev rules for vial
   #   keyboard.qmk.enable = true;
