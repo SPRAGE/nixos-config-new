@@ -16,7 +16,7 @@ in
 
     backupFileExtension = "backup";
 
-    # use the system configuration’s pkgs argument
+    # use the system configuration's pkgs argument
     # this ensures parity between nixos' pkgs and hm's pkgs
     useGlobalPkgs = true;
 
@@ -40,4 +40,9 @@ in
     # directory, or will exit with directory not found errors
     users = genAttrs config.modules.os.users (name: ./${name});
   };
+
+  imports = [
+    ./shaun
+    # Add other user or shared modules here as needed
+  ];
 }

@@ -12,6 +12,7 @@
       disks = [ "/dev/nvme0n1" ];
       swapSize = "32G";
     })
+    ./home
   ];
 
   boot = {
@@ -28,11 +29,6 @@
   virtualisation.docker.rootless = {
     enable = true;
     setSocketVariable = true;
-  };
-
-  # home-manager modules
-  home-manager.users.${config.modules.os.mainUser}.config.modules = {
-    theme.wallpaper = ../../modules/home/shaun/theming/wallpaper;
   };
 
   modules = {

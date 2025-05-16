@@ -108,18 +108,48 @@
 
   };
 
-  outputs =
-    inputs@{ self, flake-parts, ... }:
+  outputs = inputs@{ self, flake-parts, ... }:
     let
-      # custom lib functions
       lib' = import ./lib;
-      # main user for location
       user = "shaun";
-      # Location of the nixos config
       location = "/home/${user}/nixos-config";
+
+      # --- Auto-detect hosts ---
+      hostDirs = builtins.filter
+        (name:
+          let path = ./hosts + "/${name}";
+          in builtins.pathExists (path + "/default.nix") && name != "disks"
+        )
+        (builtins.attrNames (builtins.readDir ./hosts));
+
+      homeManager = [
+        inputs.home-manager.nixosModules.home-manager
+        ./modules/home
+      ];
+
+      specialArgs = {
+        inherit inputs self lib' location;
+        nix-stable = import inputs.nixpkgs-stable {
+          system = "x86_64-linux";
+          config.allowUnfree = true;
+        };
+      };
+
+      mkHost = name: {
+        name = name;
+        value = inputs.nixpkgs.lib.nixosSystem {
+          inherit specialArgs;
+          modules = [
+            (./hosts + "/${name}")
+            ./modules/nixos
+          ] ++ homeManager;
+        };
+      };
+
+      nixosConfigurations = builtins.listToAttrs (map mkHost hostDirs);
+
     in
     flake-parts.lib.mkFlake { inherit inputs; } {
-      # systems for which the `perSystem` attributes will be built
       systems = [
         "x86_64-linux"
         "aarch64-linux"
@@ -127,26 +157,12 @@
 
       imports = [
         inputs.treefmt-nix.flakeModule
-
-        # the flake utilities
         ./flake
         ./pkgs
       ];
-      # perSystem =
-      #   { pkgs, system, ... }:
-      #   {
-      #   };
 
       flake = {
-        # entry-point for nixosConfigurations
-        nixosConfigurations = import ./hosts/profiles.nix {
-          inherit
-            inputs
-            self
-            lib'
-            location
-            ;
-        };
+        nixosConfigurations = nixosConfigurations;
       };
     };
 }
