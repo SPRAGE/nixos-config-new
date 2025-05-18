@@ -196,11 +196,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1746729224,
-        "narHash": "sha256-9R4sOLAK1w3Bq54H3XOJogdc7a6C2bLLmatOQ+5pf5w=",
+        "lastModified": 1747274630,
+        "narHash": "sha256-87RJwXbfOHyzTB9LYagAQ6vOZhszCvd8Gvudu+gf3qo=",
         "owner": "nix-community",
         "repo": "disko",
-        "rev": "85555d27ded84604ad6657ecca255a03fd878607",
+        "rev": "ec7c109a4f794fce09aad87239eab7f66540b888",
         "type": "github"
       },
       "original": {
@@ -497,7 +497,6 @@
       "inputs": {
         "nixpkgs-lib": [
           "stylix",
-          "nur",
           "nixpkgs"
         ]
       },
@@ -661,27 +660,6 @@
       }
     },
     "flake-utils_8": {
-      "inputs": {
-        "systems": [
-          "stylix",
-          "systems"
-        ]
-      },
-      "locked": {
-        "lastModified": 1731533236,
-        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "type": "github"
-      }
-    },
-    "flake-utils_9": {
       "inputs": {
         "systems": "systems_10"
       },
@@ -853,11 +831,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1747181178,
-        "narHash": "sha256-Svvx3mlfGRyta0yMQmqW6FyAKtCH7KQxlcRnJPh/k6Q=",
+        "lastModified": 1747439237,
+        "narHash": "sha256-5rCGrnkglKKj4cav1U3HC+SIUNJh08pqOK4spQv9RjA=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "b44c39cf4618ccf58df2b68827ca95a3fecf0655",
+        "rev": "ae755329092c87369b9e9a1510a8cf1ce2b1c708",
         "type": "github"
       },
       "original": {
@@ -874,11 +852,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1747021744,
-        "narHash": "sha256-IDsM/9/tHQBlhG3tXI2fTM84AUN1uRa7JDPT1LMlGes=",
+        "lastModified": 1747279714,
+        "narHash": "sha256-UdxlE8yyrKiGq3bgGyJ78AdFwh+fuRAruKtyFY5Zq5I=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "fb061f555f821fe4fb49f8f6f2a0cc3d5728bd52",
+        "rev": "954615c510c9faa3ee7fb6607ff72e55905e69f2",
         "type": "github"
       },
       "original": {
@@ -895,11 +873,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1747029715,
-        "narHash": "sha256-F75IlhzUF+VTPOq+u2Exj+6PjHWPkLcBWDnhO+Vvch4=",
+        "lastModified": 1747531721,
+        "narHash": "sha256-kx7hCuML0sMcjbyjbpplNWsJjLoUfiy23JiS9aG4UWw=",
         "owner": "Jas-SinghFSU",
         "repo": "HyprPanel",
-        "rev": "2bb1449fb6ad60a736ce6fb4de2037d7655545ed",
+        "rev": "c203ffe80f4e7b68e22ba3fde0598622500f5add",
         "type": "github"
       },
       "original": {
@@ -953,11 +931,11 @@
         "nixpkgs": "nixpkgs_5"
       },
       "locked": {
-        "lastModified": 1745887302,
-        "narHash": "sha256-5tBde4EwofvvRxUpUwtPUhD2Rs7oaEd5uYcZtx6XMko=",
+        "lastModified": 1747533870,
+        "narHash": "sha256-UU+WnR3mt2wVICdAyVAKYe+rTLe9l+wQHnKXsiu+jY4=",
         "ref": "main",
-        "rev": "4ce81f82b0d733453c504edecac15b0f86e18bba",
-        "revCount": 45,
+        "rev": "649ff38d7d12e9bae6a553fdc9aa2070b02307ae",
+        "revCount": 46,
         "type": "git",
         "url": "ssh://git@github.com/SPRAGE/ingestion-service.git"
       },
@@ -1204,11 +1182,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1746934494,
-        "narHash": "sha256-3n6i+F0sDASjkhbvgFDpPDZGp7z19IrRtjfF9TwJpCA=",
+        "lastModified": 1747470409,
+        "narHash": "sha256-R9TP2//BDKyjNzuZybplIZm7HQEnwL8khs7EmmTPYP4=",
         "owner": "nix-community",
         "repo": "nix-index-database",
-        "rev": "e9b21b01e4307176b9718a29ac514838e7f6f4ff",
+        "rev": "c1f63a0c3bf1b2fe05124ccb099333163e2184a7",
         "type": "github"
       },
       "original": {
@@ -1250,11 +1228,11 @@
     },
     "nixpkgs-stable": {
       "locked": {
-        "lastModified": 1746957726,
-        "narHash": "sha256-k9ut1LSfHCr0AW82ttEQzXVCqmyWVA5+SHJkS5ID/Jo=",
+        "lastModified": 1747335874,
+        "narHash": "sha256-IKKIXTSYJMmUtE+Kav5Rob8SgLPnfnq4Qu8LyT4gdqQ=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "a39ed32a651fdee6842ec930761e31d1f242cb94",
+        "rev": "ba8b70ee098bc5654c459d6a95dfc498b91ff858",
         "type": "github"
       },
       "original": {
@@ -1442,11 +1420,11 @@
     },
     "nixpkgs_8": {
       "locked": {
-        "lastModified": 1746904237,
-        "narHash": "sha256-3e+AVBczosP5dCLQmMoMEogM57gmZ2qrVSrmq9aResQ=",
+        "lastModified": 1747327360,
+        "narHash": "sha256-LSmTbiq/nqZR9B2t4MRnWG7cb0KVNU70dB7RT4+wYK4=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "d89fc19e405cb2d55ce7cc114356846a0ee5e956",
+        "rev": "e06158e58f3adee28b139e9c2bcfcc41f8625b46",
         "type": "github"
       },
       "original": {
@@ -1494,7 +1472,10 @@
     },
     "nur": {
       "inputs": {
-        "flake-parts": "flake-parts_4",
+        "flake-parts": [
+          "stylix",
+          "flake-parts"
+        ],
         "nixpkgs": [
           "stylix",
           "nixpkgs"
@@ -1552,11 +1533,11 @@
         "tokyodark": "tokyodark"
       },
       "locked": {
-        "lastModified": 1746727421,
-        "narHash": "sha256-bYulqfs/30tCoTn8cLixL/YvXrSjKlw34gTlOiTeE8k=",
+        "lastModified": 1747192978,
+        "narHash": "sha256-RGwZu53jg6qqPO4+qDwojbamWz5TZ0iWpaqwu1vC37w=",
         "owner": "SPRAGE",
         "repo": "nixvim",
-        "rev": "ee8f5973123e64a67ffa41a4b7946be180a0c090",
+        "rev": "d468217241f26c9d00fa43883afc92fda74251bd",
         "type": "github"
       },
       "original": {
@@ -1606,11 +1587,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1746537231,
-        "narHash": "sha256-Wb2xeSyOsCoTCTj7LOoD6cdKLEROyFAArnYoS+noCWo=",
+        "lastModified": 1747372754,
+        "narHash": "sha256-2Y53NGIX2vxfie1rOW0Qb86vjRZ7ngizoo+bnXU9D9k=",
         "owner": "cachix",
         "repo": "pre-commit-hooks.nix",
-        "rev": "fa466640195d38ec97cf0493d6d6882bc4d14969",
+        "rev": "80479b6ec16fefd9c1db3ea13aeb038c60530f46",
         "type": "github"
       },
       "original": {
@@ -1838,7 +1819,7 @@
         "base16-vim": "base16-vim",
         "firefox-gnome-theme": "firefox-gnome-theme",
         "flake-compat": "flake-compat_5",
-        "flake-utils": "flake-utils_8",
+        "flake-parts": "flake-parts_4",
         "git-hooks": "git-hooks",
         "gnome-shell": "gnome-shell",
         "home-manager": "home-manager_2",
@@ -1852,11 +1833,11 @@
         "tinted-zed": "tinted-zed"
       },
       "locked": {
-        "lastModified": 1747170169,
-        "narHash": "sha256-LRP/8RejiA1IkdN7WEcmEMQC+FSoqyvZ5UYfU12JjiI=",
+        "lastModified": 1747533965,
+        "narHash": "sha256-MEbRvR/ZlQHf8vcX1AIby/ILdN/q7SSMGCd2mWIy1DA=",
         "owner": "danth",
         "repo": "stylix",
-        "rev": "1466793570f22c56fc9f606151bcb306fcaa3551",
+        "rev": "5f6f08daad947b3116ccb878e4226e6bdf7a0c61",
         "type": "github"
       },
       "original": {
@@ -2142,11 +2123,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1746989248,
-        "narHash": "sha256-uoQ21EWsAhyskNo8QxrTVZGjG/dV4x5NM1oSgrmNDJY=",
+        "lastModified": 1747469671,
+        "narHash": "sha256-bo1ptiFoNqm6m1B2iAhJmWCBmqveLVvxom6xKmtuzjg=",
         "owner": "numtide",
         "repo": "treefmt-nix",
-        "rev": "708ec80ca82e2bbafa93402ccb66a35ff87900c5",
+        "rev": "ab0378b61b0d85e73a8ab05d5c6029b5bd58c9fb",
         "type": "github"
       },
       "original": {
@@ -2158,16 +2139,16 @@
     "websocket-server": {
       "inputs": {
         "fenix": "fenix_6",
-        "flake-utils": "flake-utils_9",
+        "flake-utils": "flake-utils_8",
         "naersk": "naersk_6",
         "nixpkgs": "nixpkgs_14"
       },
       "locked": {
-        "lastModified": 1746320297,
-        "narHash": "sha256-9VvBCTek0z8EEn2OeTHyjyCNDLtcyV1NRxBQehlgVe4=",
+        "lastModified": 1747533943,
+        "narHash": "sha256-ntCWAScAePRWueznoqu57I+qjvq6wmig2MWO+3LhEWc=",
         "ref": "main",
-        "rev": "512e99dd8eeec8004027752226a2eae766cc7665",
-        "revCount": 18,
+        "rev": "4ebcc6b2b62f7cbed7338eb7b12478c08bb2db37",
+        "revCount": 19,
         "type": "git",
         "url": "ssh://git@github.com/SPRAGE/websocket-client.git"
       },
