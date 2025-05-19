@@ -15,7 +15,7 @@ in
 
     package = mkOption {
       type = types.package;
-      default = inputs.index-frontend.packages.${pkgs.system}.index-frontend;
+      default = inputs.index-frontend.packages.${pkgs.system}.default;
       description = "The index-frontend package to install.";
     };
 
@@ -25,7 +25,7 @@ in
         [Desktop Entry]
         Name=Index Frontend
         Comment=Rust-based GUI for Financial Index Visualization
-        Exec=${cfg.package}/bin/index_frontend
+        Exec=${cfg.package}/bin/index-frontend
         Icon=utilities-terminal
         Terminal=false
         Type=Application
@@ -43,7 +43,7 @@ in
     xdg.desktopEntries.index-frontend = {
       name = "Index Frontend";
       comment = "Rust-based GUI for Financial Index Visualization";
-      exec = "${cfg.package}/bin/index_frontend";
+      exec = "${cfg.package}/bin/index-frontend";
       icon = "utilities-terminal"; # you can replace with a custom icon later
       terminal = false;
       categories = [ "Utility" ];
