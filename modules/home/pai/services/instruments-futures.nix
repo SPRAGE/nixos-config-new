@@ -51,26 +51,40 @@ in
 
   config = mkIf cfg.enable {
     # run once per invocation
-    systemd.user.services.grpc-invoke = {
-      description = "Invoke instrument → futures gRPC calls";
-      after = [ "network.target" ];
-      wants = [ "network.target" ];
-      serviceConfig = {
-        Type      = "oneshot";
-        ExecStart = "${invokeBin} ${cfg.targetIp} ${cfg.instrumentMethod} ${cfg.futuresMethod}";
-      };
-      install.WantedBy = [ "multi-user.target" ];
+    # the one-shot user service
+  services.systemd.user.services.grpc-invoke = {
+    description = "Invoke instrument → futures gRPC calls";
+
+    # everything that would normally go under [Unit] and [Service]
+    serviceConfig = {
+      # Unit
+      After = "network.target";
+      Wants = "network.target";
+
+      # Service
+      Type      = "oneshot";
+      ExecStart = "${invokeBin}";
     };
 
-    # every 2 hours
-    systemd.user.timers.grpc-invoke = {
-      description = "Run grpc-invoke.service every 2 hours";
-      wants = [ "grpc-invoke.service" ];
-      timerConfig = {
-        OnUnitActiveSec = "2h";
-        Persistent      = true;
-      };
-      install.WantedBy = [ "timers.target" ];
+    # install into the default target (so `systemctl --user enable grpc-invoke`)
+    install = {
+      WantedBy = [ "default.target" ];
     };
+  };
+
+  # the timer to fire it every 2h
+  services.systemd.user.timers.grpc-invoke = {
+    description = "Run grpc-invoke.service every 2 hours";
+    wants = [ "grpc-invoke.service" ];
+
+    timerConfig = {
+      OnUnitActiveSec = "2h";
+      Persistent      = true;
+    };
+
+    install = {
+      WantedBy = [ "timers.target" ];
+    };
+  };
   };
 }
