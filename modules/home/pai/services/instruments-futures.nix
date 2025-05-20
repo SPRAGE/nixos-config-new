@@ -51,7 +51,7 @@ in
 
   config = mkIf cfg.enable {
     # run once per invocation
-    systemd.services.grpc-invoke = {
+    systemd.user.services.grpc-invoke = {
       description = "Invoke instrument → futures gRPC calls";
       after = [ "network.target" ];
       wants = [ "network.target" ];
@@ -63,7 +63,7 @@ in
     };
 
     # every 2 hours
-    systemd.timers.grpc-invoke = {
+    systemd.user.timers.grpc-invoke = {
       description = "Run grpc-invoke.service every 2 hours";
       wants = [ "grpc-invoke.service" ];
       timerConfig = {
