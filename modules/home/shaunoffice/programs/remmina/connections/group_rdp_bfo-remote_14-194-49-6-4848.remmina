@@ -1,7 +1,7 @@
 [remmina]
 password=.
-window_width=1916
-window_height=1036
+window_width=1910
+window_height=1012
 gateway_username=
 notes_text=
 vc=
@@ -47,7 +47,7 @@ loadbalanceinfo=
 clientbuild=
 gateway_server=
 clientname=
-resolution_width=1916
+resolution_width=1910
 drive=
 relax-order-checks=0
 base-cred-for-gw=0
@@ -80,7 +80,7 @@ keymap=
 ssh_tunnel_username=
 execpath=
 shareserial=0
-resolution_height=1916
+resolution_height=1012
 rdp_mouse_jitter=No
 useproxyenv=0
 sharesmartcard=0
