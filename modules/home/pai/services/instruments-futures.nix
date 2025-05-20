@@ -3,7 +3,7 @@
 let
   inherit (lib) mkEnableOption mkOption mkIf types;
 
-  cfg = config.services.grpcInvoker;
+  cfg = config.modules.services.grpcInvoker;
   invokeBin = pkgs.writeShellScriptBin "invoke-grpc" ''
     #!/usr/bin/env bash
     set -euo pipefail
