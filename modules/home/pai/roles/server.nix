@@ -29,6 +29,12 @@ in
         package = inputs.analysis-server.packages.${pkgs.system}.default;
         configFile = null; # or ./config.toml
       };
+      grpcInvoker = {
+        enable           = true;
+        targetIp         = "127.0.0.1:50002";
+        instrumentMethod = "IngestionService/IngestInstruments";
+        futuresMethod    = "IngestionService/IngestFutures"; 
+      };
       ingestion-server = {
         enable = true;
         package = inputs.ingestion-server.packages.${pkgs.system}.ingestion-server;
