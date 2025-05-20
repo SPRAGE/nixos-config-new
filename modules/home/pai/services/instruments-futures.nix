@@ -25,7 +25,7 @@ let
   '';
 in
 {
-  options.services.grpcInvoker = {
+  options.modules.services.grpcInvoker = {
     enable = mkEnableOption "Enable periodic gRPC invoker";
     targetIp = mkOption {
       type = types.str;
