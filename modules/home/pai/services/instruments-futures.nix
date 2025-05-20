@@ -52,7 +52,7 @@ in
   config = mkIf cfg.enable {
     # run once per invocation
     # the one-shot user service
-  services.systemd.user.services.grpc-invoke = {
+  systemd.user.services.grpc-invoke = {
     description = "Invoke instrument → futures gRPC calls";
 
     # everything that would normally go under [Unit] and [Service]
@@ -73,7 +73,7 @@ in
   };
 
   # the timer to fire it every 2h
-  services.systemd.user.timers.grpc-invoke = {
+  systemd.user.timers.grpc-invoke = {
     description = "Run grpc-invoke.service every 2 hours";
     wants = [ "grpc-invoke.service" ];
 
