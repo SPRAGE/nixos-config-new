@@ -909,11 +909,11 @@
         "systems": "systems_3"
       },
       "locked": {
-        "lastModified": 1747711492,
-        "narHash": "sha256-CGve0WZnzrrkgF55qxNCKxZVesbZgd8gSnv97VpNLq8=",
+        "lastModified": 1747786995,
+        "narHash": "sha256-4VxIFJHbwK8OQPtxao08ZhlNuwVqXusjEss/re4U+cA=",
         "ref": "main",
-        "rev": "5d0a19e3a22cd7416197583ecf34457edfbaa68c",
-        "revCount": 17,
+        "rev": "3e7702a509e049204a460f5b902481d4e3a9bc33",
+        "revCount": 19,
         "type": "git",
         "url": "ssh://git@github.com/SPRAGE/dx-frontend.git"
       },

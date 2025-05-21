@@ -2,8 +2,7 @@
 
 let
   inherit (lib) mkEnableOption mkOption mkIf types;
-
-  cfg = config.modules.services.grpcInvoker;
+  cfg = config.services.grpcInvoker;
   invokeBin = pkgs.writeShellScriptBin "invoke-grpc" ''
     #!/usr/bin/env bash
     set -euo pipefail
@@ -13,9 +12,9 @@ let
     FUTURES_METHOD="${cfg.futuresMethod}"
 
     PAYLOAD=$(cat <<EOF
-        ${cfg.payload}
-        EOF
-        )
+${cfg.payload}
+EOF
+)
 
     echo "[$(date)] → calling Instrument at $TARGET_IP → $INSTRUMENT_METHOD"
     grpcurl -plaintext -d "$PAYLOAD" "$TARGET_IP" "$INSTRUMENT_METHOD"
@@ -23,9 +22,9 @@ let
     echo "[$(date)] → calling Futures  at $TARGET_IP → $FUTURES_METHOD"
     grpcurl -plaintext -d "$PAYLOAD" "$TARGET_IP" "$FUTURES_METHOD"
   '';
-in
-{
-  options.modules.services.grpcInvoker = {
+in {
+  ### 1) Define your `services.grpcInvoker.*` options in the right namespace:
+  options.services.grpcInvoker = {
     enable = mkEnableOption "Enable periodic gRPC invoker";
     targetIp = mkOption {
       type = types.str;
@@ -49,42 +48,34 @@ in
     };
   };
 
+  ### 2) Only when enabled, hook in the systemd units *and* make sure `grpcurl` is in your user’s PATH:
   config = mkIf cfg.enable {
-    # run once per invocation
-    # the one-shot user service
-  systemd.user.services.grpc-invoke = {
-    description = "Invoke instrument → futures gRPC calls";
+    # if this is a home-manager (user) module:
+    home.packages = [ pkgs.grpcurl ];
 
-    # everything that would normally go under [Unit] and [Service]
-    serviceConfig = {
-      # Unit
-      After = "network.target";
-      Wants = "network.target";
-
-      # Service
-      Type      = "oneshot";
-      ExecStart = "${invokeBin}";
+    systemd.user.services."grpc-invoke" = {
+      description = "Invoke instrument → futures gRPC calls";
+      after       = [ "network.target" ];
+      wants       = [ "network.target" ];
+      serviceConfig = {
+        Type      = "oneshot";
+        ExecStart = invokeBin;
+      };
+      install = {
+        WantedBy = [ "default.target" ];
+      };
     };
 
-    # install into the default target (so `systemctl --user enable grpc-invoke`)
-    install = {
-      WantedBy = [ "default.target" ];
+    systemd.user.timers."grpc-invoke" = {
+      description = "Run grpc-invoke.service every 2 hours";
+      wants       = [ "grpc-invoke.service" ];
+      timerConfig = {
+        OnUnitActiveSec = "2h";
+        Persistent      = true;
+      };
+      install = {
+        WantedBy = [ "timers.target" ];
+      };
     };
-  };
-
-  # the timer to fire it every 2h
-  systemd.user.timers.grpc-invoke = {
-    description = "Run grpc-invoke.service every 2 hours";
-    wants = [ "grpc-invoke.service" ];
-
-    timerConfig = {
-      OnUnitActiveSec = "2h";
-      Persistent      = true;
-    };
-
-    install = {
-      WantedBy = [ "timers.target" ];
-    };
-  };
   };
 }
