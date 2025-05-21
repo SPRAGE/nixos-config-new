@@ -7,64 +7,40 @@ let
     mkIf
     types;
 
-  # Grab your settings from the imported module-tree:
   cfg = config.modules.services.grpcInvoker;
 
-  # A tiny wrapper script that makes the two grpcurl calls:
+  # build a tiny wrapper that calls both date and grpcurl by absolute path
   invokeBin = pkgs.writeShellScriptBin "grpc-invoke" ''
     #!/usr/bin/env bash
     set -euo pipefail
+
+    DATE_CMD=${pkgs.coreutils}/bin/date
+    GRPCURL=${pkgs.grpcurl}/bin/grpcurl
 
     TARGET_IP="${cfg.targetIp}"
     INSTRUMENT_METHOD="${cfg.instrumentMethod}"
     FUTURES_METHOD="${cfg.futuresMethod}"
     PAYLOAD=${cfg.payload}
 
-    echo "[$(date)] → calling Instrument at $TARGET_IP → $INSTRUMENT_METHOD"
-    grpcurl -plaintext -d "$PAYLOAD" "$TARGET_IP" "$INSTRUMENT_METHOD"
+    echo "[$($DATE_CMD)] → calling Instrument at $TARGET_IP → $INSTRUMENT_METHOD"
+    $GRPCURL -plaintext -d "$PAYLOAD" "$TARGET_IP" "$INSTRUMENT_METHOD"
 
-    echo "[$(date)] → calling Futures  at $TARGET_IP → $FUTURES_METHOD"
-    grpcurl -plaintext -d "$PAYLOAD" "$TARGET_IP" "$FUTURES_METHOD"
+    echo "[$($DATE_CMD)] → calling Futures  at $TARGET_IP → $FUTURES_METHOD"
+    $GRPCURL -plaintext -d "$PAYLOAD" "$TARGET_IP" "$FUTURES_METHOD"
   '';
-in
-{
-  ##############################################################################
-  # 1) Options under modules.services.grpcInvoker
-  ##############################################################################
+
+in {
   options.modules.services.grpcInvoker = {
     enable = mkEnableOption "Enable periodic gRPC invoker";
-
-    targetIp = mkOption {
-      type        = types.str;
-      default     = "127.0.0.1:50051";
-      description = "host:port of both instrument & futures service";
-    };
-
-    instrumentMethod = mkOption {
-      type        = types.str;
-      default     = "your.package.InstrumentService/InstrumentMethod";
-      description = "gRPC method for instrument call";
-    };
-
-    futuresMethod = mkOption {
-      type        = types.str;
-      default     = "your.package.FuturesService/FuturesMethod";
-      description = "gRPC method for futures call";
-    };
-
-    payload = mkOption {
-      type        = types.nullOr types.str;
-      default     = "{}";
-      description = "JSON request body (single-line string)";
-    };
+    targetIp = mkOption { type = types.str; default = "127.0.0.1:50051"; };
+    instrumentMethod = mkOption { type = types.str; default = "your.package.InstrumentService/InstrumentMethod"; };
+    futuresMethod = mkOption { type = types.str; default = "your.package.FuturesService/FuturesMethod"; };
+    payload = mkOption { type = types.nullOr types.str; default = "{}"; };
   };
 
-  ##############################################################################
-  # 2) Hook in systemd units when enabled
-  ##############################################################################
   config = mkIf cfg.enable {
-    # make sure grpcurl is available in the user’s PATH
-    home.packages = [ pkgs.grpcurl ];
+    # we don’t actually need to pull grpcurl or coreutils into the user PATH
+    # because we call them by absolute path in the script.
 
     systemd.user.services."grpc-invoke" = {
       Unit = {
@@ -74,25 +50,20 @@ in
       };
       Service = {
         Type      = "oneshot";
+        # point at the script’s bin directory
         ExecStart = "${invokeBin}/bin/grpc-invoke";
         Restart   = "no";
       };
-      Install = {
-        WantedBy = [ "default.target" ];
-      };
+      Install = { WantedBy = [ "default.target" ]; };
     };
 
     systemd.user.timers."grpc-invoke" = {
-      Unit = {
-        Description = "Timer: run grpc-invoke.service every 2h";
-      };
+      Unit = { Description = "Timer: run grpc-invoke.service every 2h"; };
       Timer = {
         OnUnitActiveSec = "2h";
         Persistent      = true;
       };
-      Install = {
-        WantedBy = [ "timers.target" ];
-      };
+      Install = { WantedBy = [ "timers.target" ]; };
     };
   };
 }
