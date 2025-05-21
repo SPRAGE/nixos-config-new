@@ -1,68 +1,101 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}:
+{ config, lib, pkgs, ... }:
 
 let
   inherit (lib)
     mkEnableOption
     mkOption
     mkIf
-    types
-    optionalString
-    ;
+    types;
 
-  cfg = config.modules.services.ingestion-server;
+  # Grab the user’s settings once your module is imported:
+  cfg = config.services.grpcInvoker;
+
+  # Build a tiny wrapper script that does the two grpcurl calls:
+  invokeBin = pkgs.writeShellScriptBin "grpc-invoke" ''
+    #!/usr/bin/env bash
+    set -euo pipefail
+
+    TARGET_IP="${cfg.targetIp}"
+    INSTRUMENT_METHOD="${cfg.instrumentMethod}"
+    FUTURES_METHOD="${cfg.futuresMethod}"
+    PAYLOAD=${cfg.payload}
+
+    echo "[$(date)] → calling Instrument at $TARGET_IP → $INSTRUMENT_METHOD"
+    grpcurl -plaintext -d "$PAYLOAD" "$TARGET_IP" "$INSTRUMENT_METHOD"
+
+    echo "[$(date)] → calling Futures  at $TARGET_IP → $FUTURES_METHOD"
+    grpcurl -plaintext -d "$PAYLOAD" "$TARGET_IP" "$FUTURES_METHOD"
+  '';
 in
 {
-  options.modules.services.ingestion-server = {
-    enable = mkEnableOption "Enable the ingestion server as a user service";
+  ##############################################################################
+  # 1) Option definitions
+  ##############################################################################
+  options.services.grpcInvoker = {
+    enable = mkEnableOption "Enable periodic gRPC invoker";
 
-    package = mkOption {
-      type = types.package;
-      description = "The ingestion-server package to run.";
+    targetIp = mkOption {
+      type        = types.str;
+      default     = "127.0.0.1:50051";
+      description = "host:port of both instrument & futures service";
     };
 
-    configFile = mkOption {
-      type = types.nullOr types.path;
-      default = null;
-      description = "Optional path to the TOML config file used by ingestion-server.";
+    instrumentMethod = mkOption {
+      type        = types.str;
+      default     = "your.package.InstrumentService/InstrumentMethod";
+      description = "gRPC method for instrument call";
     };
 
-    rustLogLevel = mkOption {
-      type = types.str;
-      default = "warn";
-      description = "The log level for the RUST_LOG environment variable (e.g., debug, info, warn, error).";
+    futuresMethod = mkOption {
+      type        = types.str;
+      default     = "your.package.FuturesService/FuturesMethod";
+      description = "gRPC method for futures call";
+    };
+
+    payload = mkOption {
+      type        = types.nullOr types.str;
+      default     = "{}";
+      description = "JSON request body to send (as a single-line string)";
     };
   };
 
+  ##############################################################################
+  # 2) When enabled, inject the script, grpcurl, and the two systemd units
+  ##############################################################################
   config = mkIf cfg.enable {
-    systemd.user.services.ingestion-server = {
+    # Ensure grpcurl is in your PATH
+    home.packages = [ pkgs.grpcurl ];
+
+    systemd.user.services."grpc-invoke" = {
       Unit = {
-        Description = "User-space ingestion-server";
-        After = [ "network.target" ];
+        Description = "Invoke Instrument & Futures gRPC calls";
+        After       = [ "network.target" ];
+        Wants       = [ "network.target" ];
       };
 
       Service = {
-        ExecStart = lib.concatStringsSep " " (
-          [ "${cfg.package}/bin/ingestion-server" ]
-          ++ lib.optionals (cfg.configFile != null) [
-            "--config"
-            "${cfg.configFile}"
-          ]
-        );
-
-        Restart = "on-failure";
-        Environment = [
-          "LD_LIBRARY_PATH=${pkgs.openssl.out}/lib"
-          "RUST_LOG=${cfg.rustLogLevel}"
-        ];
+        Type      = "oneshot";
+        ExecStart = invokeBin;
+        Restart   = "no";
       };
 
       Install = {
-        WantedBy = [ "default.target" "multi-user.target" ];
+        WantedBy = [ "default.target" ];
+      };
+    };
+
+    systemd.user.timers."grpc-invoke" = {
+      Unit = {
+        Description = "Timer: run grpc-invoke.service every 2h";
+      };
+
+      Timer = {
+        OnUnitActiveSec = "2h";
+        Persistent      = true;
+      };
+
+      Install = {
+        WantedBy = [ "timers.target" ];
       };
     };
   };
