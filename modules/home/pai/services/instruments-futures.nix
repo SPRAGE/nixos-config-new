@@ -1,20 +1,24 @@
 { config, lib, pkgs, ... }:
 
 let
-  inherit (lib) mkEnableOption mkOption mkIf types;
-  cfg = config.services.grpcInvoker;
-  invokeBin = pkgs.writeShellScriptBin "invoke-grpc" ''
+  inherit (lib)
+    mkEnableOption
+    mkOption
+    mkIf
+    types;
+
+  # Grab your settings from the imported module-tree:
+  cfg = config.modules.services.grpcInvoker;
+
+  # A tiny wrapper script that makes the two grpcurl calls:
+  invokeBin = pkgs.writeShellScriptBin "grpc-invoke" ''
     #!/usr/bin/env bash
     set -euo pipefail
 
     TARGET_IP="${cfg.targetIp}"
     INSTRUMENT_METHOD="${cfg.instrumentMethod}"
     FUTURES_METHOD="${cfg.futuresMethod}"
-
-    PAYLOAD=$(cat <<EOF
-${cfg.payload}
-EOF
-)
+    PAYLOAD=${cfg.payload}
 
     echo "[$(date)] → calling Instrument at $TARGET_IP → $INSTRUMENT_METHOD"
     grpcurl -plaintext -d "$PAYLOAD" "$TARGET_IP" "$INSTRUMENT_METHOD"
@@ -22,58 +26,71 @@ EOF
     echo "[$(date)] → calling Futures  at $TARGET_IP → $FUTURES_METHOD"
     grpcurl -plaintext -d "$PAYLOAD" "$TARGET_IP" "$FUTURES_METHOD"
   '';
-in {
-  ### 1) Define your `services.grpcInvoker.*` options in the right namespace:
-  options.services.grpcInvoker = {
+in
+{
+  ##############################################################################
+  # 1) Options under modules.services.grpcInvoker
+  ##############################################################################
+  options.modules.services.grpcInvoker = {
     enable = mkEnableOption "Enable periodic gRPC invoker";
+
     targetIp = mkOption {
-      type = types.str;
-      default = "127.0.0.1:50051";
+      type        = types.str;
+      default     = "127.0.0.1:50051";
       description = "host:port of both instrument & futures service";
     };
+
     instrumentMethod = mkOption {
-      type = types.str;
-      default = "your.package.InstrumentService/InstrumentMethod";
+      type        = types.str;
+      default     = "your.package.InstrumentService/InstrumentMethod";
       description = "gRPC method for instrument call";
     };
+
     futuresMethod = mkOption {
-      type = types.str;
-      default = "your.package.FuturesService/FuturesMethod";
+      type        = types.str;
+      default     = "your.package.FuturesService/FuturesMethod";
       description = "gRPC method for futures call";
     };
+
     payload = mkOption {
-      type = types.str;
-      default = "{}";
-      description = "JSON request body to send";
+      type        = types.nullOr types.str;
+      default     = "{}";
+      description = "JSON request body (single-line string)";
     };
   };
 
-  ### 2) Only when enabled, hook in the systemd units *and* make sure `grpcurl` is in your user’s PATH:
+  ##############################################################################
+  # 2) Hook in systemd units when enabled
+  ##############################################################################
   config = mkIf cfg.enable {
-    # if this is a home-manager (user) module:
+    # make sure grpcurl is available in the user’s PATH
     home.packages = [ pkgs.grpcurl ];
 
     systemd.user.services."grpc-invoke" = {
-      description = "Invoke instrument → futures gRPC calls";
-      after       = [ "network.target" ];
-      wants       = [ "network.target" ];
-      serviceConfig = {
+      Unit = {
+        Description = "Invoke Instrument & Futures gRPC calls";
+        After       = [ "network.target" ];
+        Wants       = [ "network.target" ];
+      };
+      Service = {
         Type      = "oneshot";
         ExecStart = invokeBin;
+        Restart   = "no";
       };
-      install = {
+      Install = {
         WantedBy = [ "default.target" ];
       };
     };
 
     systemd.user.timers."grpc-invoke" = {
-      description = "Run grpc-invoke.service every 2 hours";
-      wants       = [ "grpc-invoke.service" ];
-      timerConfig = {
+      Unit = {
+        Description = "Timer: run grpc-invoke.service every 2h";
+      };
+      Timer = {
         OnUnitActiveSec = "2h";
         Persistent      = true;
       };
-      install = {
+      Install = {
         WantedBy = [ "timers.target" ];
       };
     };
