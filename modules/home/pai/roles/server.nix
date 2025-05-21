@@ -22,8 +22,8 @@ in
       grpcInvoker = {
         enable           = true;
         targetIp         = "127.0.0.1:50002";
-        instrumentMethod = "IngestionService/IngestInstruments";
-        futuresMethod    = "IngestionService/IngestFutures"; 
+        instrumentMethod = "ingestion.IngestionService/IngestInstruments";
+        futuresMethod    = "ingestion.IngestionService/IngestFutures"; 
       };
       auth-server = {
         enable = true;
