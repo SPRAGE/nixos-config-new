@@ -11,13 +11,6 @@ in
     # Terminal Utils
     fastfetch
 
-    # Video/Audio
-    pwvucontrol
-
-    #office
-    libreoffice
-    galculator
-
     #github
     gh
 
