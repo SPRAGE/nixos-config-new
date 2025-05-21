@@ -27,6 +27,9 @@ in
     #tailscale
     tailscale
 
+    #grpc
+    grpcurl
+
 
   ];
 }
