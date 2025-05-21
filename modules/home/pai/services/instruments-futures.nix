@@ -74,7 +74,7 @@ in
       };
       Service = {
         Type      = "oneshot";
-        ExecStart = invokeBin;
+        ExecStart = "${invokeBin}/bin/grpc-invoke";
         Restart   = "no";
       };
       Install = {
