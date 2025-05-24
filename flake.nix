@@ -71,10 +71,10 @@
     stylix.url = "github:danth/stylix";
     # persist files on boot
     impermanence.url = "github:nix-community/impermanence";
-    # create nix project automatically
-    dev-assistant.url = "github:spector700/DevAssistant";
-    # My app launcher
-    lumastart.url = "github:spector700/lumastart";
+    # # create nix project automatically
+    # dev-assistant.url = "github:spector700/DevAssistant";
+    # # My app launcher
+    # lumastart.url = "github:spector700/lumastart";
     # my neovim flake
     nvix.url = "github:SPRAGE/nixvim";
     # # gaming tweaks and addons
