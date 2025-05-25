@@ -1459,11 +1459,11 @@
         "tokyodark": "tokyodark"
       },
       "locked": {
-        "lastModified": 1748172090,
-        "narHash": "sha256-L6Mln6/SxcbO3QRFfstgON05olrSCzm6vAIJWPgTCOY=",
+        "lastModified": 1748173141,
+        "narHash": "sha256-XdCxk6gylJZ/vy3lkdYW01YKlWWPYCqxz1i8mqfQLsQ=",
         "owner": "SPRAGE",
         "repo": "nixvim",
-        "rev": "b3895ab6fe2c7e298e8275c53ec2c4b4d9806262",
+        "rev": "158ee7b071fd7004097898eb08d2fbd5fe2b8e53",
         "type": "github"
       },
       "original": {
