@@ -77,6 +77,15 @@
     # lumastart.url = "github:spector700/lumastart";
     # my neovim flake
     nvix.url = "github:SPRAGE/nixvim";
+   oil-vcs-status = {
+      url = "github:SirZenith/oil-vcs-status";
+      flake = false;
+    };
+
+    oil-lsp-diagnostics = {
+      url = "github:JezerM/oil-lsp-diagnostics.nvim";
+      flake = false;
+    };
     # # gaming tweaks and addons
     # gaming.url = "github:fufexan/nix-gaming";
 

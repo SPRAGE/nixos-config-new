@@ -5,7 +5,7 @@
   ...
 }:
 {
-  imports = [ inputs.dev-assistant.homeManagerModules.default ];
+#  imports = [ inputs.dev-assistant.homeManagerModules.default ];
 
   home.packages = with pkgs; [
     # get ssh information with fzf
@@ -110,7 +110,7 @@
       enableZshIntegration = true;
     };
 
-    dev-assistant.enable = true;
+    # dev-assistant.enable = true;
 
     fzf = {
       enable = true;

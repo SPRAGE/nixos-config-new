@@ -20,8 +20,14 @@
     };
   };
 
-  home.shellAliases = {
-    # change color on ssh
-    ssh = "kitten ssh --kitten=color_scheme=Dracula";
-  };
+  programs.zsh.initExtra = ''
+    # Smart SSH function that uses kitten only when in kitty terminal
+    ssh() {
+      if [ "$TERM" = "xterm-kitty" ]; then
+        kitten ssh --kitten=color_scheme=Dracula "$@"
+      else
+        command ssh "$@"
+      fi
+    }
+  '';
 }
