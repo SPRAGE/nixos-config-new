@@ -17,7 +17,9 @@ in
     enableZshIntegration = config.programs.zsh.enable;
     enableNushellIntegration = config.programs.nushell.enable;
 
-    pinentryPackage = pkgs.pinentry-gnome3; # requires services.dbus.packages = [ pkgs.gcr ]
+    pinentry = {
+      package = pkgs.pinentry-gnome3;
+    };
     enableScDaemon = true;
     enableSshSupport = true;
     defaultCacheTtl = 1209600;
