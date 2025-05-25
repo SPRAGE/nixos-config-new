@@ -20,7 +20,7 @@
     };
   };
 
-  programs.zsh.initExtra = ''
+  programs.zsh.initContent = ''
     # Smart SSH function that uses kitten only when in kitty terminal
     ssh() {
       if [ "$TERM" = "xterm-kitty" ]; then
