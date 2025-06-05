@@ -16,10 +16,10 @@
     };
 
     # hyprland.url = "git+https://github.com/hyprwm/Hyprland/?submodules=1/d26439a0fe5594fb26d5a3c01571f9490a9a2d2c";
-    hyprpanel = {
-      url = "github:Jas-SinghFSU/HyprPanel";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # hyprpanel = {
+    #   url = "github:Jas-SinghFSU/HyprPanel";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
     sops-nix = {
       url = "github:mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -61,8 +61,6 @@
     };
     solaar = {
       url = "https://flakehub.com/f/Svenum/Solaar-Flake/*.tar.gz"; # For latest stable version
-      #url = "https://flakehub.com/f/Svenum/Solaar-Flake/0.1.1.tar.gz"; # uncomment line for solaar version 1.1.13
-      #url = "github:Svenum/Solaar-Flake/main"; # Uncomment line for latest unstable version
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -77,15 +75,6 @@
     # lumastart.url = "github:spector700/lumastart";
     # my neovim flake
     nvix.url = "github:SPRAGE/nixvim";
-   oil-vcs-status = {
-      url = "github:SirZenith/oil-vcs-status";
-      flake = false;
-    };
-
-    oil-lsp-diagnostics = {
-      url = "github:JezerM/oil-lsp-diagnostics.nvim";
-      flake = false;
-    };
     # # gaming tweaks and addons
     # gaming.url = "github:fufexan/nix-gaming";
 
@@ -95,6 +84,11 @@
     #  flake = false;
     #};
     #Github private repos
+    trading = {
+      url = "git+ssh://git@github.com/SPRAGE/trading.git?ref=main";
+    };
+
+
     auth-server = {
       url = "git+ssh://git@github.com/SPRAGE/auth-server.git?ref=master";
     };

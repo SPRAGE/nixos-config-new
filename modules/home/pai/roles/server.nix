@@ -27,7 +27,7 @@ in
       };
       auth-server = {
         enable = true;
-        package = inputs.auth-server.packages.${pkgs.system}.default;
+        package = inputs.trading.packages.${pkgs.system}.auth_server;
         configFile = null; # or ./config.toml
       };
       analysis-server = {
