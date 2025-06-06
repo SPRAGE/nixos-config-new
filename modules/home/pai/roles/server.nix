@@ -39,7 +39,7 @@ in
         enable = true;
         package = inputs.trading.packages.${pkgs.system}.ingestion_server;
         configFile = null; # or ./config.toml
-        rustLogLevel = "error";
+        rustLogLevel = "debug";
       };
       internal-websocket = {
         enable = true;
@@ -51,32 +51,32 @@ in
         enable = true;
         package = inputs.websocket-server.packages.${pkgs.system}.index_consumer;
         configFile = null; # or ./config.toml
-        rustLogLevel = "info";
+        rustLogLevel = "debug";
       };
       futures-consumer = {
         enable = true;
         package = inputs.websocket-server.packages.${pkgs.system}.futures_consumer;
         configFile = null; # or ./config.toml
-        rustLogLevel = "error";
+        rustLogLevel = "debug";
       };
       greeks-consumer = {
         enable = true;
         package = inputs.websocket-server.packages.${pkgs.system}.greeks_consumer;
         configFile = null; # or ./config.toml
-        rustLogLevel = "error";
+        rustLogLevel = "debug";
       };
       ws-manager = {
         enable = true;
         package = inputs.websocket-server.packages.${pkgs.system}.ws_manager;
         configFile = null; # or ./config.toml
-        rustLogLevel = "error";
+        rustLogLevel = "debug";
       };
 
       historical-data-updater = {
         enable = true;
         package = inputs.ingestion-server.packages.${pkgs.system}.historical-data-updater;
         configFile = null; # or ./config.toml
-        rustLogLevel = "error";
+        rustLogLevel = "debug";
       };
 
       valkey = {
