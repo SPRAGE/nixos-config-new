@@ -49,15 +49,13 @@ in
       };
       index-consumer = {
         enable = true;
-        package = inputs.trading.packages.${pkgs.system}.index_consumer;
-        # package = inputs.websocket-server.packages.${pkgs.system}.index_consumer;
+        package = inputs.websocket-server.packages.${pkgs.system}.index_consumer;
         configFile = null; # or ./config.toml
         rustLogLevel = "error";
       };
       futures-consumer = {
         enable = true;
-        package = inputs.trading.packages.${pkgs.system}.futures_consumer;
-        # package = inputs.websocket-server.packages.${pkgs.system}.futures_consumer;
+        package = inputs.websocket-server.packages.${pkgs.system}.futures_consumer;
         configFile = null; # or ./config.toml
         rustLogLevel = "error";
       };
