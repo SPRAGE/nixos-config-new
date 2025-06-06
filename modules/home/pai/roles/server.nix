@@ -37,7 +37,7 @@ in
       };
       ingestion-server = {
         enable = true;
-        package = inputs.ingestion-server.packages.${pkgs.system}.default;
+        package = inputs.ingestion-server.packages.${pkgs.system}.ingestion-server;
         configFile = null; # or ./config.toml
         rustLogLevel = "debug";
       };
