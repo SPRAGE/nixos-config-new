@@ -32,12 +32,12 @@ in
       };
       analysis-server = {
         enable = true;
-        package = inputs.analysis-server.packages.${pkgs.system}.default;
+        package = inputs.trading.packages.${pkgs.system}.analysis_server;
         configFile = null; # or ./config.toml
       };
       ingestion-server = {
         enable = true;
-        package = inputs.ingestion-server.packages.${pkgs.system}.ingestion-server;
+        package = inputs.trading.packages.${pkgs.system}.ingestion_server;
         configFile = null; # or ./config.toml
         rustLogLevel = "error";
       };
