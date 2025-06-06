@@ -51,7 +51,7 @@ in
         enable = true;
         package = inputs.websocket-server.packages.${pkgs.system}.index_consumer;
         configFile = null; # or ./config.toml
-        rustLogLevel = "error";
+        rustLogLevel = "info";
       };
       futures-consumer = {
         enable = true;
