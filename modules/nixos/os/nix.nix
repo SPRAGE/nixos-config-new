@@ -68,7 +68,7 @@
       substituters = [
         "https://cache.nixos.org"
         "https://nix-community.cachix.org"
-        "https://fufexan.cachix.org"
+        # "https://fufexan.cachix.org"
         "https://nixpkgs-unfree.cachix.org"
         "https://pre-commit-hooks.cachix.org"
       ];
