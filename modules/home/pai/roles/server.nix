@@ -27,17 +27,17 @@ in
       };
       auth-server = {
         enable = true;
-        package = inputs.trading.packages.${pkgs.system}.auth_server;
+        package = inputs.auth-server.packages.${pkgs.system}.default;
         configFile = null; # or ./config.toml
       };
       analysis-server = {
         enable = true;
-        package = inputs.trading.packages.${pkgs.system}.analysis_server;
+        package = inputs.analysis-server.packages.${pkgs.system}.default;
         configFile = null; # or ./config.toml
       };
       ingestion-server = {
         enable = true;
-        package = inputs.trading.packages.${pkgs.system}.ingestion_server;
+        package = inputs.ingestion-server.packages.${pkgs.system}.default;
         configFile = null; # or ./config.toml
         rustLogLevel = "debug";
       };
