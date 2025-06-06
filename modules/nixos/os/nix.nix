@@ -70,9 +70,6 @@
       # Connect timeout for HTTP requests (in seconds)
       connect-timeout = 10;
 
-      # Download timeout for HTTP requests (in seconds) 
-      download-timeout = 60;
-
       # Fallback to building from source if substitutes fail
       fallback = true;
 
