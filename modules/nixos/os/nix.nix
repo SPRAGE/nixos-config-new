@@ -58,7 +58,7 @@
       warn-dirty = false;
 
       # maximum number of parallel TCP connections used to fetch imports and binary caches, 0 means no limit
-      http-connections = 50;
+      http-connections = 0;
 
       trusted-users = [
         "root"
