@@ -57,8 +57,24 @@
 
       warn-dirty = false;
 
-      # maximum number of parallel TCP connections used to fetch imports and binary caches, 0 means no limit
-      http-connections = 0;
+      # maximum number of parallel TCP connections used to fetch imports and binary caches
+      # Setting to a reasonable number can improve performance and reduce resource usage
+      http-connections = 128;
+
+      # Enable parallel downloading of substitutes
+      max-substitution-jobs = 16;
+
+      # Compress build logs to save bandwidth
+      compress-build-log = true;
+
+      # Connect timeout for HTTP requests (in seconds)
+      connect-timeout = 10;
+
+      # Download timeout for HTTP requests (in seconds) 
+      download-timeout = 60;
+
+      # Fallback to building from source if substitutes fail
+      fallback = true;
 
       trusted-users = [
         "root"
@@ -68,17 +84,23 @@
       substituters = [
         "https://cache.nixos.org"
         "https://nix-community.cachix.org"
-        # "https://fufexan.cachix.org"
         "https://nixpkgs-unfree.cachix.org"
         "https://pre-commit-hooks.cachix.org"
+        # "https://hyprland.cachix.org"
+        # "https://anyrun.cachix.org"
+        # "https://devenv.cachix.org"
+        # "https://fufexan.cachix.org"
       ];
 
       trusted-public-keys = [
         "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-        # "fufexan.cachix.org-1:LwCDjCJNJQf5XD2BV+yamQIMZfcKWR9ISIFy5curUsY="
         "nixpkgs-unfree.cachix.org-1:hqvoInulhbV4nJ9yJOEr+4wxhDV4xq2d1DK7S6Nj6rs="
         "pre-commit-hooks.cachix.org-1:Pkk3Panw5AW24TOv6kz3PvLhlH8puAsJTBbOPmBo7Rc="
+        # "hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
+        # "anyrun.cachix.org-1:pqBobmOjI7nKlsUMV25u9QHa9btJK65/C8vnO3p346s="
+        # "devenv.cachix.org-1:w1cLUi8dv3hnoSPGAuibQv+f9TZLr6cv/Hm9XgU50cw="
+        # "fufexan.cachix.org-1:LwCDjCJNJQf5XD2BV+yamQIMZfcKWR9ISIFy5curUsY="
       ];
     };
 
