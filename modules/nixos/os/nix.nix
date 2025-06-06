@@ -62,7 +62,7 @@
       http-connections = 128;
 
       # Enable parallel downloading of substitutes
-      max-substitution-jobs = 16;
+      max-substitution-jobs = 100;
 
       # Compress build logs to save bandwidth
       compress-build-log = true;
