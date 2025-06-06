@@ -23,7 +23,7 @@ in
         enable           = true;
         targetIp         = "127.0.0.1:50002";
         instrumentMethod = "ingestion.IngestionService/IngestInstruments";
-        futuresMethod    = "ingestion.IngestionService/IngestFutures"; 
+        futuresMethod    = "ingestion.IngestionService/IngestFutures";
       };
       auth-server = {
         enable = true;
@@ -49,13 +49,15 @@ in
       };
       index-consumer = {
         enable = true;
-        package = inputs.websocket-server.packages.${pkgs.system}.index_consumer;
+        package = inputs.trading.packages.${pkgs.system}.index_consumer;
+        # package = inputs.websocket-server.packages.${pkgs.system}.index_consumer;
         configFile = null; # or ./config.toml
         rustLogLevel = "error";
       };
       futures-consumer = {
         enable = true;
-        package = inputs.websocket-server.packages.${pkgs.system}.futures_consumer;
+        package = inputs.trading.packages.${pkgs.system}.futures_consumer;
+        # package = inputs.websocket-server.packages.${pkgs.system}.futures_consumer;
         configFile = null; # or ./config.toml
         rustLogLevel = "error";
       };
@@ -71,7 +73,7 @@ in
         configFile = null; # or ./config.toml
         rustLogLevel = "error";
       };
-      
+
       historical-data-updater = {
         enable = true;
         package = inputs.ingestion-server.packages.${pkgs.system}.historical-data-updater;
