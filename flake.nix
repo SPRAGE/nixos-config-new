@@ -96,9 +96,9 @@
     analysis-server = {
       url = "git+ssh://git@github.com/SPRAGE/analysis-server.git?ref=main";
     };
-    ingestion-server = {
-      url = "git+ssh://git@github.com/SPRAGE/ingestion-service.git?ref=main";
-    };
+    # ingestion-server = {
+    #   url = "git+ssh://git@github.com/SPRAGE/ingestion-service.git?ref=main";
+    # };
     websocket-server = {
       url = "git+ssh://git@github.com/SPRAGE/websocket-client.git?ref=main";
     };
