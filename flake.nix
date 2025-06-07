@@ -89,9 +89,9 @@
     };
 
 
-    auth-server = {
-      url = "git+ssh://git@github.com/SPRAGE/auth-server.git?ref=master";
-    };
+    # auth-server = {
+    #   url = "git+ssh://git@github.com/SPRAGE/auth-server.git?ref=master";
+    # };
 
     analysis-server = {
       url = "git+ssh://git@github.com/SPRAGE/analysis-server.git?ref=main";
