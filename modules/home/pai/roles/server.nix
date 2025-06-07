@@ -45,38 +45,38 @@ in
         enable = true;
         package = inputs.internal-websocket.packages.${pkgs.system}.default;
         configFile = null; # or ./config.toml
-        rustLogLevel = "info";
+        rustLogLevel = "error";
       };
       index-consumer = {
         enable = true;
         package = inputs.websocket-server.packages.${pkgs.system}.index_consumer;
         configFile = null; # or ./config.toml
-        rustLogLevel = "debug";
+        rustLogLevel = "error";
       };
       futures-consumer = {
         enable = true;
         package = inputs.websocket-server.packages.${pkgs.system}.futures_consumer;
         configFile = null; # or ./config.toml
-        rustLogLevel = "debug";
+        rustLogLevel = "error";
       };
       greeks-consumer = {
         enable = true;
         package = inputs.websocket-server.packages.${pkgs.system}.greeks_consumer;
         configFile = null; # or ./config.toml
-        rustLogLevel = "debug";
+        rustLogLevel = "error";
       };
       ws-manager = {
         enable = true;
         package = inputs.websocket-server.packages.${pkgs.system}.ws_manager;
         configFile = null; # or ./config.toml
-        rustLogLevel = "debug";
+        rustLogLevel = "error";
       };
 
       historical-data-updater = {
         enable = true;
         package = inputs.ingestion-server.packages.${pkgs.system}.historical-data-updater;
         configFile = null; # or ./config.toml
-        rustLogLevel = "debug";
+        rustLogLevel = "error";
       };
 
       valkey = {
