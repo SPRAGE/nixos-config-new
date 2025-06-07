@@ -84,9 +84,9 @@
     #  flake = false;
     #};
     #Github private repos
-    # trading = {
-    #   url = "git+ssh://git@github.com/SPRAGE/trading.git?ref=main";
-    # };
+    trading = {
+      url = "git+ssh://git@github.com/SPRAGE/trading.git?ref=main";
+    };
 
 
     auth-server = {
