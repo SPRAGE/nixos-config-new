@@ -74,7 +74,7 @@ in
 
       historical-data-updater = {
         enable = true;
-        package = inputs.ingestion-server.packages.${pkgs.system}.historical-data-updater;
+        package = inputs.trading.packages.${pkgs.system}.historical_data_updater;
         configFile = null; # or ./config.toml
         rustLogLevel = "error";
       };
