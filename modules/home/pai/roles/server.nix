@@ -32,14 +32,15 @@ in
       };
       analysis-server = {
         enable = true;
-        package = inputs.analysis-server.packages.${pkgs.system}.default;
+        package = inputs.trading.packages.${pkgs.system}.analysis_server;
         configFile = null; # or ./config.toml
+        rustLogLevel = "error";
       };
       ingestion-server = {
         enable = true;
         package = inputs.trading.packages.${pkgs.system}.ingestion_server;
         configFile = null; # or ./config.toml
-        rustLogLevel = "debug";
+        rustLogLevel = "error";
       };
       internal-websocket = {
         enable = true;

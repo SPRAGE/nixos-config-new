@@ -93,9 +93,9 @@
     #   url = "git+ssh://git@github.com/SPRAGE/auth-server.git?ref=master";
     # };
 
-    analysis-server = {
-      url = "git+ssh://git@github.com/SPRAGE/analysis-server.git?ref=main";
-    };
+    # analysis-server = {
+    #   url = "git+ssh://git@github.com/SPRAGE/analysis-server.git?ref=main";
+    # };
     # ingestion-server = {
     #   url = "git+ssh://git@github.com/SPRAGE/ingestion-service.git?ref=main";
     # };

@@ -29,6 +29,12 @@ in
       default = null;
       description = "Optional TOML config file for analysis-server.";
     };
+
+    rustLogLevel = mkOption {
+      type = types.str;
+      default = "warn";
+      description = "Rust log level for analysis-server.";
+    };
   };
 
   config = mkIf cfg.enable {
@@ -49,7 +55,7 @@ in
         Restart = "on-failure";
         Environment = [
           "LD_LIBRARY_PATH=${pkgs.openssl.out}/lib"
-          "RUST_LOG=warn"
+          "RUST_LOG=${cfg.rustLogLevel}"
         ];
       };
 
