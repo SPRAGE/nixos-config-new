@@ -1563,11 +1563,11 @@
         "nixpkgs": "nixpkgs_9"
       },
       "locked": {
-        "lastModified": 1749362417,
-        "narHash": "sha256-QctJ8inULzzkiewU8T7VqRXqL9Ll84+GRJw0nm2QIVw=",
+        "lastModified": 1749363146,
+        "narHash": "sha256-BZwvWGX0iSombeOOljTyfq3hRksh6h5dY7CAw/vTK4o=",
         "ref": "main",
-        "rev": "1cccced65502c2f97f81453cbf9ea9010253b392",
-        "revCount": 21,
+        "rev": "a880143e17dc45cfca20157a5b57708da285a444",
+        "revCount": 22,
         "type": "git",
         "url": "ssh://git@github.com/SPRAGE/trading.git"
       },
