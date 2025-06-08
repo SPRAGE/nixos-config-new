@@ -50,25 +50,25 @@ in
       };
       index-consumer = {
         enable = true;
-        package = inputs.websocket-server.packages.${pkgs.system}.index_consumer;
+        package = inputs.trading.packages.${pkgs.system}.index_consumer;
         configFile = null; # or ./config.toml
         rustLogLevel = "error";
       };
       futures-consumer = {
         enable = true;
-        package = inputs.websocket-server.packages.${pkgs.system}.futures_consumer;
+        package = inputs.trading.packages.${pkgs.system}.futures_consumer;
         configFile = null; # or ./config.toml
         rustLogLevel = "error";
       };
       greeks-consumer = {
         enable = true;
-        package = inputs.websocket-server.packages.${pkgs.system}.greeks_consumer;
+        package = inputs.trading.packages.${pkgs.system}.greeks_consumer;
         configFile = null; # or ./config.toml
         rustLogLevel = "error";
       };
       ws-manager = {
         enable = true;
-        package = inputs.websocket-server.packages.${pkgs.system}.ws_manager;
+        package = inputs.trading.packages.${pkgs.system}.ws_manager;
         configFile = null; # or ./config.toml
         rustLogLevel = "error";
       };
