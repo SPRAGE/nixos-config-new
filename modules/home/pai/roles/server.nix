@@ -73,6 +73,19 @@ in
         rustLogLevel = "error";
       };
 
+      ws-subscriber = {
+        enable = true;
+        package = inputs.trading.packages.${pkgs.system}.ws_subscriber;
+        symbols = [ "NIFTY" 
+        "BANKNIFTY" 
+        "SENSEX" 
+        "BANKEX" 
+        "MIDCPNIFTY" 
+        "INDIA VIX"];
+        configFile = null; # or ./config.toml
+        rustLogLevel = "error";
+      };
+
       historical-data-updater = {
         enable = true;
         package = inputs.trading.packages.${pkgs.system}.historical_data_updater;

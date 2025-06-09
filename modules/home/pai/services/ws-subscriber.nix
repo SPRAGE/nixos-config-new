@@ -29,6 +29,12 @@ in
       description = "Optional TOML config file for ws-subscriber.";
     };
 
+    symbols = mkOption {
+      type = types.listOf types.str;
+      default = [];
+      description = "List of symbols to subscribe to (e.g., NIFTY, BANKNIFTY).";
+    };
+
     rustLogLevel = mkOption {
       type = types.str;
       default = "warn";
@@ -49,6 +55,10 @@ in
           ++ lib.optionals (cfg.configFile != null) [
             "--config"
             "${cfg.configFile}"
+          ]
+          ++ lib.optionals (cfg.symbols != []) [
+            "--symbols"
+            (lib.concatStringsSep "," cfg.symbols)
           ]
         );
         Restart = "on-failure";
