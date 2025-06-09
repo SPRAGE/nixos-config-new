@@ -46,10 +46,13 @@ in
     systemd.user.services.ws-subscriber = {
       Unit = {
         Description = "User-space ws-subscriber service";
-        After = [ "network.target" ];
+        After = [ "network.target" "ws-manager.service" ];
+        Requires = [ "ws-manager.service" ];
+        BindsTo = [ "ws-manager.service" ];
       };
 
       Service = {
+        ExecStartPre = "${pkgs.coreutils}/bin/sleep 5";
         ExecStart = lib.concatStringsSep " " (
           [ "${cfg.package}/bin/ws-subscriber" ]
           ++ lib.optionals (cfg.configFile != null) [
