@@ -61,7 +61,7 @@ in
           ]
           ++ lib.optionals (cfg.symbols != []) [
             "--symbols"
-            (lib.concatStringsSep "," cfg.symbols)
+            (lib.concatStringsSep "," (map (symbol: ''"${symbol}"'') cfg.symbols))
           ]
         );
         Restart = "on-failure";
