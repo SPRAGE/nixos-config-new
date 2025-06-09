@@ -12,6 +12,7 @@
     ./ws-manager.nix
     ./internal-ws.nix
     ./instruments-futures.nix
+    ./ws-subscriber.nix
 
     # ./sops.nix
     ./xdg.nix
