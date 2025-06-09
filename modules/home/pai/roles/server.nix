@@ -83,7 +83,7 @@ in
         "MIDCPNIFTY" 
         "INDIA VIX"];
         configFile = null; # or ./config.toml
-        rustLogLevel = "error";
+        rustLogLevel = "debug";
       };
 
       historical-data-updater = {
