@@ -48,12 +48,12 @@ in
         configFile = null; # or ./config.toml
         rustLogLevel = "error";
       };
-      index-consumer = {
-        enable = true;
-        package = inputs.trading.packages.${pkgs.system}.index_consumer;
-        configFile = null; # or ./config.toml
-        rustLogLevel = "error";
-      };
+      # index-consumer = {
+      #   enable = true;
+      #   package = inputs.trading.packages.${pkgs.system}.index_consumer;
+      #   configFile = null; # or ./config.toml
+      #   rustLogLevel = "error";
+      # };
       futures-consumer = {
         enable = true;
         package = inputs.trading.packages.${pkgs.system}.futures_consumer;
