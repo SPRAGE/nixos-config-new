@@ -70,7 +70,7 @@ in
         enable = true;
         package = inputs.trading.packages.${pkgs.system}.ws_manager;
         configFile = null; # or ./config.toml
-        rustLogLevel = "debug";
+        rustLogLevel = "error";
       };
 
       ws-subscriber = {
