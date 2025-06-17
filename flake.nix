@@ -102,9 +102,9 @@
     # websocket-server = {
     #   url = "git+ssh://git@github.com/SPRAGE/websocket-client.git?ref=main";
     # };
-    index-frontend = {
-      url = "git+ssh://git@github.com/SPRAGE/index-frontend.git?ref=main";
-    };
+    # index-frontend = {
+    #   url = "git+ssh://git@github.com/SPRAGE/index-frontend.git?ref=main";
+    # };
     internal-websocket = {
       url = "git+ssh://git@github.com/SPRAGE/internal-websocket.git?ref=main";
     };
