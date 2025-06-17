@@ -2,7 +2,7 @@
 password=.
 gateway_username=
 notes_text=
-window_height=1036
+window_height=964
 vc=
 preferipv6=0
 ssh_tunnel_loopback=0
@@ -79,7 +79,7 @@ keymap=
 ssh_tunnel_username=
 execpath=
 shareserial=0
-resolution_height=1036
+resolution_height=964
 rdp_mouse_jitter=No
 useproxyenv=0
 sharesmartcard=0
