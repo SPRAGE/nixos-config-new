@@ -15,7 +15,7 @@ in
 
     package = mkOption {
       type = types.package;
-      default = inputs.index-frontend.packages.${pkgs.system}.default;
+      default = inputs.trading.packages.${pkgs.system}.index_frontend;
       description = "The index-frontend package to install.";
     };
 
