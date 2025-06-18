@@ -1,61 +1,37 @@
-<p align="center"><img src="https://i.imgur.com/X5zKxvp.png" width=300px></p>
+# NixOS Configuration Fork
 
-<p align="center">
-<a href="https://nixos.org/"><img src="https://img.shields.io/badge/NixOS-unstable-informational.svg?style=flat&logo=nixos&logoColor=CAD3F5&colorA=24273A&colorB=8AADF4"></a>
+This repository is a personal fork of [spector700/nixos-config](https://github.com/spector700/nixos-config). It contains my own tweaks and machine profiles while keeping most of the original structure.
 
-<p align="center"><img src="https://i.imgur.com/NbxQ8MY.png" width=600px></p>
+## Components
 
----
+- **Window Manager** — [Hyprland](https://github.com/hyprwm/Hyprland)
+- **Shell** — [Zsh](https://www.zsh.org) with [starship](https://github.com/starship/starship)
+- **Terminal** — [Kitty](https://sw.kovidgoyal.net/kitty/)
+- **Panel** — [Hyprpanel](https://hyprpanel.com/)
+- **File Manager** — [yazi](https://yazi-rs.github.io)
+- **Neovim** — [Akari](https://github.com/spector700/Akari)
 
-- **Window Manager** • [Hyprland](https://github.com/hyprwm/Hyprland)🎨
-- **Shell** • [Zsh](https://www.zsh.org) 🐚 with
-  [starship](https://github.com/starship/starship)
-- **Terminal** • [Kitty](https://sw.kovidgoyal.net/kitty/) 💻
-- **Panel** • [Hyprpanel](https://hyprpanel.com/)🍧
-- **File Manager** • [yazi](https://yazi-rs.github.io)🔖
-- **Neovim** • [Akari](https://github.com/spector700/Akari)
+## Installation
 
----
+1. Download the latest minimal ISO:
+   ```bash
+   wget -O nixos.iso https://channels.nixos.org/nixos-23.05/latest-nixos-minimal-x86_64-linux.iso
+   ```
+2. Boot the installer and partition the drive with Disko:
+   ```bash
+   sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko -- --mode disko --flake github:<your-user>/nixos-config-new#shaundesk
+   ```
+3. Install the system using this flake:
+   ```bash
+   sudo nixos-install --flake github:<your-user>/nixos-config-new#shaundesk --no-write-lock-file
+   ```
+4. Reboot.
 
-![desktop-pic-1](.github/assets/desktop-pic-1.png)
-![desktop-pic-2](.github/assets/desktop-pic-2.png)
-![desktop-pic-3](.github/assets/desktop-pic-3.png)
-<p align="center">Screenshots Circa: 2024-4-9</p>
+## Credits
 
----
-
-## <samp>INSTALLATION (NixOS)</samp>
-
-- Download ISO.
-```bash
-wget -O https://channels.nixos.org/nixos-23.05/latest-nixos-minimal-x86_64-linux.iso
-```
-
-- Boot Into the Installer.
-
-- Format Partitions with Disko:
-
-```bash
-sudo nix --experimental-features "nix-command flakes" run github:nix-community/disko -- --mode disko --flake github:spector700/nixos-config#alfhiem
-```
-
-- Install Dotfiles Using Flake
-
-```bash
-sudo nixos-install --flake github:spector700/nixos-config#alfhiem --no-write-lock-file
-```
-
-- Reboot
-
----
-
-## 💾 Credits & Inspiration
-
-This configuration is inspired by and builds upon the amazing work of:
+Inspired by and based on the work of:
 
 - [fufexan/dotfiles](https://github.com/fufexan/dotfiles)
 - [linuxmobile/kaku](https://github.com/linuxmobile/kaku)
 - [Gerg-L/nixos](https://github.com/Gerg-L/nixos)
 - [Misterio77/nix-config](https://github.com/Misterio77/nix-config)
-
-Special thanks to these projects for their contributions to the NixOS and Linux ecosystem.
