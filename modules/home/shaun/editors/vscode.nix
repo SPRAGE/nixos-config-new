@@ -6,7 +6,7 @@
       package = (pkgs.vscode.override { isInsiders = true; }).overrideAttrs (oldAttrs: rec {
         src = (builtins.fetchTarball {
           url = "https://code.visualstudio.com/sha/download?build=insider&os=linux-x64";
-          sha256 = "0kb6rk6l2617ivw1ylnrq6srf6amnmss049lxc2l8j4nvb3mp5wf";
+          sha256 = "099vnvh9j163n9yfsqiasy2aq6jhh77ls964017mph1a84njmz7v";
         });
         version = "latest";
         
@@ -25,6 +25,7 @@
           pulseaudio
           libpulseaudio
           glibc
+          util-linux
         ];
         
         # Wrap the executable to set LD_LIBRARY_PATH
@@ -44,6 +45,7 @@
               pulseaudio
               libpulseaudio
               glibc
+              util-linux
             ])}"
         '';
         

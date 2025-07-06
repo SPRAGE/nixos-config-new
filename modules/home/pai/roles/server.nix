@@ -42,30 +42,30 @@ in
         configFile = null; # or ./config.toml
         rustLogLevel = "error";
       };
-      internal-websocket = {
+      # internal-websocket = {
+      #   enable = true;
+      #   package = inputs.internal-websocket.packages.${pkgs.system}.default;
+      #   configFile = null; # or ./config.toml
+      #   rustLogLevel = "error";
+      # };
+      financial_data_consumer = {
         enable = true;
-        package = inputs.internal-websocket.packages.${pkgs.system}.default;
+        package = inputs.trading.packages.${pkgs.system}.financial_data_consumer;
         configFile = null; # or ./config.toml
         rustLogLevel = "error";
       };
-      index-consumer = {
-        enable = true;
-        package = inputs.trading.packages.${pkgs.system}.index_consumer;
-        configFile = null; # or ./config.toml
-        rustLogLevel = "error";
-      };
-      futures-consumer = {
-        enable = true;
-        package = inputs.trading.packages.${pkgs.system}.futures_consumer;
-        configFile = null; # or ./config.toml
-        rustLogLevel = "error";
-      };
-      greeks-consumer = {
-        enable = true;
-        package = inputs.trading.packages.${pkgs.system}.greeks_consumer;
-        configFile = null; # or ./config.toml
-        rustLogLevel = "error";
-      };
+      # futures-consumer = {
+      #   enable = true;
+      #   package = inputs.trading.packages.${pkgs.system}.futures_consumer;
+      #   configFile = null; # or ./config.toml
+      #   rustLogLevel = "error";
+      # };
+      # greeks-consumer = {
+      #   enable = true;
+      #   package = inputs.trading.packages.${pkgs.system}.greeks_consumer;
+      #   configFile = null; # or ./config.toml
+      #   rustLogLevel = "error";
+      # };
       ws-manager = {
         enable = true;
         package = inputs.trading.packages.${pkgs.system}.ws_manager;

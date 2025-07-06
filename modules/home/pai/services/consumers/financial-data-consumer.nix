@@ -14,7 +14,7 @@ let
     optionalString
     ;
 
-  cfg = config.modules.services.futures-consumer;
+  cfg = config.modules.services.financial_data_consumer;
 
   waitForKafka = pkgs.writeShellScript "wait-for-kafka" ''
     export PATH=${
@@ -41,8 +41,8 @@ let
   '';
 in
 {
-  options.modules.services.futures-consumer = {
-    enable = mkEnableOption "Enable the futures-consumer as a user service";
+  options.modules.services.financial_data_consumer = {
+    enable = mkEnableOption "Enable the financial_data_consumer as a user service";
 
     package = mkOption {
       type = types.package;
@@ -63,9 +63,9 @@ in
   };
 
   config = mkIf cfg.enable {
-    systemd.user.services.futures-consumer = {
+    systemd.user.services.financial_data_consumer = {
       Unit = {
-        Description = "User-space futures-consumer service";
+        Description = "User-space financial_data_consumer service";
         After = [ "kafka.service" ]; # Wait for Kafka
         Requires = [ "kafka.service" "valkey.service"  ]; # Fail if Kafka is not available
       };
