@@ -9,8 +9,20 @@ in
     compression = true;
     addKeysToAgent = "yes";
     matchBlocks = {
-      net = {
-        host = builtins.concatStringsSep " " hostnames;
+      # Individual host configurations with specific users
+      "dataserver" = {
+        hostname = "dataserver";
+        user = "pai";
+        forwardAgent = true;
+      };
+      "shaundesk" = {
+        hostname = "shaundesk";
+        user = "shaun";
+        forwardAgent = true;
+      };
+      "shaunoffice" = {
+        hostname = "shaunoffice";
+        user = "shaunoffice";
         forwardAgent = true;
       };
       # 🐙 GitHub alias using your custom key
