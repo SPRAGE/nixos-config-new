@@ -7,6 +7,7 @@
     {
       packages = {
         # koshi = pkgs.callPackage ./ags { inherit inputs; };
+        trading-binaries = pkgs.callPackage ./trading-binaries { };
       };
     };
 }

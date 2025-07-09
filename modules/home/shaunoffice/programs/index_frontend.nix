@@ -1,4 +1,4 @@
-{ config, lib, pkgs, inputs, ... }:
+{ config, lib, pkgs, inputs, self, ... }:
 
 let
   inherit (lib)
@@ -8,6 +8,7 @@ let
     types;
 
   cfg = config.modules.programs.index-frontend;
+  tradingBinaries = self.packages.${pkgs.system}.trading-binaries;
 in
 {
   options.modules.programs.index-frontend = {
@@ -15,7 +16,7 @@ in
 
     package = mkOption {
       type = types.package;
-      default = inputs.trading.packages.${pkgs.system}.index_frontend;
+      default = tradingBinaries.passthru.index_frontend;
       description = "The index-frontend package to install.";
     };
 

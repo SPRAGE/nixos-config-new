@@ -3,11 +3,13 @@
   osConfig,
   lib,
   pkgs,
+  self,
   ...
 }:
 let
   inherit (lib) mkIf mkDefault;
   cfg = osConfig.modules.roles.server;
+  tradingBinaries = self.packages.${pkgs.system}.trading-binaries;
 in
 {
   config = mkIf cfg.enable {
@@ -27,18 +29,18 @@ in
       };
       auth-server = {
         enable = true;
-        package = inputs.trading.packages.${pkgs.system}.auth_server;
+        package = tradingBinaries.passthru.auth_server;
         configFile = null; # or ./config.toml
       };
       analysis-server = {
         enable = true;
-        package = inputs.trading.packages.${pkgs.system}.analysis_server;
+        package = tradingBinaries.passthru.analysis_server;
         configFile = null; # or ./config.toml
         rustLogLevel = "error";
       };
       ingestion-server = {
         enable = true;
-        package = inputs.trading.packages.${pkgs.system}.ingestion_server;
+        package = tradingBinaries.passthru.ingestion_server;
         configFile = null; # or ./config.toml
         rustLogLevel = "error";
       };
@@ -50,7 +52,7 @@ in
       # };
       financial_data_consumer = {
         enable = true;
-        package = inputs.trading.packages.${pkgs.system}.financial_data_consumer;
+        package = tradingBinaries.passthru.financial_data_consumer;
         configFile = null; # or ./config.toml
         rustLogLevel = "error";
       };
@@ -68,14 +70,14 @@ in
       # };
       ws-manager = {
         enable = true;
-        package = inputs.trading.packages.${pkgs.system}.ws_manager;
+        package = tradingBinaries.passthru.ws_manager;
         configFile = null; # or ./config.toml
         rustLogLevel = "warn";
       };
 
       ws-subscriber = {
         enable = true;
-        package = inputs.trading.packages.${pkgs.system}.ws_subscriber;
+        package = tradingBinaries.passthru.ws_subscriber;
         symbols = [ "NIFTY" 
         "BANKNIFTY" 
         "SENSEX" 
@@ -88,7 +90,7 @@ in
 
       historical-data-updater = {
         enable = true;
-        package = inputs.trading.packages.${pkgs.system}.historical_data_updater;
+        package = tradingBinaries.passthru.historical_data_updater;
         configFile = null; # or ./config.toml
         rustLogLevel = "error";
       };
