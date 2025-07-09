@@ -1,11 +1,11 @@
 result
 
 # Trading system binaries
-downlaods/trading-x86_64-linux.tar.gz
-downlaods/*.tar.gz
-downlaods/*.zip
-downlaods/*.tar.xz
-downlaods/*.tar.bz2
+downloads/trading-x86_64-linux.tar.gz
+downloads/*.tar.gz
+downloads/*.zip
+downloads/*.tar.xz
+downloads/*.tar.bz2
 
 # Other binary archives
 *.tar.gz.tmp

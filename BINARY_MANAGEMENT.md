@@ -104,7 +104,7 @@ nixos-config-new/
 ├── download-binaries.sh      # Main download script
 ├── download-config.env       # Download configuration
 ├── Makefile                  # Build automation
-├── downlaods/               # Downloaded binaries directory
+├── downloads/               # Downloaded binaries directory
 │   └── trading-x86_64-linux.tar.gz
 └── pkgs/trading-binaries/   # Nix package definition
     └── default.nix
@@ -132,7 +132,7 @@ nixos-config-new/
 
 ### Build Fails After Download
 1. Verify all expected binaries are in the archive: `make check-binaries`
-2. Check the tar.gz file integrity: `tar -tzf downlaods/trading-x86_64-linux.tar.gz`
+2. Check the tar.gz file integrity: `tar -tzf downloads/trading-x86_64-linux.tar.gz`
 3. Ensure the file permissions are correct
 
 ### Missing Dependencies

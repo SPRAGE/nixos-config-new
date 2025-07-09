@@ -20,7 +20,7 @@ Before using the download script in production, you need to update the download 
 2. **Add real SHA256 checksums**:
    ```bash
    # Generate checksum for your actual binary:
-   sha256sum downlaods/trading-x86_64-linux.tar.gz
+   sha256sum downloads/trading-x86_64-linux.tar.gz
    
    # Update this line:
    EXPECTED_SHA256="PUT_ACTUAL_SHA256_HERE"

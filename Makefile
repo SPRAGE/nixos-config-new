@@ -21,11 +21,11 @@ download-verify: ## Download and verify binaries with checksums
 
 check-binaries: ## Check if binaries are present and valid
 	@echo "🔍 Checking trading binaries..."
-	@if [ -f "downlaods/trading-x86_64-linux.tar.gz" ]; then \
+	@if [ -f "downloads/trading-x86_64-linux.tar.gz" ]; then \
 		echo "✅ Binary archive found"; \
-		echo "📊 File size: $$(du -h downlaods/trading-x86_64-linux.tar.gz | cut -f1)"; \
+		echo "📊 File size: $$(du -h downloads/trading-x86_64-linux.tar.gz | cut -f1)"; \
 		echo "🗂️  Archive contents:"; \
-		tar -tzf downlaods/trading-x86_64-linux.tar.gz | grep "bin/" | head -10; \
+		tar -tzf downloads/trading-x86_64-linux.tar.gz | grep "bin/" | head -10; \
 	else \
 		echo "❌ Binary archive not found. Run 'make download-binaries' first."; \
 		exit 1; \
@@ -78,7 +78,7 @@ clean-downloads: ## Remove downloaded binaries (use with caution)
 	@echo "🗑️  Removing downloaded binaries..."
 	@read -p "Are you sure you want to delete downloaded binaries? [y/N] " confirm; \
 	if [ "$$confirm" = "y" ] || [ "$$confirm" = "Y" ]; then \
-		rm -f downlaods/trading-x86_64-linux.tar.gz; \
+		rm -f downloads/trading-x86_64-linux.tar.gz; \
 		echo "✅ Downloaded binaries removed"; \
 	else \
 		echo "❌ Cancelled"; \

@@ -18,7 +18,7 @@ stdenv.mkDerivation rec {
   pname = "trading-binaries";
   version = "1.0.0";
 
-  src = ../../downlaods/trading-x86_64-linux.tar.gz;
+  src = ../../downloads/trading-x86_64-linux.tar.gz;
 
   nativeBuildInputs = [
     autoPatchelfHook
