@@ -31,6 +31,10 @@ check-binaries: ## Check if binaries are present and valid
 		exit 1; \
 	fi
 
+check-services: ## Check status of trading services
+	@echo "🔍 Checking trading services status..."
+	./check-services.sh
+
 build-dataserver: ## Build the dataserver NixOS configuration
 	@echo "🏗️  Building dataserver configuration..."
 	nix build .#nixosConfigurations.dataserver.config.system.build.toplevel
@@ -93,6 +97,27 @@ dev-shell: ## Enter development shell
 dev-check: check-syntax check-binaries ## Run all development checks
 
 dev-build: download-binaries build-dataserver ## Download binaries and build dataserver
+
+# Service management targets
+start-services: ## Start all trading services
+	@echo "🚀 Starting trading services..."
+	systemctl --user start kafka valkey financial_data_consumer
+
+stop-services: ## Stop all trading services
+	@echo "🛑 Stopping trading services..."
+	systemctl --user stop financial_data_consumer valkey kafka
+
+restart-services: ## Restart all trading services
+	@echo "🔄 Restarting trading services..."
+	systemctl --user restart kafka valkey financial_data_consumer
+
+logs-consumer: ## View financial data consumer logs
+	@echo "📋 Viewing financial data consumer logs..."
+	journalctl --user -u financial_data_consumer -f
+
+logs-kafka: ## View Kafka logs
+	@echo "📋 Viewing Kafka logs..."
+	journalctl --user -u kafka -f
 
 # CI/CD targets
 ci-prepare: download-binaries ## Prepare for CI/CD
