@@ -46,13 +46,13 @@ in
 
     package = mkOption {
       type = types.package;
-      description = "The package providing the futures_consumer binary.";
+      description = "The package providing the financial_data_consumer binary.";
     };
 
     configFile = mkOption {
       type = types.nullOr types.path;
       default = null;
-      description = "Optional path to the TOML config file used by futures_consumer.";
+      description = "Optional path to the TOML config file used by financial_data_consumer.";
     };
 
     rustLogLevel = mkOption {
@@ -73,7 +73,7 @@ in
       Service = {
         ExecStartPre = waitForKafka;
         ExecStart = lib.concatStringsSep " " (
-          [ "${cfg.package}/bin/futures_consumer" ]
+          [ "${cfg.package}/bin/financial-data-consumer" ]
           ++ lib.optionals (cfg.configFile != null) [
             "--config"
             "${cfg.configFile}"
