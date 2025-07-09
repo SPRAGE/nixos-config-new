@@ -56,6 +56,7 @@ in
         configFile = null; # or ./config.toml
         rustLogLevel = "error";
         kafkaBootstrapServer = "192.168.0.7:9092";  # Match the Kafka hostIp configuration
+        waitForKafka = false;  # Use simple delay instead of complex wait
       };
       # futures-consumer = {
       #   enable = true;
