@@ -4,13 +4,21 @@
   autoPatchelfHook,
   glibc,
   gcc-unwrapped,
+  # GUI dependencies for index-frontend
+  gtk3,
+  webkitgtk_4_1,
+  cairo,
+  gdk-pixbuf,
+  libsoup_3,
+  glib,
+  xdotool,
 }:
 
 stdenv.mkDerivation rec {
   pname = "trading-binaries";
   version = "1.0.0";
 
-  src = /home/shaunoffice/codes/nixos-config-new/downlaods/trading-x86_64-linux.tar.gz;
+  src = ../../downlaods/trading-x86_64-linux.tar.gz;
 
   nativeBuildInputs = [
     autoPatchelfHook
@@ -19,6 +27,14 @@ stdenv.mkDerivation rec {
   buildInputs = [
     glibc
     gcc-unwrapped.lib
+    # GUI dependencies for index-frontend
+    gtk3
+    webkitgtk_4_1
+    cairo
+    gdk-pixbuf
+    libsoup_3
+    glib
+    xdotool
   ];
 
   sourceRoot = "trading-x86_64-linux";
@@ -46,114 +62,52 @@ stdenv.mkDerivation rec {
   '';
 
   # Create individual packages for each binary
-  passthru = {
-    auth_server = stdenv.mkDerivation {
-      inherit pname version src;
-      installPhase = ''
-        mkdir -p $out/bin
-        tar -xzf $src
-        cp trading-x86_64-linux/bin/auth-server $out/bin/
-        chmod +x $out/bin/auth-server
-      '';
-      nativeBuildInputs = [ autoPatchelfHook ];
-      buildInputs = [ glibc gcc-unwrapped.lib ];
-    };
-
-    analysis_server = stdenv.mkDerivation {
-      inherit pname version src;
-      installPhase = ''
-        mkdir -p $out/bin
-        tar -xzf $src
-        cp trading-x86_64-linux/bin/analysis-server $out/bin/
-        chmod +x $out/bin/analysis-server
-      '';
-      nativeBuildInputs = [ autoPatchelfHook ];
-      buildInputs = [ glibc gcc-unwrapped.lib ];
-    };
-
-    financial_data_consumer = stdenv.mkDerivation {
-      inherit pname version src;
-      installPhase = ''
-        mkdir -p $out/bin
-        tar -xzf $src
-        cp trading-x86_64-linux/bin/financial-data-consumer $out/bin/
-        chmod +x $out/bin/financial-data-consumer
-      '';
-      nativeBuildInputs = [ autoPatchelfHook ];
-      buildInputs = [ glibc gcc-unwrapped.lib ];
-    };
-
-    historical_data_updater = stdenv.mkDerivation {
-      inherit pname version src;
-      installPhase = ''
-        mkdir -p $out/bin
-        tar -xzf $src
-        cp trading-x86_64-linux/bin/historical-data-updater $out/bin/
-        chmod +x $out/bin/historical-data-updater
-      '';
-      nativeBuildInputs = [ autoPatchelfHook ];
-      buildInputs = [ glibc gcc-unwrapped.lib ];
-    };
-
-    index_frontend = stdenv.mkDerivation {
-      inherit pname version src;
-      installPhase = ''
-        mkdir -p $out/bin
-        tar -xzf $src
-        cp trading-x86_64-linux/bin/index-frontend $out/bin/
-        chmod +x $out/bin/index-frontend
-      '';
-      nativeBuildInputs = [ autoPatchelfHook ];
-      buildInputs = [ glibc gcc-unwrapped.lib ];
-    };
-
-    ingestion_server = stdenv.mkDerivation {
-      inherit pname version src;
-      installPhase = ''
-        mkdir -p $out/bin
-        tar -xzf $src
-        cp trading-x86_64-linux/bin/ingestion-server $out/bin/
-        chmod +x $out/bin/ingestion-server
-      '';
-      nativeBuildInputs = [ autoPatchelfHook ];
-      buildInputs = [ glibc gcc-unwrapped.lib ];
-    };
-
-    ws_manager = stdenv.mkDerivation {
-      inherit pname version src;
-      installPhase = ''
-        mkdir -p $out/bin
-        tar -xzf $src
-        cp trading-x86_64-linux/bin/ws_manager $out/bin/
-        chmod +x $out/bin/ws_manager
-      '';
-      nativeBuildInputs = [ autoPatchelfHook ];
-      buildInputs = [ glibc gcc-unwrapped.lib ];
-    };
-
-    ws_subscriber = stdenv.mkDerivation {
-      inherit pname version src;
-      installPhase = ''
-        mkdir -p $out/bin
-        tar -xzf $src
-        cp trading-x86_64-linux/bin/ws-subscriber $out/bin/
-        chmod +x $out/bin/ws-subscriber
-      '';
-      nativeBuildInputs = [ autoPatchelfHook ];
-      buildInputs = [ glibc gcc-unwrapped.lib ];
-    };
-
-    test_clickhouse = stdenv.mkDerivation {
-      inherit pname version src;
-      installPhase = ''
-        mkdir -p $out/bin
-        tar -xzf $src
-        cp trading-x86_64-linux/bin/test-clickhouse $out/bin/
-        chmod +x $out/bin/test-clickhouse
-      '';
-      nativeBuildInputs = [ autoPatchelfHook ];
-      buildInputs = [ glibc gcc-unwrapped.lib ];
-    };
+  passthru = 
+    let
+      # Common server dependencies
+      serverBuildInputs = [ glibc gcc-unwrapped.lib ];
+      # GUI frontend dependencies  
+      frontendBuildInputs = serverBuildInputs ++ [ 
+        gtk3 webkitgtk_4_1 cairo gdk-pixbuf libsoup_3 glib xdotool 
+      ];
+      
+      mkServerBinary = name: binaryName: stdenv.mkDerivation {
+        inherit pname version src;
+        name = "${name}-${version}";
+        installPhase = ''
+          mkdir -p $out/bin
+          tar -xzf $src
+          cp trading-x86_64-linux/bin/${binaryName} $out/bin/
+          chmod +x $out/bin/${binaryName}
+        '';
+        nativeBuildInputs = [ autoPatchelfHook ];
+        buildInputs = serverBuildInputs;
+      };
+      
+      mkFrontendBinary = name: binaryName: stdenv.mkDerivation {
+        inherit pname version src;
+        name = "${name}-${version}";
+        installPhase = ''
+          mkdir -p $out/bin
+          tar -xzf $src
+          cp trading-x86_64-linux/bin/${binaryName} $out/bin/
+          chmod +x $out/bin/${binaryName}
+        '';
+        nativeBuildInputs = [ autoPatchelfHook ];
+        buildInputs = frontendBuildInputs;
+      };
+    in {
+    auth_server = mkServerBinary "auth-server" "auth-server";
+    analysis_server = mkServerBinary "analysis-server" "analysis-server";
+    financial_data_consumer = mkServerBinary "financial-data-consumer" "financial-data-consumer";
+    historical_data_updater = mkServerBinary "historical-data-updater" "historical-data-updater";
+    ingestion_server = mkServerBinary "ingestion-server" "ingestion-server";
+    ws_manager = mkServerBinary "ws-manager" "ws_manager";
+    ws_subscriber = mkServerBinary "ws-subscriber" "ws-subscriber";
+    test_clickhouse = mkServerBinary "test-clickhouse" "test-clickhouse";
+    
+    # Frontend with GUI dependencies
+    index_frontend = mkFrontendBinary "index-frontend" "index-frontend";
   };
 
   meta = with lib; {
