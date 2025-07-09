@@ -35,19 +35,19 @@ log_error() {
     echo -e "${RED}[ERROR]${NC} $1"
 }
 
-# Function to show usage
 show_usage() {
     cat << EOF
 Usage: $0 [OPTIONS]
 
 Download trading system binaries for NixOS configuration.
+By default, uses GitHub CLI if available and authenticated, otherwise falls back to HTTP.
 
 Options:
     -h, --help      Show this help message
     -f, --force     Force re-download even if file exists
-    -u, --url URL   Specify custom download URL
-    -g, --github    Use GitHub CLI for download (requires --repo and optionally --tag)
-    --repo REPO     GitHub repository in format owner/repo
+    -u, --url URL   Use HTTP/HTTPS download with custom URL
+    -g, --github    Explicitly use GitHub CLI for download (requires --repo and optionally --tag)
+    --repo REPO     GitHub repository in format owner/repo (default: $DEFAULT_GITHUB_REPO)
     --tag TAG       Release tag (default: latest)
     --asset ASSET   Asset name pattern (default: trading-x86_64-linux.tar.gz)
     -s, --ssh       Use SSH for download (requires --ssh-host, --ssh-user, --ssh-path)
@@ -59,15 +59,13 @@ Options:
     --dry-run       Show what would be done without actually doing it
 
 Examples:
-    $0                              # Download with default settings
-    $0 --force                      # Force re-download
-    $0 --url https://example.com/trading-binaries.tar.gz
-    $0 --verify                     # Download and verify checksums
-    $0 --github --repo myorg/trading-binaries
+    $0                              # Use default method (GitHub CLI if available, else HTTP)
+    $0 --force                      # Force re-download with default method
+    $0 --github --repo myorg/trading-binaries  # Explicitly use GitHub CLI
     $0 --github --repo myorg/trading-binaries --tag v1.2.3
-    $0 --github --repo myorg/trading-binaries --asset "*linux*.tar.gz"
+    $0 --url https://example.com/trading-binaries.tar.gz  # Force HTTP download
+    $0 --verify                     # Download and verify checksums
     $0 --ssh --ssh-host example.com --ssh-user deploy --ssh-path /opt/binaries/trading-x86_64-linux.tar.gz
-    $0 --ssh --ssh-host 192.168.1.100 --ssh-user admin --ssh-path /home/admin/trading.tar.gz --ssh-key ~/.ssh/deploy_key
 
 EOF
 }
@@ -87,7 +85,9 @@ SSH_USER=""
 SSH_PATH=""
 SSH_KEY=""
 
-# You should replace this with the actual download URL
+# Default GitHub repository - replace with your actual repository
+DEFAULT_GITHUB_REPO="SPRAGE/trading"
+# Fallback HTTP URL for when GitHub CLI is not available
 DEFAULT_DOWNLOAD_URL="https://github.com/your-org/trading-binaries/releases/latest/download/trading-x86_64-linux.tar.gz"
 
 # Parse command line arguments
@@ -157,7 +157,21 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
-# Use default URL if none provided
+# Use default GitHub repo if none provided and no other method specified
+if [[ "$USE_SSH" != "true" && "$USE_GITHUB" != "true" && -z "$DOWNLOAD_URL" ]]; then
+    # Default to GitHub CLI if available and authenticated
+    if command -v gh &> /dev/null && gh auth status &> /dev/null 2>&1; then
+        USE_GITHUB=true
+        GITHUB_REPO="$DEFAULT_GITHUB_REPO"
+        log_info "Defaulting to GitHub CLI download method"
+    else
+        # Fallback to HTTP download
+        DOWNLOAD_URL="$DEFAULT_DOWNLOAD_URL"
+        log_info "GitHub CLI not available or not authenticated, using HTTP download"
+    fi
+fi
+
+# Use default URL if HTTP method is selected but no URL provided
 if [[ -z "$DOWNLOAD_URL" && "$USE_SSH" != "true" && "$USE_GITHUB" != "true" ]]; then
     DOWNLOAD_URL="$DEFAULT_DOWNLOAD_URL"
 fi
@@ -166,6 +180,7 @@ fi
 if [[ "$USE_GITHUB" == "true" ]]; then
     if [[ -z "$GITHUB_REPO" ]]; then
         log_error "GitHub download requires --repo parameter (format: owner/repo)"
+        log_info "Or set DEFAULT_GITHUB_REPO in the script"
         exit 1
     fi
     # Validate repo format
@@ -185,9 +200,9 @@ fi
 
 # Ensure only one download method is selected
 download_methods=0
-[[ "$USE_SSH" == "true" ]] && ((download_methods++))
-[[ "$USE_GITHUB" == "true" ]] && ((download_methods++))
-[[ -n "$DOWNLOAD_URL" ]] && ((download_methods++))
+[[ "$USE_SSH" == "true" ]] && ((download_methods++)) || true
+[[ "$USE_GITHUB" == "true" ]] && ((download_methods++)) || true
+[[ -n "$DOWNLOAD_URL" ]] && ((download_methods++)) || true
 
 if [[ $download_methods -gt 1 ]]; then
     log_error "Please specify only one download method: --url, --github, or --ssh"
@@ -263,6 +278,17 @@ should_download() {
     return 1  # Should not download
 }
 
+# Function to show file size information
+show_file_size() {
+    local file_path="$1"
+    if [[ -f "$file_path" ]]; then
+        local file_size_bytes file_size_human
+        file_size_bytes=$(stat -c%s "$file_path" 2>/dev/null || stat -f%z "$file_path" 2>/dev/null || echo "0")
+        file_size_human=$(du -h "$file_path" 2>/dev/null | cut -f1 || echo "unknown")
+        log_info "Downloaded file size: $file_size_human ($file_size_bytes bytes)"
+    fi
+}
+
 # Function to download the binary
 download_binary() {
     if [[ "$USE_SSH" == "true" ]]; then
@@ -313,8 +339,15 @@ download_via_github() {
     local download_dir
     download_dir="$(dirname "$BINARY_PATH")"
     
+    # Add --clobber flag if force download is requested
+    local gh_flags=()
+    if [[ "$FORCE_DOWNLOAD" == "true" ]]; then
+        gh_flags+=("--clobber")
+        log_info "Force download requested, will overwrite existing files"
+    fi
+    
     if [[ "$GITHUB_TAG" == "latest" ]]; then
-        if gh release download --repo "$GITHUB_REPO" --pattern "$GITHUB_ASSET" --dir "$download_dir" latest; then
+        if gh release download --repo "$GITHUB_REPO" --pattern "$GITHUB_ASSET" --dir "$download_dir" "${gh_flags[@]}" latest; then
             # Check if the downloaded file has the expected name
             if [[ ! -f "$BINARY_PATH" ]]; then
                 # Find the downloaded file and rename it if necessary
@@ -331,12 +364,13 @@ download_via_github() {
                 fi
             fi
             log_success "GitHub download completed successfully"
+            show_file_size "$BINARY_PATH"
         else
             log_error "GitHub download failed"
             return 1
         fi
     else
-        if gh release download --repo "$GITHUB_REPO" --pattern "$GITHUB_ASSET" --dir "$download_dir" "$GITHUB_TAG"; then
+        if gh release download --repo "$GITHUB_REPO" --pattern "$GITHUB_ASSET" --dir "$download_dir" "${gh_flags[@]}" "$GITHUB_TAG"; then
             # Check if the downloaded file has the expected name
             if [[ ! -f "$BINARY_PATH" ]]; then
                 # Find the downloaded file and rename it if necessary
@@ -353,6 +387,7 @@ download_via_github() {
                 fi
             fi
             log_success "GitHub download completed successfully"
+            show_file_size "$BINARY_PATH"
         else
             log_error "GitHub download failed"
             return 1
@@ -387,6 +422,7 @@ download_via_ssh() {
     log_info "Using scp for download..."
     if scp "${ssh_opts[@]}" "${SSH_USER}@${SSH_HOST}:${SSH_PATH}" "$BINARY_PATH"; then
         log_success "SSH download completed successfully"
+        show_file_size "$BINARY_PATH"
     else
         log_error "SSH download failed"
         return 1
@@ -408,6 +444,7 @@ download_via_http() {
         log_info "Using curl for download..."
         if curl -L -o "$BINARY_PATH" "$DOWNLOAD_URL"; then
             log_success "Download completed successfully"
+            show_file_size "$BINARY_PATH"
         else
             log_error "Download failed with curl"
             return 1
@@ -416,6 +453,7 @@ download_via_http() {
         log_info "Using wget for download..."
         if wget -O "$BINARY_PATH" "$DOWNLOAD_URL"; then
             log_success "Download completed successfully"
+            show_file_size "$BINARY_PATH"
         else
             log_error "Download failed with wget"
             return 1
