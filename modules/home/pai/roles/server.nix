@@ -55,6 +55,7 @@ in
         package = tradingBinaries.passthru.financial_data_consumer;
         configFile = null; # or ./config.toml
         rustLogLevel = "error";
+        kafkaBootstrapServer = "192.168.0.7:9092";  # Match the Kafka hostIp configuration
       };
       # futures-consumer = {
       #   enable = true;
