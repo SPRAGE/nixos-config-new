@@ -26,7 +26,7 @@ in
         confirmClose = true;
       };
       # programs.spicetify.enable = mkDefault true;
-      # programs.index-frontend.enable = mkDefault true;
+      programs.index-frontend.enable = mkDefault true;
     };
   };
 }
