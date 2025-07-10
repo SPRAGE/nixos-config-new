@@ -80,12 +80,14 @@ in
       ws-subscriber = {
         enable = true;
         package = tradingBinaries.passthru.ws_subscriber;
-        symbols = [ "NIFTY" 
-        "BANKNIFTY" 
-        "SENSEX" 
-        "BANKEX" 
-        "MIDCPNIFTY" 
-        "INDIA VIX"];
+        symbols = [ "NIFTY"
+        "BANKNIFTY"
+        "SENSEX"
+        "BANKEX"
+        "MIDCPNIFTY"
+        "INDIA VIX"
+        "GIFT NIFTY"
+        ];
         configFile = null; # or ./config.toml
         rustLogLevel = "debug";
       };
